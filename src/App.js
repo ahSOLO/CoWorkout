@@ -1,5 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import axios from './fakeAxios';
+// import axios from 'axios';
+
+axios.get('/api/users').then(data => console.log(data))
 
 function App() {
   return (
@@ -15,7 +19,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Learn React!
         </a>
       </header>
     </div>
