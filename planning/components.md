@@ -1,4 +1,5 @@
 ## React Components
+* Index (homepage, "onboarding page")
 * Login
 * Registration
 * Dashboard
@@ -15,15 +16,20 @@
     * Empty
     * Booked
     * Selected
-    * Confirm
+    * Confirm - confirm delete/ confirm book appointment
     * Error
     * Status
-* Settings/Preferences
+* Settings (contact method, reminder frequency) - 
+* Account (age, weight, height, workout goals, workout interests, location, avatar)
 * Workout Call
   * Index
-  * Waiting
-  * Ongoing
-  * Postcall
+  * Waiting (if possible, video preview)
+  * Ongoing (actual call session)
+  * Postcall (rate, report, "you did it")
+* Leaderboard
+* Rewards
+* Friends
+* Profile
 
 
 ## Helpers and hooks
