@@ -2,9 +2,14 @@
 * Login
 * Registration
 * Dashboard
+* Upcoming
 * Calendar
   * Index
-  * Day
+  * Month (pop up only)
+  * Day (vertical columns)
+    * DayActive
+    * DayDisabled (days past)
+    * DaySelected (today if none selected)
   * Slot
     * Index
     * Empty
