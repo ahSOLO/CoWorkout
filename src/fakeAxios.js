@@ -1,16 +1,30 @@
 // fake data
 const fakeData = {
-  '/api/users': {
-    id: 1,
-    first_name: 'Chuck',
-    last_name: 'Norris',
-    avatar: 'img link',
-    gender: 'Male',
-    // add more as needed
+  'GET': {
+    '/api/users': {
+      id: 1,
+      first_name: 'Chuck',
+      last_name: 'Norris',
+      avatar: 'img link',
+      gender: 'Male',
+      // add more as needed
+    },
+    '/api/sessions': {
+      id: 1,
+      // add more as needed
+    }
   },
-  '/api/sessions': {
-    id: 1,
-    // add more as needed
+
+  'POST': {
+    '/api/': {
+      test: true
+    }
+  },
+
+  'DELETE': {
+    '/api/': {
+      test: true
+    }
   }
 }
 
@@ -27,7 +41,13 @@ const fakePromise = function(fakeData) {
 // fake axios
 const axios = {
   get: function(route) {
-    return fakePromise(fakeData[route]); 
+    return fakePromise(fakeData['GET'][route]); 
+  },
+  post: function(route) {
+    return fakePromise(fakeData['POST'][route]); 
+  },
+  delete: function(route) {
+    return fakePromise(fakeData['DELETE'][route]); 
   }
 }
 

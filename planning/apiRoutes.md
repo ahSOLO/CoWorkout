@@ -1,5 +1,5 @@
 # API Routes
 
 ## Users
-* /api/users
-* /api/sessions
+* /api/user/N
+* /api/session/N
