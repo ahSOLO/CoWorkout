@@ -30,6 +30,7 @@
 * Rewards
 * Friends
 * Profile
+* Sidebar
 
 
 ## Helpers and hooks
