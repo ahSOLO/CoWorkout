@@ -31,15 +31,17 @@ const axios = {
   }
 }
 
+export default axios;
 
-// // usage
+// USAGE 
 
+// import axios from './fakeAxios';
+//
 // axios.get('/api/users')
 //   .then(data => {
 //     console.log(data);
 //   })
 
 
-export default axios;
 
 

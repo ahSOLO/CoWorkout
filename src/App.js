@@ -3,9 +3,11 @@ import './App.css';
 import axios from './fakeAxios';
 // import axios from 'axios';
 
-axios.get('/api/users').then(data => console.log(data))
-
 function App() {
+  const checkLogin = function() {
+    
+  }
+
   return (
     <div className="App">
       <header className="App-header">
