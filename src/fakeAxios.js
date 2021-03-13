@@ -1,7 +1,7 @@
 // fake data
 const fakeData = {
   'GET': {
-    '/api/users': {
+    '/api/user/testuser': {
       id: 1,
       first_name: 'Chuck',
       last_name: 'Norris',
@@ -33,7 +33,7 @@ const fakePromise = function(fakeData) {
   const fakePromise = new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve(fakeData);
-    }, 100);
+    }, 2000);
   });
   return fakePromise;
 }
@@ -52,16 +52,3 @@ const axios = {
 }
 
 export default axios;
-
-// USAGE 
-
-// import axios from './fakeAxios';
-//
-// axios.get('/api/users')
-//   .then(data => {
-//     console.log(data);
-//   })
-
-
-
-
