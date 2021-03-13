@@ -6,7 +6,7 @@
 * /logout - call axios.post on '/api/logout' to destroy the session
 * /register - call axios.create on '/api/register'
 * /settings
-* /account - call axios.get on '/api/user' to get info from the `users` table
+* /account - call axios.get on '/api/user/<username>' to get info from the `users` table
 * /leaderboard
 * /rewards
 * /friends
