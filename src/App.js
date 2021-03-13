@@ -15,7 +15,7 @@ function App() {
   return (
     <div>
       <nav>CoWorkout</nav>
-      
+      <MainRouter />
     </div>
   );
 }
