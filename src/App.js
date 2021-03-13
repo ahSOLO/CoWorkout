@@ -2,6 +2,7 @@ import './App.css';
 import axios from './fakeAxios';
 // import axios from 'axios';
 import MainRouter from './components/MainRouter';
+import './basic.css';
 
 function App() {
   console.log('Rerendered');
