@@ -1,6 +1,0 @@
-DROP TABLE IF EXISTS workout_goals CASCADE;
-
-CREATE TABLE workout_goals (
-  id SERIAL PRIMARY KEY NOT NULL,
-  goal VARCHAR(255) NOT NULL
-);

@@ -1,9 +1,0 @@
-DROP TABLE IF EXISTS ratings CASCADE;
-
-CREATE TABLE ratings (
-  id SERIAL PRIMARY KEY NOT NULL,
-  session_id INT REFERENCES sessions(id) ON DELETE CASCADE,
-  rater_user_id INT REFERENCES users(id) ON DELETE CASCADE,
-  rated_user_id INT REFERENCES users(id) ON DELETE CASCADE,
-  rating VARCHAR(8) NOT NULL
-);
