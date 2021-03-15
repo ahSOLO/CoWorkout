@@ -62,7 +62,7 @@
     ]
   },
   "scripts": {
-    "start": "concurrently npm:server npm:dev",
+    "start": "concurrently npm:dev",
     "dev": "react-scripts start",
     "build": "node ./scripts/build.js",
     "test": "jest",
@@ -101,7 +101,7 @@
       "pre-commit": "lint-staged"
     }
   },
-  "proxy": "http://localhost:8081/",
+  "proxy": "http://143.198.226.226:8081/",
   "jest": {
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
