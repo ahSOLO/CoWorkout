@@ -1,8 +1,8 @@
-import './App.css';
+import './App.scss';
 import axios from './fakeAxios';
 // import axios from 'axios';
 import MainRouter from './components/MainRouter';
-import './basic.css';
+import './basic.scss';
 
 function App() {
   console.log('Rerendered');
