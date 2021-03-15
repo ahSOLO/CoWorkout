@@ -5,5 +5,6 @@ CREATE TABLE sessions (
   scheduled_at timestamp NOT NULL,
   state VARCHAR(32) NOT NULL DEFAULT 'pending',
   scheduled_duration decimal,
-  actual_duration decimal
+  actual_duration decimal,
+  owner_id INT REFERENCES users(id) ON DELETE CASCADE
 );
