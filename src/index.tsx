@@ -16,6 +16,9 @@ import { VideoProvider } from './components/VideoProvider';
 import useConnectionOptions from './utils/useConnectionOptions/useConnectionOptions';
 import UnsupportedBrowserWarning from './components/UnsupportedBrowserWarning/UnsupportedBrowserWarning';
 
+// custom
+import CustomReroute from './components/CustomApiReroute';
+
 const VideoApp = () => {
   const { error, setError } = useAppState();
   const connectionOptions = useConnectionOptions();
@@ -43,6 +46,9 @@ ReactDOM.render(
             </PrivateRoute>
             <Route path="/login">
               <LoginPage />
+            </Route>
+            <Route path="/token">
+              <CustomReroute />
             </Route>
             <Redirect to="/" />
           </Switch>
