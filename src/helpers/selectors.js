@@ -7,7 +7,7 @@ const db = new Pool(dbParams);
 db.connect();
 
 // Contains helper functions used by the main application.
-const getUpcomingCurrentDaySessions = function(datetime) {
+const getUpcomingCurrentDaySessions = function(start, end) {
 
   db.query(
     `
@@ -20,8 +20,8 @@ const getUpcomingCurrentDaySessions = function(datetime) {
       FROM sessions 
       JOIN users
         ON sessions.owner_id = users.id 
-     WHERE sessions.scheduled_at > ${datetime}
-       AND sessions.scheduled_at::date = ${datetime}
+     WHERE sessions.scheduled_at >= ${start}
+       AND sessions.scheduled_at <= ${end}
     `
   ).then(data => {
     console.log(data.rows);
