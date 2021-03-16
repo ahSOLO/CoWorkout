@@ -98,16 +98,9 @@ const autoGenerateEmptyAppointments = function() {
   return emptyAppointments;
 };
 
-// // examples
-// let today = new Date();
-// console.log(extractDayOfWeek(today.toString()));
-// console.log(extractTimeString("2021-03-29T01:07:04.353Z"));
-// console.log(changeToUserTZ(today.toString(), 'Asia/Singapore'));
-// console.log(getWeekDates("2021-03-29T19:07:04.353Z"));
-
-const rebuildAppointmentObjs = function(allAppointments, userTZ) {
-  // deep copy allAppointments
-  let reconstructedAppointments = {...allAppointments};
+const rebuildAppointmentObjs = function(emptyAppointments, allAppointments, userTZ) {
+  // deep copy emptyAppointments
+  let reconstructedAppointments = {...emptyAppointments};
   for (const appointment of allAppointments) {
     const startTimeUserTZ = changeToUserTZ('', userTZ);
     const dayOfWeek = extractDayOfWeek(startTimeUserTZ);
@@ -121,24 +114,33 @@ const rebuildAppointmentObjs = function(allAppointments, userTZ) {
         'activityType': null
     };
   }
+  console.log(reconstructedAppointments);
   return reconstructedAppointments;
 }
 
 
 // replace with static var after finalizing formats
-const allAppointments = autoGenerateEmptyAppointments();
+const allSlots = autoGenerateEmptyAppointments();
 
-console.log(allAppointments);
+
+
+// // examples
+// let today = new Date();
+// console.log(extractDayOfWeek(today.toString()));
+// console.log(extractTimeString("2021-03-29T01:07:04.353Z"));
+// console.log(changeToUserTZ(today.toString(), 'Asia/Singapore'));
+// console.log(getWeekDates("2021-03-29T19:07:04.353Z"));
+
 module.exports = {
-  allAppointments,
+  allSlots,
   extractTimeString,
   extractDayOfWeek,
   changeToUserTZ,
   getWeekDates
 }
 
-/* example allAppointments
-const allAppointments = {
+/* example allSlots
+const allSlots = {
   MON: {
     '00:00': { status: 'empty' },
     '00:15': { status: 'empty' },

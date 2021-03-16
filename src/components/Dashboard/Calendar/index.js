@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Day from "./Day";
 import "./styles.scss";
-import { allAppointments, changeToUserTZ, extractTimeString, getWeekDates } from "../../../calendarHelpers";
+import { allSlots, changeToUserTZ, extractTimeString, getWeekDates } from "../../../calendarHelpers";
 import axios from '../../../fakeAxios';
 // import axios from 'axios';
 
