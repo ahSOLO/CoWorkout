@@ -1,35 +1,25 @@
 import { useState } from 'react';
+import Slot from "./Slot";
 import axios from '../../../../fakeAxios';
 // import axios from 'axios';
 
-import Slot from './Slot';
+import { Typography } from "@material-ui/core";
+import "./styles.scss";
+
+// 96 15-minute intervals in a day
+const intervals = [...Array(96).keys()]
+const fakeSessions = intervals.map( interval => {
+  return (
+    <Slot content={interval}/>
+  )
+})
 
 export default function Day(props) {
-  // EXPECTED PROPS:
-  // targetDate
-  
-  const [ sessions, setSessions ] = useState('');
-  
-  axios.get('/api/sessions')
-  .then((data) => {
-      setSessions(data);
-    }
-  )
-
-  
-  
-  const showSlots = function(sessionsData) {
-    let sessionsForDay = [];
-    for (const session of sessionsData) {
-      sessionsForDay.push(<Slot key={session.id}/>);
-    }
-    return sessionsForDay;
-  }
-  
 
   return (
-    <div className="day">
-      {showSlots(sessions)}
+    <div className="container__slots">
+      {fakeSessions}
     </div>
   )
 }
+
