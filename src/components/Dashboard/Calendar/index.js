@@ -6,7 +6,7 @@ import axios from '../../../fakeAxios';
 // import axios from 'axios';
 
 // Material UI
-import { Typography } from "@material-ui/core";
+import { Typography, IconButton } from "@material-ui/core";
 import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
@@ -78,11 +78,21 @@ export default function Calendar(props) {
         <Typography variant='h4'>
           March 8 - 14
         </Typography>
-        <ArrowBackIosOutlinedIcon fontSize="large" className="clickable"/>
-        <ArrowForwardIosOutlinedIcon fontSize="large" className="clickable"/>
-        <CalendarTodayOutlinedIcon fontSize="large" className="clickable"/>
-        <FilterListOutlinedIcon fontSize="large" className="clickable"/>
-        <RefreshOutlinedIcon fontSize="large" className="clickable"/>
+        <IconButton variant="outlined">
+          <ArrowBackIosOutlinedIcon fontSize="large"/>
+        </IconButton>
+        <IconButton>
+          <ArrowForwardIosOutlinedIcon fontSize="large"/>
+        </IconButton>
+        <IconButton>
+          <CalendarTodayOutlinedIcon fontSize="large"/>
+        </IconButton>
+        <IconButton>
+          <FilterListOutlinedIcon fontSize="large"/>
+        </IconButton>
+        <IconButton>
+          <RefreshOutlinedIcon fontSize="large"/>
+        </IconButton>
       </section>
       <section class="cal__main">
         <div className="cal__headers">

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 
-import { Typography } from "@material-ui/core";
 import "./styles.scss";
 
 import Empty from "./Empty";
