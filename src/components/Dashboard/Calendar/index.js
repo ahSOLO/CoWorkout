@@ -38,13 +38,13 @@ export default function Calendar(props) {
           {calHeaders}
         </div>
         <div className="cal__days">
-          <Day date="08" weekday="Mon"/>
-          <Day date="09" weekday="Tue"/>
-          <Day date="10" weekday="Wed"/>
-          <Day date="11" weekday="Thu"/>
-          <Day date="12" weekday="Fri"/>
-          <Day date="13" weekday="Sat"/>
-          <Day date="14" weekday="Sun"/>
+          <Day />
+          <Day />
+          <Day />
+          <Day />
+          <Day />
+          <Day />
+          <Day />
         </div>
       </section>
     </div>
