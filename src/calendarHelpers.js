@@ -9,7 +9,7 @@ const extractDayOfWeek = function(timestamp) {
   // expected timestamp format '2021-03-16T07:29:39.503Z'
   // output: 'WED'
   const daysOfWeek = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-  // check to see if timestamp is a string or a datetime object
+  // check to see if timestamp is a string or a datetime object\
   let newDateObj;
   if (typeof(timestamp) === 'string') {
     newDateObj = new Date(timestamp);
@@ -50,6 +50,48 @@ const generateTimeString = function(hour, minute) {
   }
   return hourString + ':' + minuteString;
 }
+
+const getWeekDates = function(userTZ) {
+  /*
+    JS Date.getDay()
+    MON: 0
+    TUE: 1
+    WED: 2
+    THU: 3
+    FRI: 4
+    SAT: 5
+    SUN: 6
+  */
+
+  const today = new Date();
+  let daysFromMon = today.getDay();
+  let daysFromSun = 6 - today.getDay();
+
+  let daysBeforeToday = [];
+  let daysAfterToday = [];
+
+  // get dates before today up till monday
+  while (daysFromMon > 0) {
+    // deep copy of today object
+    let newDate = new Date(today.getTime());
+    newDate.setDate(newDate.getDate() - daysFromMon);
+    daysBeforeToday.push(newDate);
+    daysFromMon --;
+  }
+
+  // get dates after today up till sunday
+  for (let dayAfter = 1; dayAfter <= daysFromSun; dayAfter++) {
+    // deep copy of today object
+    let newDate = new Date(today.getTime());
+    newDate.setDate(newDate.getDate() + dayAfter);
+    console.log('new date:', newDate);
+    daysAfterToday.push(newDate);
+  }
+
+  console.log([...daysBeforeToday, today, ...daysAfterToday]);
+  // return daysBeforeToday;
+  
+}();
 
 const autoGenerateEmptyAppointments = function() {
   let emptyAppointments = {};
