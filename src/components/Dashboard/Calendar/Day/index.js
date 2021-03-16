@@ -1,23 +1,35 @@
+import { useState } from 'react';
 import axios from '../../../../fakeAxios';
 // import axios from 'axios';
+
+import Slot from './Slot';
 
 export default function Day(props) {
   // EXPECTED PROPS:
   // targetDate
-
-  axios.get('', {
-    'params': {
-      datetime: '2021-03-15 12:00:00'
+  
+  const [ sessions, setSessions ] = useState('');
+  
+  axios.get('/api/sessions')
+  .then((data) => {
+      setSessions(data);
     }
-  })
-    .then((data) => {
-        console.log(data);
-      }
-    )
+  )
+
+  
+  
+  const showSlots = function(sessionsData) {
+    let sessionsForDay = [];
+    for (const session of sessionsData) {
+      sessionsForDay.push(<Slot />);
+    }
+    return sessionsForDay;
+  }
+  
 
   return (
     <div className="day">
-      day
+      {showSlots(sessions)}
     </div>
   )
 }
