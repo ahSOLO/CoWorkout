@@ -24,7 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "api-start": "node api-server.js",
+    "backend-start": "node server.js",
     "db:reset": "node bin/resetdb.js"
   },
   "eslintConfig": {
