@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Day from "./Day";
 import "./styles.scss";
+import { allAppointments } from "../../../appointmentListTemplate";
 
 // Material UI
 import { Box, Container, Typography } from "@material-ui/core";
@@ -21,8 +22,8 @@ export default function Calendar(props) {
     console.log(document.querySelector("div.cal__headers"));
     document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
   }, [])
-
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
   const calHeaders = weekDays.map(weekDay => {
     return (
       <header className="cal">
