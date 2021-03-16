@@ -88,8 +88,8 @@ const getWeekDates = function(userTZ) {
     daysAfterToday.push(newDate);
   }
 
-  console.log([...daysBeforeToday, today, ...daysAfterToday]);
-  // return daysBeforeToday;
+  // console.log([...daysBeforeToday, today, ...daysAfterToday]);
+  return [...daysBeforeToday, today, ...daysAfterToday]
   
 }();
 
