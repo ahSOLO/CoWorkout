@@ -105,9 +105,9 @@ const autoGenerateEmptyAppointments = function() {
 };
 
 // // examples
-let today = new Date();
+// let today = new Date();
 // console.log(extractDayOfWeek(today.toString()));
-console.log(extractTimeString("2021-03-29T01:07:04.353Z"));
+// console.log(extractTimeString("2021-03-29T01:07:04.353Z"));
 // console.log(changeToUserTZ(today.toString(), 'Asia/Singapore'));
 // console.log(getWeekDates("2021-03-29T19:07:04.353Z"));
 
