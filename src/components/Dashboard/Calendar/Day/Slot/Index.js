@@ -10,6 +10,3 @@ export default function Slot(props) {
     </div>
   )
 }
-
-// ./src/components/Dashboard/Calendar/Day/index.js
-// Cannot find file: 'index.js' does not match the corresponding name on disk: '.\src\components\Dashboard\Calendar\Day\Slot\Index.js'.
