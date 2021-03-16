@@ -22,25 +22,25 @@ const theme = createMuiTheme({
     }
   },
   typography: {
-    fontFamily: "'Montserrat', 'sans-serif'",
+    fontFamily: "'Raleway', sans-serif",
     fontWeightBold: 600,
     h1: {
-      fontFamily: "'Raleway', sans-serif"
+      fontFamily: "'Montserrat', 'sans-serif'"
     },
     h2: {
-      fontFamily: "'Raleway', sans-serif"
+      fontFamily: "'Montserrat', 'sans-serif'"
     },
     h3: {
-      fontFamily: "'Raleway', sans-serif"
+      fontFamily: "'Montserrat', 'sans-serif'"
     },
     h4: {
-      fontFamily: "'Raleway', sans-serif"
+      fontFamily: "'Montserrat', 'sans-serif'"
     },
     h5: {
-      fontFamily: "'Raleway', sans-serif"
+      fontFamily: "'Montserrat', 'sans-serif'"
     },
     h6: {
-      fontFamily: "'Raleway', sans-serif"
+      fontFamily: "'Montserrat', 'sans-serif'"
     }
   }
 })
