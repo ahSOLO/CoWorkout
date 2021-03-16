@@ -16,16 +16,10 @@ const extractDayOfWeek = function(timestamp) {
 
 const changeToUserTZ = function(timestamp, userTZ) {
   // changeToUserTZ('2021-03-16T07:29:39.503Z', 'Asia/Singapore')
-  // output: 2021-03-16, 12:29:39 a.m
-
   const targetDatetime = formatTimeStamp(timestamp);
-  return targetDatetime.toLocaleString({ timeZone: userTZ});
-  // return targetDatetime.toLocaleString('en-US', { timeZone: userTZ}); // can specify output format
+  const timeString = targetDatetime.toLocaleString('en-US',{ timeZone: userTZ}).toString();
+  return new Date(timeString);
 };
-
-// const replaceEmptySessions = function(allAppointments, bookedAppointments) {
-//   for (const appointment in all)
-// };
 
 const generateTimeString = function(hour, minute) {
   // takes in ints and returns a time string in the "01:45" format
@@ -105,12 +99,31 @@ const autoGenerateEmptyAppointments = function() {
 };
 
 // // examples
-// let today = new Date();
+let today = new Date();
 // console.log(extractDayOfWeek(today.toString()));
 // console.log(extractTimeString("2021-03-29T01:07:04.353Z"));
-// console.log(changeToUserTZ(today.toString(), 'Asia/Singapore'));
+console.log(changeToUserTZ(today.toString(), 'Asia/Singapore'));
 // console.log(getWeekDates("2021-03-29T19:07:04.353Z"));
 
+const rebuildAppointmentObjs = function(allAppointments) {
+  let reconstructedAppointments = [];
+  for (const appointment of allAppointments) {
+    reconstructedAppointments.push(
+      {
+        'id': null,
+        'owner_name': null,
+        'owner_pic': null,
+        'day': null,
+        'startTime': changeToUserTZ(''),
+        'activityType': null,
+      }
+    )
+  }
+}
+
+const replaceEmptySessions = function(allAppointments, bookedAppointments) {
+  // for (const appointment in all)
+};
 
 
 
