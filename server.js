@@ -32,8 +32,6 @@ app.get('/token', (req, res) => {
   console.log(`issued token for ${identity} in room ${roomName}`);
 });
 
-app.get('*', (_, res) => res.sendFile(path.join(__dirname, 'build/index.html')));
-
 // PG database client/connection setup
 const { Pool } = require("pg");
 const dbParams = require('./lib/db.js');
@@ -59,6 +57,7 @@ app.use("/api/user_workout_goals", user_workout_goals(db));
 app.use("/api/session_users", session_users(db));
 app.use("/api/ratings", ratings(db));
 
+app.get('*', (_, res) => res.sendFile(path.join(__dirname, 'build/index.html')));
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
