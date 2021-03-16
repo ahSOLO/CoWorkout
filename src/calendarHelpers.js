@@ -69,7 +69,7 @@ const getWeekDates = function(targetDate = new Date()) {
     // deep copy of today object
     let newDate = new Date(today.getTime());
     newDate.setDate(newDate.getDate() - daysFromMon);
-    daysBeforeToday.push(newDate);
+    daysBeforeToday.push(newDate.getDate());
     daysFromMon --;
   }
 
@@ -78,11 +78,10 @@ const getWeekDates = function(targetDate = new Date()) {
     // deep copy of today object
     let newDate = new Date(today.getTime());
     newDate.setDate(newDate.getDate() + dayAfter);
-    console.log('new date:', newDate);
-    daysAfterToday.push(newDate);
+    daysAfterToday.push(newDate.getDate());
   }
 
-  return [...daysBeforeToday, today, ...daysAfterToday]
+  return [...daysBeforeToday, today.getDate(), ...daysAfterToday]
 };
 
 const autoGenerateEmptyAppointments = function() {
