@@ -6,18 +6,19 @@ const formatTimeStamp = function(timestamp) {
     newDateObj = timestamp;
   }
   return newDateObj;
-}
+};
 
 const extractTimeString = function(timestamp) {
   const timeString = formatTimeStamp(timestamp).toString();
-  return timeString.substring(11,16);
+  // 'Tue Mar 16 2021 12:02:21 GMT-0700 (Pacific Daylight Time)'
+  return timeString.substring(16,21);
 };
 
 const extractDayOfWeek = function(timestamp) {
   const daysOfWeek = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
   const targetDay = formatTimeStamp(timestamp);
   return daysOfWeek[targetDay.getDay()];
-}
+};
 
 const changeToUserTZ = function(timestamp, userTZ) {
   // changeToUserTZ('2021-03-16T07:29:39.503Z', 'Asia/Singapore')
@@ -43,9 +44,9 @@ const generateTimeString = function(hour, minute) {
     minuteString = "0" + minuteString;
   }
   return hourString + ':' + minuteString;
-}
+};
 
-const getWeekDates = function(userTZ) {
+const getWeekDates = function(targetDate = new Date()) {
   /*
     JS Date.getDay()
     MON: 0
@@ -57,7 +58,7 @@ const getWeekDates = function(userTZ) {
     SUN: 6
   */
 
-  const today = new Date();
+  const today = formatTimeStamp(targetDate);
   let daysFromMon = today.getDay();
   let daysFromSun = 6 - today.getDay();
   let daysBeforeToday = [];
@@ -80,7 +81,7 @@ const getWeekDates = function(userTZ) {
     console.log('new date:', newDate);
     daysAfterToday.push(newDate);
   }
-  
+
   return [...daysBeforeToday, today, ...daysAfterToday]
 };
 
@@ -103,7 +104,17 @@ const autoGenerateEmptyAppointments = function() {
     };
   }
   return emptyAppointments;
-}
+};
+
+// examples
+let today = new Date();
+console.log(extractDayOfWeek(today.toString()));
+console.log(extractTimeString(today.toString()));
+console.log(changeToUserTZ(today.toString(), 'Asia/Singapore'));
+console.log(getWeekDates("2021-03-29T19:07:04.353Z"));
+
+
+
 
 const allAppointments = autoGenerateEmptyAppointments();
 
