@@ -21,7 +21,7 @@ export default function Day(props) {
   const showSlots = function(sessionsData) {
     let sessionsForDay = [];
     for (const session of sessionsData) {
-      sessionsForDay.push(<Slot />);
+      sessionsForDay.push(<Slot key={session.id}/>);
     }
     return sessionsForDay;
   }

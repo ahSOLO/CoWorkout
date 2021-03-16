@@ -12,6 +12,7 @@ const fakeData = {
     '/api/sessions': [
       // FILTER RESULTS ON API SERVER SIDE
       {
+        id: 1,
         scheduled_at: '2021-03-15 12:00:00',
         state: 'pending',
         scheduled_duration: 30,
@@ -20,6 +21,7 @@ const fakeData = {
         owner_avatar: 'image'
       },
       {
+        id: 2,
         scheduled_at: '2021-03-15 12:00:00',
         state: 'pending',
         scheduled_duration: 30,
@@ -28,6 +30,7 @@ const fakeData = {
         owner_avatar: 'image'
       },
       {
+        id: 3,
         scheduled_at: '2021-03-15 13:00:00',
         state: 'pending',
         scheduled_duration: 30,
