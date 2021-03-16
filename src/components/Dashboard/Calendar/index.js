@@ -10,10 +10,12 @@ import { Box, Container, Typography } from "@material-ui/core";
 import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
+import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined';
+import RefreshOutlinedIcon from '@material-ui/icons/RefreshOutlined';
 
 export default function Calendar(props) {
 
-  // Get scrollbar width and compensate width of calendar accordingly
+  // Get scrollbar width and compensate width of calendar header accordingly
   useEffect(() => {
     const outerWidth = document.querySelector("div.cal__days").offsetWidth;
     let innerWidth = document.querySelector("div.cal__ticks").offsetWidth; 
@@ -21,6 +23,9 @@ export default function Calendar(props) {
       innerWidth += ele.offsetWidth;
     });
     const scrollBarWidth = outerWidth - innerWidth;
+    console.log(outerWidth);
+    console.log(innerWidth);
+    console.log(scrollBarWidth);
     console.log(document.querySelector("div.cal__headers"));
     document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
   }, [])
@@ -54,15 +59,30 @@ export default function Calendar(props) {
     }
   );
 
+  const hours = ["12am", "1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "9am", "10am", "11am", "12am", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm", "9pm", "10pm", "11pm"]
+  const calTicks = hours.map( hour => {
+      return (
+        <>
+          <p>{hour}</p>
+          <p>:15</p>
+          <p>:30</p>
+          <p>:45</p>
+        </>
+      )
+    }
+  )
+
   return (
     <div class="cal__container">
       <section class="cal__top">
         <Typography variant='h4'>
           March 8 - 14
         </Typography>
-        <ArrowBackIosOutlinedIcon />
-        <ArrowForwardIosOutlinedIcon />
-        <CalendarTodayOutlinedIcon />
+        <ArrowBackIosOutlinedIcon fontSize="large" />
+        <ArrowForwardIosOutlinedIcon fontSize="large" />
+        <CalendarTodayOutlinedIcon fontSize="large" />
+        <FilterListOutlinedIcon fontSize="large" />
+        <RefreshOutlinedIcon fontSize="large" />
       </section>
       <section class="cal__main">
         <div className="cal__headers">
@@ -70,110 +90,15 @@ export default function Calendar(props) {
         </div>
         <div className="cal__days">
           <div className="cal__ticks">
-            <p>12am</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>1am</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>2am</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>3am</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>4am</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>5am</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>6am</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>7am</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>8am</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>9am</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>10am</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>11am</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>12pm</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>1pm</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>2pm</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>3pm</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>4pm</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>5pm</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>6pm</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>7pm</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>8pm</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>9pm</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>10pm</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
-            <p>11pm</p>
-            <p>:15</p>
-            <p>:30</p>
-            <p>:45</p>
+            {calTicks}
           </div>
-          <Day />
-          <Day />
-          <Day />
-          <Day />
-          <Day />
-          <Day />
-          <Day />
+            <Day />
+            <Day />
+            <Day />
+            <Day />
+            <Day />
+            <Day />
+            <Day />
         </div>
       </section>
     </div>
