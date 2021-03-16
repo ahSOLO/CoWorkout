@@ -121,5 +121,6 @@ module.exports = {
   allAppointments,
   extractTimeString,
   extractDayOfWeek,
-  changeToUserTZ
+  changeToUserTZ,
+  getWeekDates
 }
