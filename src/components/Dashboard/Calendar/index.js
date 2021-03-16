@@ -7,10 +7,12 @@ import { Box, Container, Typography } from "@material-ui/core";
 import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
+import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined';
+import RefreshOutlinedIcon from '@material-ui/icons/RefreshOutlined';
 
 export default function Calendar(props) {
 
-  // Get scrollbar width and compensate width of calendar accordingly
+  // Get scrollbar width and compensate width of calendar header accordingly
   useEffect(() => {
     const outerWidth = document.querySelector("div.cal__days").offsetWidth;
     let innerWidth = document.querySelector("div.cal__ticks").offsetWidth; 
@@ -18,6 +20,9 @@ export default function Calendar(props) {
       innerWidth += ele.offsetWidth;
     });
     const scrollBarWidth = outerWidth - innerWidth;
+    console.log(outerWidth);
+    console.log(innerWidth);
+    console.log(scrollBarWidth);
     console.log(document.querySelector("div.cal__headers"));
     document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
   }, [])
@@ -42,9 +47,11 @@ export default function Calendar(props) {
         <Typography variant='h4'>
           March 8 - 14
         </Typography>
-        <ArrowBackIosOutlinedIcon />
-        <ArrowForwardIosOutlinedIcon />
-        <CalendarTodayOutlinedIcon />
+        <ArrowBackIosOutlinedIcon fontSize="large" />
+        <ArrowForwardIosOutlinedIcon fontSize="large" />
+        <CalendarTodayOutlinedIcon fontSize="large" />
+        <FilterListOutlinedIcon fontSize="large" />
+        <RefreshOutlinedIcon fontSize="large" />
       </section>
       <section class="cal__main">
         <div className="cal__headers">
@@ -149,13 +156,13 @@ export default function Calendar(props) {
             <p>:30</p>
             <p>:45</p>
           </div>
-          <Day />
-          <Day />
-          <Day />
-          <Day />
-          <Day />
-          <Day />
-          <Day />
+            <Day />
+            <Day />
+            <Day />
+            <Day />
+            <Day />
+            <Day />
+            <Day />
         </div>
       </section>
     </div>
