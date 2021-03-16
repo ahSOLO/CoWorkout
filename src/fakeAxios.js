@@ -28,7 +28,7 @@ const fakeData = {
         owner_avatar: 'image'
       },
       {
-        scheduled_at: '2021-03-15 12:00:00',
+        scheduled_at: '2021-03-15 13:00:00',
         state: 'pending',
         scheduled_duration: 30,
         owner_id: 1,
