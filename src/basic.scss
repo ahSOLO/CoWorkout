@@ -1,4 +1,22 @@
+// for scaffolding only, delete after implementing actual css
+
 nav>a {
   display: block;
+}
+
+#calendar {
+  max-width: 500px;
+  display: flex;
+  flex-direction: row;
+  border: 1px solid black;
+  justify-content: space-around;
+}
+
+.day {
+  padding: 0.5em;
+  border-right: 1px solid black;
+}
+.day:last-child {
+  border-right: 0;
 }
 
