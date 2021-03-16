@@ -1,10 +1,13 @@
 const extractTimeString = function(timestamp) {
   // expected timestamp format '2021-03-16T07:29:39.503Z'
+  // output: 07:29
   const timeString = timestamp.toString();
   return timeString.substring(11,16);
 };
 
 const extractDayOfWeek = function(timestamp) {
+  // expected timestamp format '2021-03-16T07:29:39.503Z'
+  // output: 'WED'
   const daysOfWeek = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
   // check to see if timestamp is a string or a datetime object
   let newDateObj;
@@ -15,10 +18,11 @@ const extractDayOfWeek = function(timestamp) {
   }
   return daysOfWeek[newDateObj.getDay()];
 }
-// example: (outputs 'WED')
-// console.log(extractDayOfWeek('2021-03-16T07:29:39.503Z'));
 
 const changeToUserTZ = function(timestamp, userTZ) {
+  // changeToUserTZ('2021-03-16T07:29:39.503Z', 'Asia/Singapore')
+  // output: 2021-03-16, 12:29:39 a.m
+
   // check to see if timestamp is a string or a datetime object
   let newDateObj;
   if (typeof(timestamp) === 'string') {
@@ -30,14 +34,12 @@ const changeToUserTZ = function(timestamp, userTZ) {
   // return newDateObj.toLocaleString('en-US', { timeZone: userTZ}); // can specify output format
 };
 
-// example (output: 2021-03-16, 12:29:39 a.m)
-// console.log(changeToUserTZ('2021-03-16T07:29:39.503Z', 'Asia/Singapore'));
-
-const replaceEmptySessions = function(allAppointments, bookedAppointments) {
-
-};
+// const replaceEmptySessions = function(allAppointments, bookedAppointments) {
+//   for (const appointment in all)
+// };
 
 const generateTimeString = function(hour, minute) {
+  // takes in ints and returns a time string in the "01:45" format
   let hourString = hour.toString();
   let minuteString = minute.toString();
   if (hourString.length !== 2) {
@@ -75,5 +77,6 @@ const allAppointments = autoGenerateEmptyAppointments();
 module.exports = {
   allAppointments,
   extractTimeString,
+  extractDayOfWeek,
   changeToUserTZ
 }
