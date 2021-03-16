@@ -36,6 +36,10 @@ export default function Calendar(props) {
   });
 
   const targetDay = new Date();
+  // for displaying month names dynamically
+  const months = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
+
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   const weekDates = getWeekDates(targetDay); // arr of dates corresponding to MON-SUN
 
@@ -58,7 +62,7 @@ export default function Calendar(props) {
     <div class="cal__container">
       <section class="cal__top">
         <Typography variant='h4'>
-          March 8 - 14
+          {months[targetDay.getMonth()]} {weekDates[0]} - {weekDates[0] + 6}
         </Typography>
         <ArrowBackIosOutlinedIcon />
         <ArrowForwardIosOutlinedIcon />
