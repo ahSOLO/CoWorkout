@@ -12,32 +12,32 @@ export default function Calendar(props) {
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   const calHeaders = weekDays.map(weekDay => {
     return (
-      <div className="cal__header">
+      <header className="cal">
         <Typography variant='h3'>
           01
         </Typography>
         <Typography variant='subtitle1'>
           {weekDay}
         </Typography>
-      </div>
+      </header>
     )
   });
 
   return (
-    <Container maxWidth='lg'>
-      <Box component="div" display="flex" alignItems="center">
+    <div class="cal__container">
+      <section class="cal__top">
         <Typography variant='h4'>
           March 8 - 14
         </Typography>
         <ArrowBackIosOutlinedIcon />
         <ArrowForwardIosOutlinedIcon />
         <CalendarTodayOutlinedIcon />
-      </Box>
-      <Box component="div" display="flex" flexDirection="column">
-        <div className="cal__headers__container">
+      </section>
+      <section class="cal__main">
+        <div className="cal__headers">
           {calHeaders}
         </div>
-        <div className="cal__main">
+        <div className="cal__days">
           <Day date="08" weekday="Mon"/>
           <Day date="09" weekday="Tue"/>
           <Day date="10" weekday="Wed"/>
@@ -46,7 +46,7 @@ export default function Calendar(props) {
           <Day date="13" weekday="Sat"/>
           <Day date="14" weekday="Sun"/>
         </div>
-      </Box>
-    </Container>
+      </section>
+    </div>
   )
 }

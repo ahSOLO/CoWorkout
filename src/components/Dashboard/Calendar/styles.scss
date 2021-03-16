@@ -1,27 +1,48 @@
-.cal__headers__container {
+.cal__container {
   display: flex;
-  flex-direction: row;
-  // Subtract width of scrollbar -- TO DO: need to be responsive to different browser types
-  width: calc(100% - 17px)
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
-.cal__header {
+section.cal__top {
+  width: 90%;
+  display: flex;
+  align-items: center;
+}
+
+.cal__headers {
+  display: flex;
+  flex-direction: row;
+  // width of scrollbar -- TO DO: need to be responsive to different browser types
+  width: calc(90% - 17px);
+}
+
+header.cal {
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: 100px;
-  width: 12.5%;
+  width: 100%;
   border: 2px solid black;
 }
 
-.cal__header + .cal__header {
+header.cal + header.cal {
   border-left: none;
 }
 
-.cal__main {
+section.cal__main {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+.cal__days {
+  width: 90%;
   display: flex;
   flex-direction: row;
-  height: 75vh;
+  height: 65vh;
   overflow: scroll;
   overflow-x: hidden;
 }

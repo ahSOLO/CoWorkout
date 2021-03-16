@@ -1,81 +1,13 @@
+import { Typography } from "@material-ui/core"
 import "./styles.scss"
 
 export default function Slot(props) {
   return (
-    <>
     <div className="slot">
-      Test
+      <Typography>
+        {props.content}
+      </Typography>
     </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    <div className="slot">
-      Test
-    </div>
-    </>
   )
 }
 
