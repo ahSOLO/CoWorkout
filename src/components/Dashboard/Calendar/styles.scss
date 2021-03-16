@@ -1,0 +1,27 @@
+.cal__headers__container {
+  display: flex;
+  flex-direction: row;
+  // Subtract width of scrollbar -- TO DO: need to be responsive to different browser types
+  width: calc(100% - 17px)
+}
+
+.cal__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100px;
+  width: 12.5%;
+  border: 2px solid black;
+}
+
+.cal__header + .cal__header {
+  border-left: none;
+}
+
+.cal__main {
+  display: flex;
+  flex-direction: row;
+  height: 75vh;
+  overflow: scroll;
+  overflow-x: hidden;
+}

@@ -1,0 +1,13 @@
+.container__slots {
+  height: 1600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100px;
+  width: 12.5%;
+  border: 2px solid black;
+}
+
+.container__slots + .container__slots{
+  border-left: none;
+}
