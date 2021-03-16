@@ -78,11 +78,11 @@ export default function Calendar(props) {
         <Typography variant='h4'>
           March 8 - 14
         </Typography>
-        <ArrowBackIosOutlinedIcon fontSize="large" />
-        <ArrowForwardIosOutlinedIcon fontSize="large" />
-        <CalendarTodayOutlinedIcon fontSize="large" />
-        <FilterListOutlinedIcon fontSize="large" />
-        <RefreshOutlinedIcon fontSize="large" />
+        <ArrowBackIosOutlinedIcon fontSize="large" className="clickable"/>
+        <ArrowForwardIosOutlinedIcon fontSize="large" className="clickable"/>
+        <CalendarTodayOutlinedIcon fontSize="large" className="clickable"/>
+        <FilterListOutlinedIcon fontSize="large" className="clickable"/>
+        <RefreshOutlinedIcon fontSize="large" className="clickable"/>
       </section>
       <section class="cal__main">
         <div className="cal__headers">
