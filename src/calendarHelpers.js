@@ -1,10 +1,23 @@
 const extractTimeString = function(timestamp) {
-  
+  // expected timestamp format '2021-03-16T07:29:39.503Z'
+  const timeString = timestamp.toString();
+  return timeString.substring(11,16);
 };
 
-const changeToUserTZ = function(timestamp) {
-
+const changeToUserTZ = function(timestamp, userTZ) {
+  // check to see if timestamp is a string or a datetime object
+  let newDateObj;
+  if (typeof(timestamp) === 'string') {
+    newDateObj = new Date(timestamp);
+  } else {
+    newDateObj = timestamp;
+  }
+  return newDateObj.toLocaleString({ timeZone: userTZ});
+  // return newDateObj.toLocaleString('en-US', { timeZone: userTZ}); // can specify output format
 };
+
+// example (output: 2021-03-16, 12:29:39 a.m)
+// console.log(changeToUserTZ('2021-03-16T07:29:39.503Z', 'Asia/Singapore'));
 
 const generateTimeString = function(hour, minute) {
   let hourString = hour.toString();
