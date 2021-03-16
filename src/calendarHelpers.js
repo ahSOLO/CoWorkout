@@ -99,26 +99,29 @@ const autoGenerateEmptyAppointments = function() {
 };
 
 // // examples
-let today = new Date();
+// let today = new Date();
 // console.log(extractDayOfWeek(today.toString()));
 // console.log(extractTimeString("2021-03-29T01:07:04.353Z"));
-console.log(changeToUserTZ(today.toString(), 'Asia/Singapore'));
+// console.log(changeToUserTZ(today.toString(), 'Asia/Singapore'));
 // console.log(getWeekDates("2021-03-29T19:07:04.353Z"));
 
-const rebuildAppointmentObjs = function(allAppointments) {
+const rebuildAppointmentObjs = function(allAppointments, userTZ) {
+  // reconstruct appointment objs considering user's timezone and provide day of week for sorting
   let reconstructedAppointments = [];
   for (const appointment of allAppointments) {
+    const startTimeUserTZ = changeToUserTZ('', userTZ);
     reconstructedAppointments.push(
       {
         'id': null,
         'owner_name': null,
         'owner_pic': null,
-        'day': null,
-        'startTime': changeToUserTZ(''),
-        'activityType': null,
+        'day': extractDayOfWeek(startTimeUserTZ),
+        'startTime': startTimeUserTZ,
+        'activityType': null
       }
     )
   }
+  return reconstructedAppointments;
 }
 
 const replaceEmptySessions = function(allAppointments, bookedAppointments) {
