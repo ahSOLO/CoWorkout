@@ -8,8 +8,11 @@ import "./styles.scss";
 
 // 96 15-minute intervals in a day
 const intervals = [...Array(96).keys()]
-
-
+const fakeSessions = intervals.map( interval => {
+  return (
+    <Slot content={interval}/>
+  )
+})
 
 export default function Day(props) {
   const [ sessions, setSessions ] = useState('');
@@ -27,7 +30,7 @@ export default function Day(props) {
   }
   return (
     <div className="container__slots">
-      {showSlots(sessions)}
+      {fakeSessions}
     </div>
   )
 }
