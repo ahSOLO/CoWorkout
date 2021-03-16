@@ -1,9 +1,10 @@
-import { Typography } from "@material-ui/core";
+
+import { CircularProgress, Box } from '@material-ui/core';
 
 export default function Status(props){
   return(
-    <Typography>
-      Status
-    </Typography>
+    <Box display="flex" justifyContent="center" height="80%" width="100%">
+      <CircularProgress/>
+    </Box>
   )
 }

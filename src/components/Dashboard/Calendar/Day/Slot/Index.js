@@ -21,12 +21,12 @@ export default function Slot(props) {
   const [mode, setMode] = useState(EMPTY);
 
   useEffect(() => {
-    if (props.content === 1) setMode(EMPTY);
+    if (props.content === 0) setMode(EMPTY);
     if (props.content === 2) setMode(BOOKED);
-    if (props.content === 3) setMode(MATCHING);
-    if (props.content === 4) setMode(MATCHED);
-    if (props.content === 5) setMode(LOADING);
-    if (props.content === 6) setMode(ERROR);
+    if (props.content === 4) setMode(MATCHING);
+    if (props.content === 6) setMode(MATCHED);
+    if (props.content === 8) setMode(LOADING);
+    if (props.content === 10) setMode(ERROR);
   }, [])
 
   return (
