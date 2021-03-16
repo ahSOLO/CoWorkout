@@ -6,7 +6,7 @@ import axios from '../../../fakeAxios';
 // import axios from 'axios';
 
 // Material UI
-import { Box, Container, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
