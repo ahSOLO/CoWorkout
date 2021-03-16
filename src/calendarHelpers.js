@@ -4,6 +4,20 @@ const extractTimeString = function(timestamp) {
   return timeString.substring(11,16);
 };
 
+const extractDayOfWeek = function(timestamp) {
+  const daysOfWeek = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+  // check to see if timestamp is a string or a datetime object
+  let newDateObj;
+  if (typeof(timestamp) === 'string') {
+    newDateObj = new Date(timestamp);
+  } else {
+    newDateObj = timestamp;
+  }
+  return daysOfWeek[newDateObj.getDay()];
+}
+// example: (outputs 'WED')
+// console.log(extractDayOfWeek('2021-03-16T07:29:39.503Z'));
+
 const changeToUserTZ = function(timestamp, userTZ) {
   // check to see if timestamp is a string or a datetime object
   let newDateObj;
@@ -18,6 +32,10 @@ const changeToUserTZ = function(timestamp, userTZ) {
 
 // example (output: 2021-03-16, 12:29:39 a.m)
 // console.log(changeToUserTZ('2021-03-16T07:29:39.503Z', 'Asia/Singapore'));
+
+const replaceEmptySessions = function(allAppointments, bookedAppointments) {
+
+};
 
 const generateTimeString = function(hour, minute) {
   let hourString = hour.toString();
