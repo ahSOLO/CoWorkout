@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import Day from "./Day";
 import "./styles.scss";
+import { allAppointments, changeToUserTZ, extractTimeString, getWeekDates } from "../../../calendarHelpers";
+import axios from '../../../fakeAxios';
+// import axios from 'axios';
 
 // Material UI
 import { Box, Container, Typography } from "@material-ui/core";
@@ -27,19 +30,34 @@ export default function Calendar(props) {
     document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
   }, [])
 
+  axios.get('/api/sessions', {
+    params: {
+      start_datetime: 'find appointments set for dates after this',
+      end_datetime: 'find appointments set for dates before this'
+    }
+  })
+  .then((data) => {
+
+  });
+
+  const targetDay = new Date();
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  const calHeaders = weekDays.map(weekDay => {
-    return (
+  const weekDates = getWeekDates(targetDay); // arr of dates corresponding to MON-SUN
+
+  const calHeaders = weekDays.map(
+    (weekDay, i) => {
+      return (
       <header className="cal">
         <Typography variant='h3'>
-          01
+          {weekDates[i]}
         </Typography>
         <Typography variant='subtitle1'>
           {weekDay}
         </Typography>
       </header>
-    )
-  });
+      )
+    }
+  );
 
   return (
     <div class="cal__container">
