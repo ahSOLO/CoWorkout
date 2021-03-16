@@ -13,6 +13,13 @@ const ERROR = "ERROR";
 export default function Slot(props) {
   const [mode, setMode] = useState(EMPTY);
 
+  if (props.content === 1) setMode(EMPTY);
+  if (props.content === 2) setMode(BOOKED);
+  if (props.content === 3) setMode(MATCHING);
+  if (props.content === 4) setMode(MATCHED);
+  if (props.content === 5) setMode(LOADING);
+  if (props.content === 6) setMode(ERROR);
+
   return (
     <div className="slot">
       <Typography>
