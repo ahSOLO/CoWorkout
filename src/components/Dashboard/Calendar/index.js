@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Day from "./Day";
 import "./styles.scss";
 
@@ -8,6 +9,18 @@ import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutli
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 
 export default function Calendar(props) {
+
+  // Get scrollbar width and compensate width of calendar accordingly
+  useEffect(() => {
+    const outerWidth = document.querySelector("div.cal__days").offsetWidth;
+    let innerWidth = document.querySelector("div.cal__ticks").offsetWidth; 
+    document.querySelectorAll("div.container__slots").forEach( ele => {
+      innerWidth += ele.offsetWidth;
+    });
+    const scrollBarWidth = outerWidth - innerWidth;
+    console.log(document.querySelector("div.cal__headers"));
+    document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
+  }, [])
 
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   const calHeaders = weekDays.map(weekDay => {
@@ -29,9 +42,9 @@ export default function Calendar(props) {
         <Typography variant='h4'>
           March 8 - 14
         </Typography>
-        <ArrowBackIosOutlinedIcon fontSize="large"/>
-        <ArrowForwardIosOutlinedIcon fontSize="large"/>
-        <CalendarTodayOutlinedIcon fontSize="large"/>
+        <ArrowBackIosOutlinedIcon />
+        <ArrowForwardIosOutlinedIcon />
+        <CalendarTodayOutlinedIcon />
       </section>
       <section class="cal__main">
         <div className="cal__headers">

@@ -19,7 +19,7 @@ section.cal__top {
   display: flex;
   flex-direction: row;
   // width of scrollbar -- TO DO: need to be responsive to different browser types
-  width: calc(90% - 17px);
+  width: 90%
 }
 
 header.cal {
