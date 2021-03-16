@@ -10,12 +10,13 @@ import FaceIcon from '@material-ui/icons/Face';
 
 function App() {
   console.log('Rerendered');
-  const checkLogin = function() {
-    axios.get('/api/user/testuser')
-      .then((data) => {
-        console.log(data);
-      })
-  }();
+
+  // const checkLogin = function() {
+  //   axios.get('/api/user/testuser')
+  //     .then((data) => {
+  //       console.log(data);
+  //     })
+  // }();
 
   return (
     <div>
