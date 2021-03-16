@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Day from "./Day";
 import "./styles.scss";
-import { allAppointments, changeToUserTZ, extractTimeString } from "../../../calendarHelpers";
+import { allAppointments, changeToUserTZ, extractTimeString, getWeekDates } from "../../../calendarHelpers";
 import axios from '../../../fakeAxios';
 // import axios from 'axios';
 
@@ -34,21 +34,25 @@ export default function Calendar(props) {
   .then((data) => {
 
   });
-  const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  
 
-  const calHeaders = weekDays.map(weekDay => {
-    return (
+  const targetDay = new Date();
+  const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const weekDates = getWeekDates(targetDay); // arr of dates corresponding to MON-SUN
+
+  const calHeaders = weekDays.map(
+    (weekDay, i) => {
+      return (
       <header className="cal">
         <Typography variant='h3'>
-          01
+          {weekDates[i]}
         </Typography>
         <Typography variant='subtitle1'>
           {weekDay}
         </Typography>
       </header>
-    )
-  });
+      )
+    }
+  );
 
   return (
     <div class="cal__container">
