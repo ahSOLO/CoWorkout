@@ -22,6 +22,7 @@ function App() {
     <div>
       <nav>CoWorkout</nav>
       <MainRouter />
+      <br/> <br/>
       {/* Example of mat-UI button + how to use an Icon */}
       <Button color='primary' variant='contained' size='large' startIcon={<FaceIcon/>}>Example mat-UI Button</Button>
     </div>
