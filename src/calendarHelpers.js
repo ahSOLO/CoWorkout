@@ -1,37 +1,31 @@
-const extractTimeString = function(timestamp) {
-  // expected timestamp format '2021-03-16T07:29:39.503Z'
-  // output: 07:29
-  const timeString = timestamp.toString();
-  return timeString.substring(11,16);
-};
-
-const extractDayOfWeek = function(timestamp) {
-  // expected timestamp format '2021-03-16T07:29:39.503Z'
-  // output: 'WED'
-  const daysOfWeek = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-  // check to see if timestamp is a string or a datetime object\
+const formatTimeStamp = function(timestamp) {
   let newDateObj;
   if (typeof(timestamp) === 'string') {
     newDateObj = new Date(timestamp);
   } else {
     newDateObj = timestamp;
   }
-  return daysOfWeek[newDateObj.getDay()];
+  return newDateObj;
+}
+
+const extractTimeString = function(timestamp) {
+  const timeString = formatTimeStamp(timestamp).toString();
+  return timeString.substring(11,16);
+};
+
+const extractDayOfWeek = function(timestamp) {
+  const daysOfWeek = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+  const targetDay = formatTimeStamp(timestamp);
+  return daysOfWeek[targetDay.getDay()];
 }
 
 const changeToUserTZ = function(timestamp, userTZ) {
   // changeToUserTZ('2021-03-16T07:29:39.503Z', 'Asia/Singapore')
   // output: 2021-03-16, 12:29:39 a.m
 
-  // check to see if timestamp is a string or a datetime object
-  let newDateObj;
-  if (typeof(timestamp) === 'string') {
-    newDateObj = new Date(timestamp);
-  } else {
-    newDateObj = timestamp;
-  }
-  return newDateObj.toLocaleString({ timeZone: userTZ});
-  // return newDateObj.toLocaleString('en-US', { timeZone: userTZ}); // can specify output format
+  const targetDatetime = formatTimeStamp(timestamp);
+  return targetDatetime.toLocaleString({ timeZone: userTZ});
+  // return targetDatetime.toLocaleString('en-US', { timeZone: userTZ}); // can specify output format
 };
 
 // const replaceEmptySessions = function(allAppointments, bookedAppointments) {
@@ -66,7 +60,6 @@ const getWeekDates = function(userTZ) {
   const today = new Date();
   let daysFromMon = today.getDay();
   let daysFromSun = 6 - today.getDay();
-
   let daysBeforeToday = [];
   let daysAfterToday = [];
 
@@ -87,11 +80,9 @@ const getWeekDates = function(userTZ) {
     console.log('new date:', newDate);
     daysAfterToday.push(newDate);
   }
-
-  // console.log([...daysBeforeToday, today, ...daysAfterToday]);
-  return [...daysBeforeToday, today, ...daysAfterToday]
   
-}();
+  return [...daysBeforeToday, today, ...daysAfterToday]
+};
 
 const autoGenerateEmptyAppointments = function() {
   let emptyAppointments = {};
