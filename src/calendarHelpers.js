@@ -106,12 +106,13 @@ const rebuildAppointmentObjs = function(emptyAppointments, allAppointments, user
     const dayOfWeek = extractDayOfWeek(startTimeUserTZ);
     const startTimeString = extractTimeString(startTimeUserTZ);
     reconstructedAppointments[dayOfWeek][startTimeString] = {
-        'id': null,
-        'owner_name': null,
-        'owner_pic': null,
+        'id': appointment.id,
+        'owner_name': appointment.owner_first_name,
+        'owner_pic': appointment.onwer_profile_image_url,
+        'owner_ref_id': appointment.owner_ref_id,
         'day': dayOfWeek,
-        'startTime': startTimeUserTZ,
-        'activityType': null
+        'start_time': startTimeUserTZ,
+        'activity_type': appointment.activity_type
     };
   }
   console.log(reconstructedAppointments);
@@ -132,24 +133,30 @@ const allSlots = autoGenerateEmptyAppointments();
 const fakeSessions = [
   {
     id: 1,
-    owner_name: 'Chuck Norris',
-    owner_pic: 'avatar',
-    start_time: '2021-03-15T01:00:00Z',
+    owner_first_name: 'Chuck',
+    onwer_profile_image_url: 'avatar',
+    owner_ref_id: 'd93ghjfek',
+    day: 'TUE',
+    start_time: '2021-03-15T16:00:00.000Z',
     activity_type: 'napping'
   },
   {
     id: 2,
-    owner_name: 'Rick Astley',
-    owner_pic: 'avatar',
-    start_time: '2021-03-15T01:30:00Z',
-    activity_type: 'napping'
+    owner_first_name: 'Rick',
+    onwer_profile_image_url: 'avatar',
+    owner_ref_id: 'dsa98f89b',
+    day: 'TUE',
+    start_time: '2021-03-15T16:00:00.000Z',
+    activity_type: 'lounging'
   },
   {
     id: 3,
-    owner_name: 'Bustin Jieber',
-    owner_pic: 'avatar',
-    start_time: '2021-03-15T02:00:00Z',
-    activity_type: 'napping'
+    owner_first_name: 'Morty',
+    onwer_profile_image_url: 'avatar',
+    owner_ref_id: 'fd938hgds',
+    day: 'TUE',
+    start_time: '2021-03-15T16:00:00.000Z',
+    activity_type: 'sleeping'
   },
 ];
 
@@ -303,8 +310,9 @@ const allSlots = {
     '08:45': { state: 'empty' },
     '09:00': {
       id: null,
-      owner_name: null,
-      owner_pic: null,
+      owner_first_name: null,
+      onwer_profile_image_url: null,
+      owner_ref_id: null,
       day: 'TUE',
       startTime: 2021-03-15T16:00:00.000Z,
       activityType: null
