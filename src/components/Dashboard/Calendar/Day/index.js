@@ -15,19 +15,7 @@ const fakeSessions = intervals.map( interval => {
 })
 
 export default function Day(props) {
-  const [ sessions, setSessions ] = useState('');
-  axios.get('/api/sessions')
-    .then((data) => {
-        setSessions(data);
-      }
-    )
-  const showSlots = function(sessionsData) {
-    let sessionsForDay = [];
-    for (const session of sessionsData) {
-      sessionsForDay.push(<Slot key={session.id} content={"hello"} />);
-    }
-    return sessionsForDay;
-  }
+
   return (
     <div className="container__slots">
       {fakeSessions}
