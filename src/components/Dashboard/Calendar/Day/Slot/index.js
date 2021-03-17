@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import debounce from 'lodash.debounce';
 
 import "./styles.scss";
 
@@ -20,6 +21,10 @@ export default function Slot(props) {
   const [mode, setMode] = useState(EMPTY);
   const [hover, setHover] = useState(false);
 
+  const hoverHandler = function (hoverState) {
+    debounce(() => setHover(hoverState), 75)();
+  }
+
   useEffect(() => {
     if (props.content === 0) setMode(EMPTY);
     if (props.content === 2) setMode(BOOKED);
@@ -31,8 +36,8 @@ export default function Slot(props) {
 
   return (
     <div className="slot" 
-      onMouseOver={() => setHover(true)}
-      onMouseOut={() => setHover(false)}>
+      onMouseOver={() => hoverHandler(true)}
+      onMouseOut={() => hoverHandler(false)}>
         {mode === EMPTY && <Empty hover={hover}/>}
         {mode === BOOKED && <Booked hover={hover}/>}
         {mode === MATCHING && <Matching hover={hover}/>}
