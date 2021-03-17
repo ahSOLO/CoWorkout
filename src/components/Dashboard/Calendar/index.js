@@ -68,7 +68,7 @@ export default function Calendar(props) {
       )
     }
   )
-
+  // console.log(slots['WED']);
   return (
     <div class="cal__container">
       <section class="cal__top">
@@ -99,13 +99,13 @@ export default function Calendar(props) {
           <div className="cal__ticks">
             {calTicks}
           </div>
-            <Day />
-            <Day />
-            <Day />
-            <Day />
-            <Day />
-            <Day />
-            <Day />
+            <Day slots={slots['MON']} />
+            <Day slots={slots['TUE']} />
+            <Day slots={slots['WED']} />
+            <Day slots={slots['THU']} />
+            <Day slots={slots['FRI']} />
+            <Day slots={slots['SAT']} />
+            <Day slots={slots['SUN']} />
         </div>
       </section>
       <IconButton id="bookNewButton">

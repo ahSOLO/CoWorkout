@@ -22,7 +22,7 @@ export default function Booked(props){
           <Typography variant="body2">
             {rightHover? "Schedule?"
             : leftHover? "View Profile?" 
-            : "Firstname L."}
+            : props.content.owner_name}
           </Typography>
         </div>
       </div>

@@ -13,6 +13,7 @@ const fakeData = {
       // 3 appointments on the same timeslot
       {
         id: 1,
+        state: 'pending',
         owner_first_name: 'Chuck',
         owner_profile_image_url: 'avatar',
         owner_ref_id: 'd93ghjfek',
@@ -21,6 +22,7 @@ const fakeData = {
       },
       {
         id: 2,
+        state: 'pending',
         owner_first_name: 'Rick',
         owner_profile_image_url: 'avatar',
         owner_ref_id: 'dsa98f89b',
@@ -29,6 +31,7 @@ const fakeData = {
       },
       {
         id: 3,
+        state: 'pending',
         owner_first_name: 'Morty',
         owner_profile_image_url: 'avatar',
         owner_ref_id: 'fd938hgds',
@@ -38,6 +41,7 @@ const fakeData = {
       // 1 appointment with no dups
       {
         id: 4,
+        state: 'pending',
         owner_first_name: 'Coolguy',
         owner_profile_image_url: 'avatar',
         owner_ref_id: 'fdsegfgr0a',
@@ -47,6 +51,7 @@ const fakeData = {
       // 2 more dup appointments
       {
         id: 5,
+        state: 'pending',
         owner_first_name: 'Dup1',
         owner_profile_image_url: 'avatar',
         owner_ref_id: 'hjy5eje5',
@@ -55,6 +60,7 @@ const fakeData = {
       },
       {
         id: 6,
+        state: 'pending',
         owner_first_name: 'Dup2',
         owner_profile_image_url: 'avatar',
         owner_ref_id: 'gvrf43hj6',
@@ -83,7 +89,7 @@ const fakePromise = function(fakeData) {
   const fakePromise = new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve(fakeData);
-    }, 2000);
+    }, 1);
   });
   return fakePromise;
 }
