@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Day from "./Day";
 import "./styles.scss";
 import { getWeekDates, rebuildAppointmentObjs } from "helpers/calendarHelpers";
@@ -17,6 +17,7 @@ export default function Calendar(props) {
 
   // fetch data from db
   const { slots, setSlots, appointments, setAppointments} = useApplicationData();
+  const [ targetDay, setTargetDay ] = useState(new Date());
 
   // Get scrollbar width and compensate width of calendar header accordingly
   useEffect(() => {
@@ -33,7 +34,18 @@ export default function Calendar(props) {
     document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
   }, [])
 
-  const targetDay = new Date();
+  const setWeek = function(direction) {
+    if (targetDay && direction === 'forward') {
+      setTargetDay((prev) => {
+        return new Date(prev.setDate(prev.getDate() + 7));
+      });
+    } else {
+      setTargetDay((prev) => {
+        return new Date(prev.setDate(prev.getDate() - 7));
+      });
+    }
+  };
+
   // for displaying month names dynamically
   const months = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"];
@@ -56,6 +68,27 @@ export default function Calendar(props) {
     }
   );
 
+  const displayCurrentMonthDay = function(weekDates, months, targetDay) {
+    const fromDate = weekDates[0];
+    const toDate = weekDates.slice(-1)[0];
+
+    // get monday's date
+    const daysFromMon = targetDay.getDay();
+    const startDate = new Date(targetDay.getTime() - (daysFromMon * 24 * 60 * 60 * 1000));
+    const monthInt = startDate.getMonth();
+    const fromMonth = months[monthInt];
+    let toMonth = '';
+
+    if (toDate < fromDate) {
+      toMonth = months[monthInt + 1];
+    } else if(toDate > fromDate && (toDate - fromDate !== 6) ) {
+      toMonth = months[monthInt - 1];
+    }
+
+    return `${fromMonth} ${fromDate} - ${toMonth} ${toDate}`;
+
+  }
+
   const hours = ["12am", "1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "9am", "10am", "11am", "12am", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm", "9pm", "10pm", "11pm"]
   const calTicks = hours.map( hour => {
       return (
@@ -72,24 +105,28 @@ export default function Calendar(props) {
   return (
     <div class="cal__container">
       <section class="cal__top">
-        <Typography variant='h4'>
-          {months[targetDay.getMonth()]} {weekDates[0]} - {weekDates[0] + 6}
-        </Typography>
-        <IconButton variant="outlined">
-          <ArrowBackIosOutlinedIcon fontSize="large"/>
-        </IconButton>
-        <IconButton>
-          <ArrowForwardIosOutlinedIcon fontSize="large"/>
-        </IconButton>
-        <IconButton>
-          <CalendarTodayOutlinedIcon fontSize="large"/>
-        </IconButton>
-        <IconButton>
-          <FilterListOutlinedIcon fontSize="large"/>
-        </IconButton>
-        <IconButton>
-          <RefreshOutlinedIcon fontSize="large"/>
-        </IconButton>
+        <div class="top__text">
+          <Typography variant='h4'>
+            {displayCurrentMonthDay(weekDates, months, targetDay)}
+          </Typography>
+        </div>
+        <div class="top__icons">
+          <IconButton variant="outlined">
+            <ArrowBackIosOutlinedIcon fontSize="large" onClick={setWeek}/>
+          </IconButton>
+          <IconButton>
+            <ArrowForwardIosOutlinedIcon fontSize="large" onClick={() => {setWeek('forward')}} />
+          </IconButton>
+          <IconButton>
+            <CalendarTodayOutlinedIcon fontSize="large"/>
+          </IconButton>
+          <IconButton>
+            <FilterListOutlinedIcon fontSize="large"/>
+          </IconButton>
+          <IconButton>
+            <RefreshOutlinedIcon fontSize="large"/>
+          </IconButton>
+        </div>
       </section>
       <section class="cal__main">
         <div className="cal__headers">

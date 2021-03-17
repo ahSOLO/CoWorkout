@@ -11,6 +11,10 @@ section.cal__top {
   width: 85%;
   display: flex;
   align-items: center;
+
+  .top__text{
+    width: 33%;
+  }
 }
 
 .cal__headers {

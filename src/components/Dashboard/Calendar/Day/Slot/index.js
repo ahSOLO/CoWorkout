@@ -39,7 +39,7 @@ export default function Slot(props) {
       isMySession? setMode(MATCHING) : setMode(BOOKED);      
     } else if (usersNum === 2) {
       // MATCHED: match is completed - i.e. there are 2 people associated with a 'pending' session and you are one of the two
-      setMode(MATCHED)
+      setMode(MATCHED);
     }
   }, [props.data])
 
@@ -48,9 +48,9 @@ export default function Slot(props) {
       onMouseEnter={() => hoverHandler(setHover, true)}
       onMouseLeave={() => hoverHandler(setHover, false)}>
         {mode === EMPTY && <Empty hover={hover}/>}
-        {mode === BOOKED && <Booked hover={hover} data={props.data} />}
+        {mode === BOOKED && <Booked hover={hover} data={props.data} user={props.user} />}
         {mode === MATCHING && <Matching hover={hover}/>}
-        {mode === MATCHED && <Matched hover={hover}/>}
+        {mode === MATCHED && <Matched hover={hover} data={props.data} user={props.user} />}
         {mode === LOADING && <Status />}
         {mode === ERROR && <Error hover={hover}/>}
     </div>
