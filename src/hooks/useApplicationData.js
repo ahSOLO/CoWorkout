@@ -10,7 +10,7 @@ export default function useApplicationData() {
 
   useEffect(() => {
 
-    const baseURL = ""; // use 'http://143.198.226.226:8081' in production
+    const baseURL = "";
 
     Promise.all([
       axios.get(baseURL + '/api/sessions'),
@@ -22,27 +22,9 @@ export default function useApplicationData() {
     ])
     .then((all) => {
       const [ retrievedAppointments, persistentAppointments ] = all;
-      
-      console.log(persistentAppointments);
-      console.log(retrievedAppointments);
       setAppointments(prev => retrievedAppointments);
-      setSlots(rebuildAppointmentObjs(slots, persistentAppointments, retrievedAppointments, 'Asia/Singapore'));
+      setSlots(rebuildAppointmentObjs(slots, persistentAppointments, retrievedAppointments, 'Asia/Singapore')); // !! modify to use user's timezone dynamically
     })
-
-    // axios.get(baseURL + '/api/sessions')
-    // .then((data) => {
-    //   // console.log(data);
-    //   setAppointments(prev => data);
-    //   setSlots(rebuildAppointmentObjs(slots, [], data, 'Asia/Singapore'));
-    //   // console.log(slots);
-    // });
-
-    // axios.get(baseURL + '/api/sessions', {
-    //   params: {
-    //     current_user: []
-    //   }
-    // })
-
   }, []);
 
   return {
