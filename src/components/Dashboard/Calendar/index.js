@@ -35,8 +35,6 @@ export default function Calendar(props) {
   }, [])
 
   const setWeek = function(direction) {
-    console.log('changing week...');
-    console.log('targetDay:', typeof(targetDay), targetDay);
     if (targetDay && direction === 'forward') {
       setTargetDay((prev) => {
         return new Date(prev.setDate(prev.getDate() + 7));
@@ -71,6 +69,23 @@ export default function Calendar(props) {
     }
   );
 
+  const displayCurrentMonthDay = function(weekDates, months, targetDay) {
+    const monthInt = targetDay.getMonth();
+    const fromMonth = months[monthInt];
+    let toMonth = '';
+    const fromDate = weekDates[0];
+    const toDate = weekDates.slice(-1)[0];
+
+    if (toDate < fromDate) {
+      toMonth = months[monthInt + 1];
+    } else if(toDate > fromDate && (toDate - fromDate !== 6) ) {
+      toMonth = months[monthInt - 1];
+    }
+
+    return `${fromMonth} ${fromDate} - ${toMonth} ${toDate}`;
+
+  }
+
   const hours = ["12am", "1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "9am", "10am", "11am", "12am", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm", "9pm", "10pm", "11pm"]
   const calTicks = hours.map( hour => {
       return (
@@ -88,7 +103,7 @@ export default function Calendar(props) {
     <div class="cal__container">
       <section class="cal__top">
         <Typography variant='h4'>
-          {months[targetDay.getMonth()]} {weekDates[0]} - {weekDates[0] + 6}
+          {displayCurrentMonthDay(weekDates, months, targetDay)}
         </Typography>
         <IconButton variant="outlined">
           <ArrowBackIosOutlinedIcon fontSize="large" onClick={setWeek}/>
