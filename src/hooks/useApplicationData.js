@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'fakeAxios';
 // import axios from 'axios';
-import { allSlots, changeToUserTZ, extractTimeString, getWeekDates } from "helpers/calendarHelpers";
+import { allSlots, rebuildAppointmentObjs } from "helpers/calendarHelpers";
 
 export default function useApplicationData() {
 
@@ -15,6 +15,7 @@ export default function useApplicationData() {
     axios.get(baseURL + '/api/sessions')
     .then((data) => {
       setAppointments(prev => data);
+      setSlots(rebuildAppointmentObjs(slots, data, 'Asia/Singapore'))
     });
   });
 
