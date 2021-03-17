@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Day from "./Day";
 import "./styles.scss";
-import { getWeekDates } from "helpers/calendarHelpers";
+import { getWeekDates, rebuildAppointmentObjs } from "helpers/calendarHelpers";
 import useApplicationData from 'hooks/useApplicationData';
 
 // Material UI
@@ -16,7 +16,6 @@ export default function Calendar(props) {
 
   // fetch data from db
   const { slots, setSlots, appointments, setAppointments} = useApplicationData();
-  console.log(slots);
 
   // Get scrollbar width and compensate width of calendar header accordingly
   useEffect(() => {
