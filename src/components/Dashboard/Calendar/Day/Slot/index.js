@@ -17,21 +17,31 @@ const MATCHED = "MATCHED";
 const LOADING = "LOADING";
 const ERROR = "ERROR";
 
+// {
+//   id: 1,
+//   session_users: [{user_id: 1, user_first_name: 'Chuck', user_profile_image_url: '...'}, {user_id: 2, user_first_name: 'Chuck', user_profile_image_url: '...'}]
+//   start_time: '2021-03-15T16:00:00.000Z',
+//   activity_type: 'napping'
+// },
+
 export default function Slot(props) {
-  // console.log('ran slot index');
   const [mode, setMode] = useState(EMPTY);
   const [hover, setHover] = useState(false);
 
   useEffect(() => {
-    if (props.data.state === 'empty') setMode(EMPTY);
-    else if (props.data.state === 'pending') {
-      setMode(BOOKED); // somebody other than you has booked and you're able to match - i.e. there is at least 1 person (not you) associated with a 'pending' session
-      // setMode(MATCHING); // you booked and you're able to match with others - i.e. you're the owner of a 'pending' session and the only person associated with it
-      // setMode(MATCHED); // match is completed - i.e. there are 2 people associated with a 'pending' session
+    const usersNum = props.data.session_users.length;
+    if (usersNum === 0) {
+      setMode(EMPTY);
+    } else if (usersNum === 1) {
+      const isMySession = props.data.session_users.filter(userObj => userObj.user_id === props.user_id);
+      // MATCHING: you booked and you're able to match with others - i.e. you're the owner of a 'pending' session and the only person associated with it
+      // BOOKED: somebody other than you has booked and you're able to match - i.e. there is at least 1 person (not you) associated with a 'pending' session
+      isMySession? setMode(MATCHING) : setMode(BOOKED);      
+    } else if (usersNum === 2) {
+      // MATCHED: match is completed - i.e. there are 2 people associated with a 'pending' session and you are one of the two
+      setMode(MATCHED)
     }
-  }, [props.data.state])
-
-  // console.log(props.content.state);
+  }, [props.data])
 
   return (
     <div className="slot" 
