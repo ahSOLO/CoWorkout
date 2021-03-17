@@ -33,7 +33,7 @@ const MainRouter = (props) => {
 
         <Switch>
           <Route path="/dashboard">
-            <Dashboard user={props.userObj} />
+            <Dashboard user={props.user} />
           </Route>  
           <Route path="/login" >
             <Login/>
@@ -60,10 +60,10 @@ const MainRouter = (props) => {
             <Friends />  
           </Route> 
           <Route path="/profile">
-            <Profile user={props.userObj}/>  
+            <Profile user={props.user}/>  
           </Route>
           <Route path="/workout-call">
-            <WorkoutCall user={props.userObj}/>  
+            <WorkoutCall user={props.user}/>  
           </Route> 
           <Route path="/">
             <About />  
