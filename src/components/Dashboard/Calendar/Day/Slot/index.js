@@ -18,6 +18,7 @@ const ERROR = "ERROR";
 
 export default function Slot(props) {
   const [mode, setMode] = useState(EMPTY);
+  const [hover, setHover] = useState(false);
 
   useEffect(() => {
     if (props.content === 0) setMode(EMPTY);
@@ -29,13 +30,15 @@ export default function Slot(props) {
   }, [])
 
   return (
-    <div className="slot">
-      {mode === EMPTY && <Empty/>}
-      {mode === BOOKED && <Booked/>}
-      {mode === MATCHING && <Matching/>}
-      {mode === MATCHED && <Matched/>}
-      {mode === LOADING && <Status/>}
-      {mode === ERROR && <Error/>}
+    <div className="slot" 
+      onMouseOver={() => setHover(true)}
+      onMouseOut={() => setHover(false)}>
+        {mode === EMPTY && <Empty hover={hover}/>}
+        {mode === BOOKED && <Booked hover={hover}/>}
+        {mode === MATCHING && <Matching hover={hover}/>}
+        {mode === MATCHED && <Matched hover={hover}/>}
+        {mode === LOADING && <Status />}
+        {mode === ERROR && <Error hover={hover}/>}
     </div>
   )
 }

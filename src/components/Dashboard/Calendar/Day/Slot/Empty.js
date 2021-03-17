@@ -3,7 +3,7 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 export default function Empty(props){
   return(
     <div className="slot__empty">
-      <AddCircleOutlineOutlinedIcon htmlColor="grey" className="clickable"/>
+      {props.hover && <AddCircleOutlineOutlinedIcon htmlColor="grey" className="clickable"/>}
     </div>
   )
 }
