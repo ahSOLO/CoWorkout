@@ -105,24 +105,28 @@ export default function Calendar(props) {
   return (
     <div class="cal__container">
       <section class="cal__top">
-        <IconButton variant="outlined">
-          <ArrowBackIosOutlinedIcon fontSize="large" onClick={setWeek}/>
-        </IconButton>
-        <IconButton>
-          <ArrowForwardIosOutlinedIcon fontSize="large" onClick={() => {setWeek('forward')}} />
-        </IconButton>
-        <IconButton>
-          <CalendarTodayOutlinedIcon fontSize="large"/>
-        </IconButton>
-        <IconButton>
-          <FilterListOutlinedIcon fontSize="large"/>
-        </IconButton>
-        <IconButton>
-          <RefreshOutlinedIcon fontSize="large"/>
-        </IconButton>
-        <Typography variant='h4'>
-          {displayCurrentMonthDay(weekDates, months, targetDay)}
-        </Typography>
+        <div class="top__text">
+          <Typography variant='h4'>
+            {displayCurrentMonthDay(weekDates, months, targetDay)}
+          </Typography>
+        </div>
+        <div class="top__icons">
+          <IconButton variant="outlined">
+            <ArrowBackIosOutlinedIcon fontSize="large" onClick={setWeek}/>
+          </IconButton>
+          <IconButton>
+            <ArrowForwardIosOutlinedIcon fontSize="large" onClick={() => {setWeek('forward')}} />
+          </IconButton>
+          <IconButton>
+            <CalendarTodayOutlinedIcon fontSize="large"/>
+          </IconButton>
+          <IconButton>
+            <FilterListOutlinedIcon fontSize="large"/>
+          </IconButton>
+          <IconButton>
+            <RefreshOutlinedIcon fontSize="large"/>
+          </IconButton>
+        </div>
       </section>
       <section class="cal__main">
         <div className="cal__headers">
