@@ -1,124 +1,76 @@
+// classes to make fake data more concise
+class User {
+  constructor(id, user_first_name, last_name, user_profile_image_url, gender, timezone) {
+    this.id = id;
+    this.user_id = id; // user_id being used in some places
+    this.user_first_name = user_first_name;
+    this.last_name = last_name;
+    this.user_profile_image_url = user_profile_image_url;
+    this.gender = gender;
+    this.timezone = timezone;
+  }
+}
+
+class Appointment {
+  constructor(id, session_users, start_time, activity_type) {
+    this.id = id;
+    this.session_users = session_users;
+    this.start_time = start_time;
+    this.activity_type = activity_type;
+  }
+}
+
+// fake objects
+const user1 = new User(1, 'Chuck', 'Norris', 'https://i.pravatar.cc/300', 'Male', 'Asia/Singapore');
+const user2 = new User(2, 'Stan', 'Lee', 'https://i.pravatar.cc/300', 'Male', 'Asia/Singapore');
+const user3 = new User(3, 'Bruce', 'Lee', 'https://i.pravatar.cc/300', 'Male', 'Asia/Singapore');
+const user4 = new User(4, 'Rick', 'Astley', 'https://i.pravatar.cc/300', 'Male', 'Asia/Singapore');
+const user5 = new User(5, 'Kevin', 'Malone', 'https://i.pravatar.cc/300', 'Male', 'Asia/Singapore');
+
+// fake appointments
+
+// same timeslot (booked)
+const appointment1 = new Appointment(1, [user2], '2021-03-15T16:00:00.000Z', 'napping');
+const appointment2 = new Appointment(2, [user3], '2021-03-15T16:00:00.000Z', 'napping');
+const appointment3 = new Appointment(3, [user4], '2021-03-15T16:00:00.000Z', 'napping');
+// different timeslots (booked)
+const appointment4 = new Appointment(4, [user5], '2021-03-15T17:00:00.000Z', 'napping');
+const appointment5 = new Appointment(5, [user3], '2021-03-15T18:00:00.000Z', 'napping');
+// matching
+const appointment6 = new Appointment(6, [user1], '2021-03-15T19:00:00.000Z', 'napping');
+const appointment7 = new Appointment(7, [user1], '2021-03-15T20:00:00.000Z', 'napping');
+// matched
+const appointment8 = new Appointment(8, [user2, user1], '2021-03-15T21:00:00.000Z', 'napping');
+const appointment9 = new Appointment(9, [user3, user1], '2021-03-15T22:00:00.000Z', 'napping');
+const appointment10 = new Appointment(10, [user1, user2], '2021-03-15T23:00:00.000Z', 'napping');
+// matched, but does not involve user1
+const appointment11 = new Appointment(11, [user2, user3], '2021-03-15T23:30:00.000Z', 'napping');
+
+
 // fake data
 const fakeData = {
   'GET': {
     '/api/user/testuser': {
-      'default': { // default means no params are passed through axios.get
-        id: 1,
-        first_name: 'Chuck',
-        last_name: 'Norris',
-        avatar: 'https://i.pravatar.cc/300',
-        gender: 'Male',
-        timezone: 'Asia/Singapore'
-        // add more as needed
-      },
+      'default': user1,
     },
     
     '/api/sessions': {
-      'default': [// default means no params are passed through axios.get
-
-        // 3 appointments on the same timeslot
-        {
-          id: 1,
-          session_users: [{user_id: 2, user_first_name: 'Chuck', user_profile_image_url: 'https://i.pravatar.cc/300'}],
-          start_time: '2021-03-15T16:00:00.000Z',
-          activity_type: 'napping'
-        },
-        {
-          id: 2,
-          session_users: [{user_id: 3, user_first_name: 'Sandy', user_profile_image_url: 'https://i.pravatar.cc/300'}],
-          start_time: '2021-03-15T16:00:00.000Z',
-          activity_type: 'napping'
-        },
-        {
-          id: 3,
-          session_users: [{user_id: 4, user_first_name: 'Sandy', user_profile_image_url: 'https://i.pravatar.cc/300'}],
-          start_time: '2021-03-15T16:00:00.000Z',
-          activity_type: 'lounging'
-        },
-
-        // 1 appointment with no dups
-        {
-          id: 4,
-          session_users: [{user_id: 5, user_first_name: 'Coolguy', user_profile_image_url: 'https://i.pravatar.cc/300'}],
-          start_time: '2021-03-15T16:30:00.000Z',
-          activity_type: 'lounging'
-        },
-
-        // 2 more dup appointments
-        {
-          id: 5,
-          session_users: [{user_id: 6, user_first_name: 'Dup1', user_profile_image_url: 'https://i.pravatar.cc/300'}],
-          start_time: '2021-03-15T17:30:00.000Z',
-          activity_type: 'sleeping'
-        },
-        {
-          id: 6,
-          session_users: [{user_id: 7, user_first_name: 'Dup2', user_profile_image_url: 'https://i.pravatar.cc/300'}],
-          start_time: '2021-03-15T17:30:00.000Z',
-          activity_type: 'sleeping'
-        },
-      ],
-
       'start_date': [
-
         // 3 appointments on the same timeslot
-        {
-          id: 1,
-          session_users: [{user_id: 2, user_first_name: 'Chuck', user_profile_image_url: 'https://i.pravatar.cc/300'}],
-          start_time: '2021-03-15T16:00:00.000Z',
-          activity_type: 'napping'
-        },
-        {
-          id: 2,
-          session_users: [{user_id: 3, user_first_name: 'Sandy', user_profile_image_url: 'https://i.pravatar.cc/300'}],
-          start_time: '2021-03-15T16:00:00.000Z',
-          activity_type: 'napping'
-        },
-        {
-          id: 3,
-          session_users: [{user_id: 4, user_first_name: 'Sandy', user_profile_image_url: 'https://i.pravatar.cc/300'}],
-          start_time: '2021-03-15T16:00:00.000Z',
-          activity_type: 'lounging'
-        },
-
-        // 1 appointment with no dups
-        {
-          id: 4,
-          session_users: [{user_id: 5, user_first_name: 'Coolguy', user_profile_image_url: 'https://i.pravatar.cc/300'}],
-          start_time: '2021-03-15T16:30:00.000Z',
-          activity_type: 'lounging'
-        },
-
-        // 2 more dup appointments
-        {
-          id: 5,
-          session_users: [{user_id: 6, user_first_name: 'Dup1', user_profile_image_url: 'https://i.pravatar.cc/300'}],
-          start_time: '2021-03-15T17:30:00.000Z',
-          activity_type: 'sleeping'
-        },
-        {
-          id: 6,
-          session_users: [{user_id: 7, user_first_name: 'Dup2', user_profile_image_url: 'https://i.pravatar.cc/300'}],
-          start_time: '2021-03-15T17:30:00.000Z',
-          activity_type: 'sleeping'
-        },
+        appointment1,
+        appointment2,
+        appointment3,
+        // 2 appointments with no dups
+        appointment4,
+        appointment5,
       ],
 
       // APPOINTMENTS THAT THE USER HAS MADE OR MATCHED WITH
       'current_user': [ // axios.get('/api/sessions', {params: {current_user: <value is ignored>}}); /api/sessions?current_user=<value is ignored>
         // matched appointments
-        {
-          id: 6,
-          session_users: [{user_id: 7, user_first_name: 'Match1', user_profile_image_url: 'https://i.pravatar.cc/300'}, {user_id: 1, user_first_name: 'Chuck', user_profile_image_url: 'https://i.pravatar.cc/300'}],
-          start_time: '2021-03-15T18:00:00.000Z',
-          activity_type: 'yoga'
-        },
-        {
-          id: 7,
-          session_users: [{user_id: 8, user_first_name: 'Match2', user_profile_image_url: 'https://i.pravatar.cc/300'}, {user_id: 1, user_first_name: 'Chuck', user_profile_image_url: 'https://i.pravatar.cc/300'}],
-          start_time: '2021-03-15T18:00:00.000Z',
-          activity_type: 'circuit'
-        }
+        appointment8,
+        appointment9,
+        appointment10,
       ],
     }
 
