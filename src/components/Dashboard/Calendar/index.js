@@ -51,7 +51,6 @@ export default function Calendar(props) {
   "July", "August", "September", "October", "November", "December"];
 
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  console.log('type:', typeof(targetDay));
   const weekDates = getWeekDates(targetDay); // arr of dates corresponding to MON-SUN
 
   const calHeaders = weekDays.map(
@@ -70,11 +69,15 @@ export default function Calendar(props) {
   );
 
   const displayCurrentMonthDay = function(weekDates, months, targetDay) {
-    const monthInt = targetDay.getMonth();
-    const fromMonth = months[monthInt];
-    let toMonth = '';
     const fromDate = weekDates[0];
     const toDate = weekDates.slice(-1)[0];
+
+    // get monday's date
+    const daysFromMon = targetDay.getDay();
+    const startDate = new Date(targetDay.getTime() - (daysFromMon * 24 * 60 * 60 * 1000));
+    const monthInt = startDate.getMonth();
+    const fromMonth = months[monthInt];
+    let toMonth = '';
 
     if (toDate < fromDate) {
       toMonth = months[monthInt + 1];
@@ -102,9 +105,6 @@ export default function Calendar(props) {
   return (
     <div class="cal__container">
       <section class="cal__top">
-        <Typography variant='h4'>
-          {displayCurrentMonthDay(weekDates, months, targetDay)}
-        </Typography>
         <IconButton variant="outlined">
           <ArrowBackIosOutlinedIcon fontSize="large" onClick={setWeek}/>
         </IconButton>
@@ -120,6 +120,9 @@ export default function Calendar(props) {
         <IconButton>
           <RefreshOutlinedIcon fontSize="large"/>
         </IconButton>
+        <Typography variant='h4'>
+          {displayCurrentMonthDay(weekDates, months, targetDay)}
+        </Typography>
       </section>
       <section class="cal__main">
         <div className="cal__headers">
