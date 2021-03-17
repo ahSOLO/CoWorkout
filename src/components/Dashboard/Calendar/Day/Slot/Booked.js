@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { Box, Avatar, Typography } from '@material-ui/core';
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
 import { hoverHandler } from "../../../../../helpers/utility";
@@ -15,7 +15,8 @@ export default function Booked(props){
             src="https://i.pravatar.cc/300" 
             className="clickable"
             onMouseEnter = {() => hoverHandler(setLeftHover, true)}
-            onMouseLeave = {() => hoverHandler(setLeftHover, false)}/>
+            onMouseLeave = {() => hoverHandler(setLeftHover, false)}
+          />
         </div>
         <div className="slot__name">
           <Typography variant="body2">
