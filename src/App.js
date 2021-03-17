@@ -55,15 +55,16 @@ function App() {
   //     })
   // }();
 
+  // Basic implementation of getting user data, need to replace
   const [userObj, setUserObj ] = useState(null);
 
-  export const getUserObj = function() {
+  const getUserObj = function() {
     axios.get('/api/user/testuser')
-      .then((data) => setState(data));
+      .then((data) => setUserObj(data));
   }
 
   useEffect(() => {
-    getUserObj
+    getUserObj();
   }, [])
 
   return (
