@@ -12,6 +12,7 @@ import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutli
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined';
 import RefreshOutlinedIcon from '@material-ui/icons/RefreshOutlined';
+import AddIcon from '@material-ui/icons/Add';
 
 export default function Calendar(props) {
 
@@ -115,6 +116,9 @@ export default function Calendar(props) {
             <Day />
         </div>
       </section>
+      <IconButton id="bookNewButton">
+        <AddIcon fontSize="large" />
+      </IconButton>
     </div>
   )
 }
