@@ -14,8 +14,8 @@ export default function Booked(props){
           <Avatar 
             src="https://i.pravatar.cc/300" 
             className="clickable"
-            onMouseOver = {() => hoverHandler(setLeftHover, true)}
-            onMouseOut = {() => hoverHandler(setLeftHover, false)}/>
+            onMouseEnter = {() => hoverHandler(setLeftHover, true)}
+            onMouseLeave = {() => hoverHandler(setLeftHover, false)}/>
         </div>
         <div className="slot__name">
           <Typography variant="body2">
@@ -30,8 +30,8 @@ export default function Booked(props){
         <CheckCircleOutlineOutlinedIcon 
           htmlColor="#4caf50" 
           className="clickable"
-          onMouseOver = {() => hoverHandler(setRightHover, true)}
-          onMouseOut = {() => hoverHandler(setRightHover, false)}
+          onMouseEnter = {() => hoverHandler(setRightHover, true)}
+          onMouseLeave = {() => hoverHandler(setRightHover, false)}
           />}
       </Box>
     </Box>

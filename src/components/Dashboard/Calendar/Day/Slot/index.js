@@ -21,6 +21,8 @@ export default function Slot(props) {
   const [mode, setMode] = useState(EMPTY);
   const [hover, setHover] = useState(false);
 
+  console.log("render");
+
   useEffect(() => {
     if (props.content === 0) setMode(EMPTY);
     if (props.content === 2) setMode(BOOKED);
@@ -32,8 +34,8 @@ export default function Slot(props) {
 
   return (
     <div className="slot" 
-      onMouseOver={() => hoverHandler(setHover, true)}
-      onMouseOut={() => hoverHandler(setHover, false)}>
+      onMouseEnter={() => hoverHandler(setHover, true)}
+      onMouseLeave={() => hoverHandler(setHover, false)}>
         {mode === EMPTY && <Empty hover={hover}/>}
         {mode === BOOKED && <Booked hover={hover}/>}
         {mode === MATCHING && <Matching hover={hover}/>}
