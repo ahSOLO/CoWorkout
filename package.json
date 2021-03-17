@@ -9,6 +9,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
     "dotenv": "^8.2.0",
+    "lodash": "^4.17.21",
     "node-sass": "^5.0.0",
     "normalize.css": "^8.0.1",
     "pg": "^8.5.1",
@@ -24,7 +25,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "api-start": "node api-server.js",
+    "backend-start": "node server.js",
     "db:reset": "node bin/resetdb.js"
   },
   "eslintConfig": {
