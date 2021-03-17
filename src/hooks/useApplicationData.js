@@ -15,7 +15,7 @@ export default function useApplicationData() {
     axios.get(baseURL + '/api/sessions')
     .then((data) => {
       setAppointments(prev => data);
-      setSlots(rebuildAppointmentObjs(slots, data, 'Asia/Singapore'))
+      setSlots(rebuildAppointmentObjs(slots, data, 'Asia/Singapore'));
     });
   }, []);
 
