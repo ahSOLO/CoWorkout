@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import Day from "./Day";
 import "./styles.scss";
-import { allSlots, changeToUserTZ, extractTimeString, getWeekDates } from "../../../calendarHelpers";
-import axios from '../../../fakeAxios';
-// import axios from 'axios';
+import { getWeekDates } from "helpers/calendarHelpers";
+import useApplicationData from 'hooks/useApplicationData';
 
 // Material UI
 import { Typography, IconButton } from "@material-ui/core";
@@ -14,6 +13,10 @@ import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined';
 import RefreshOutlinedIcon from '@material-ui/icons/RefreshOutlined';
 
 export default function Calendar(props) {
+
+  // fetch data from db
+  const { slots, setSlots, appointments, setAppointments} = useApplicationData();
+  console.log(slots);
 
   // Get scrollbar width and compensate width of calendar header accordingly
   useEffect(() => {
@@ -29,16 +32,6 @@ export default function Calendar(props) {
     console.log(document.querySelector("div.cal__headers"));
     document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
   }, [])
-
-  axios.get('/api/sessions', {
-    params: {
-      start_datetime: 'find appointments set for dates after this',
-      end_datetime: 'find appointments set for dates before this'
-    }
-  })
-  .then((data) => {
-
-  });
 
   const targetDay = new Date();
   // for displaying month names dynamically
