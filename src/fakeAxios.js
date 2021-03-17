@@ -9,6 +9,19 @@ const fakeData = {
       gender: 'Male',
       // add more as needed
     },
+
+    // {
+    //   id: 1,
+    //   session_users: [{user_id: 1, user_first_name: 'Chuck', user_profile_image_url: '...'}, {user_id: 2, user_first_name: 'Chuck', user_profile_image_url: '...'}]
+    //   start_time: '2021-03-15T16:00:00.000Z',
+    //   activity_type: 'napping'
+    // },
+
+      // BOOKED - somebody other than you has booked and you're able to match - i.e. there is at least 1 person (not you) associated with a 'pending' session
+      // MATCHING; // you booked and you're able to match with others - i.e. you're the owner of a 'pending' session and the only person associated with it
+      // MATCHED; // match is completed - i.e. there are 2 people associated with a 'pending' session and you are one of the two
+      // Don't need to get any pending sessions with 2 people where you are not one of the two
+    
     '/api/sessions': [
       // 3 appointments on the same timeslot
       {
