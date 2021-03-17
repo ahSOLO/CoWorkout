@@ -3,7 +3,7 @@ import { Box, Avatar, Typography, Dialog, DialogTitle, DialogContent, Button } f
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 import { hoverHandler } from "helpers/utility"
-import ConfirmDialogue from "components/Dialogs/ConfirmDialogue";
+import ConfirmDialogue from "components/Dialog/ConfirmDialogue";
 
 export default function Booked(props){
   const [leftHover, setLeftHover] = useState(false);
