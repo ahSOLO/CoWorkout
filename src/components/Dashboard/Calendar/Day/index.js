@@ -1,5 +1,5 @@
 import Slot from "./Slot";
-import axios from '../../../../fakeAxios';
+import axios from 'fakeAxios';
 // import axios from 'axios';
 
 import { Typography } from "@material-ui/core";
