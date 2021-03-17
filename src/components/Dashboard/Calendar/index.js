@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import Day from "./Day";
 import "./styles.scss";
-import { allAppointments, changeToUserTZ, extractTimeString, getWeekDates } from "../../../calendarHelpers";
+import { allSlots, changeToUserTZ, extractTimeString, getWeekDates } from "../../../calendarHelpers";
 import axios from '../../../fakeAxios';
 // import axios from 'axios';
 
 // Material UI
-import { Box, Container, Typography } from "@material-ui/core";
+import { Typography, IconButton } from "@material-ui/core";
 import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
@@ -41,6 +41,10 @@ export default function Calendar(props) {
   });
 
   const targetDay = new Date();
+  // for displaying month names dynamically
+  const months = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
+
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   const weekDates = getWeekDates(targetDay); // arr of dates corresponding to MON-SUN
 
@@ -76,13 +80,23 @@ export default function Calendar(props) {
     <div class="cal__container">
       <section class="cal__top">
         <Typography variant='h4'>
-          March 8 - 14
+          {months[targetDay.getMonth()]} {weekDates[0]} - {weekDates[0] + 6}
         </Typography>
-        <ArrowBackIosOutlinedIcon fontSize="large" />
-        <ArrowForwardIosOutlinedIcon fontSize="large" />
-        <CalendarTodayOutlinedIcon fontSize="large" />
-        <FilterListOutlinedIcon fontSize="large" />
-        <RefreshOutlinedIcon fontSize="large" />
+        <IconButton variant="outlined">
+          <ArrowBackIosOutlinedIcon fontSize="large"/>
+        </IconButton>
+        <IconButton>
+          <ArrowForwardIosOutlinedIcon fontSize="large"/>
+        </IconButton>
+        <IconButton>
+          <CalendarTodayOutlinedIcon fontSize="large"/>
+        </IconButton>
+        <IconButton>
+          <FilterListOutlinedIcon fontSize="large"/>
+        </IconButton>
+        <IconButton>
+          <RefreshOutlinedIcon fontSize="large"/>
+        </IconButton>
       </section>
       <section class="cal__main">
         <div className="cal__headers">
