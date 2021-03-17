@@ -166,7 +166,7 @@ const rebuildAppointmentObjs = function(emptyAppointments, allAppointments, user
           'day': dayOfWeek,
           'start_time': startTimeUserTZ,
           'activity_type': appointment.activity_type,
-          'state': appointment.state
+          'state': 'pending'
       };
     }
   }

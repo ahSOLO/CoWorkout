@@ -18,20 +18,20 @@ const LOADING = "LOADING";
 const ERROR = "ERROR";
 
 export default function Slot(props) {
-  console.log('ran slot index');
+  // console.log('ran slot index');
   const [mode, setMode] = useState(EMPTY);
   const [hover, setHover] = useState(false);
   
 
   useEffect(() => {
-    if (props.content.state === 'empty') setMode(EMPTY);
-    if (props.content.state === 'pending') setMode(BOOKED);
-    if (props.content === 4) setMode(MATCHING);
-    if (props.content.state === 'active') setMode(MATCHED);
-    if (props.content === 8) setMode(LOADING);
-    if (props.content === 10) setMode(ERROR);
-  }, [])
-  // console.log(props.content.state);
+    if (props.status === 'empty') setMode(EMPTY);
+    if (props.status === 'pending') setMode(BOOKED); //somebody other than you has booked and you're able to match
+    if (props.status === 4) setMode(MATCHING); // you booked and you're able to match with others
+    if (props.status === 'active') setMode(MATCHED); // match is completed
+    if (props.status === 8) setMode(LOADINGstatusoading
+    if (props.status === 10) setMode(ERROR); // error
+  }, [mode, props.content.state])
+  console.log(props.content.state);
 
   return (
     <div className="slot" 
