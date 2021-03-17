@@ -1,12 +1,10 @@
-import './App.scss';
 // import axios from './fakeAxios';
 // import axios from 'axios';
 import MainRouter from './components/MainRouter';
 import './basic.scss';
 
 // mat-ui theme
-import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core'
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 // How to import a mat-ui component + Icon
 import Button from '@material-ui/core/Button';
