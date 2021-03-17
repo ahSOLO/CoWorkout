@@ -87,7 +87,7 @@ const autoGenerateEmptyAppointments = function() {
     
     while (hour < 24) {
       let timeString = generateTimeString(hour, minute);
-      emptyAppointments[day][timeString] = { 'state': 'empty' };
+      emptyAppointments[day][timeString] = { 'state': 'empty', 'session_users': [] };
       minute += 15;
       if (minute === 60) {
         hour += 1;
@@ -133,7 +133,6 @@ const rebuildAppointmentObjs = function(emptyAppointments, allAppointments, user
     const dayOfWeek = extractDayOfWeek(startTimeUserTZ);
     const startTimeString = extractTimeString(startTimeUserTZ);
     
-
     if (reconstructedAppointments[dayOfWeek][startTimeString].state !== 'empty') {
 
       // add the existing appointment to the pool so it can be considered for the matching algorithm. Wrap in `if` statement so we don't keep adding that same appointment to the pool.
@@ -148,25 +147,19 @@ const rebuildAppointmentObjs = function(emptyAppointments, allAppointments, user
       // add the next appointment to the list
       sameSlotAppointments[dayOfWeek][startTimeString].push({
         'id': appointment.id,
-        'owner_name': appointment.owner_first_name,
-        'owner_pic': appointment.owner_profile_image_url,
-        'owner_ref_id': appointment.owner_ref_id,
         'day': dayOfWeek,
         'start_time': startTimeUserTZ,
         'activity_type': appointment.activity_type,
-        'state': 'pending'
+        'session_users': appointment.session_users
       });
 
     } else {
       reconstructedAppointments[dayOfWeek][startTimeString] = {
-          'id': appointment.id,
-          'owner_name': appointment.owner_first_name,
-          'owner_pic': appointment.owner_profile_image_url,
-          'owner_ref_id': appointment.owner_ref_id,
-          'day': dayOfWeek,
-          'start_time': startTimeUserTZ,
-          'activity_type': appointment.activity_type,
-          'state': 'pending'
+        'id': appointment.id,
+        'day': dayOfWeek,
+        'start_time': startTimeUserTZ,
+        'activity_type': appointment.activity_type,
+        'session_users': appointment.session_users
       };
     }
   }
