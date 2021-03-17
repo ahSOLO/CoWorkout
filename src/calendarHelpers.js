@@ -98,6 +98,12 @@ const autoGenerateEmptyAppointments = function() {
   return emptyAppointments;
 };
 
+// helper function for rebuildAppointmentObjs
+const matchMake = function(sessionPool) {
+  // just return a random session for now
+  return sessionPool[Math.floor(Math.random() * Math.floor(sessionPool.length))];
+};
+
 const rebuildAppointmentObjs = function(emptyAppointments, allAppointments, userTZ) {
   // deep copy emptyAppointments
   let reconstructedAppointments = {...emptyAppointments};
@@ -161,10 +167,19 @@ const rebuildAppointmentObjs = function(emptyAppointments, allAppointments, user
           'activity_type': appointment.activity_type
       };
     }
-
   }
-  console.log(reconstructedAppointments['WED']);
-  console.log(sameSlotAppointments);
+
+  // reassign timeslots where there are conflicts
+  for (const day in sameSlotAppointments) {
+    // console.log(sameSlotAppointments[day]);
+    for (const timeslot in sameSlotAppointments[day]) {
+      // assign an appointment through the matchmaker
+      reconstructedAppointments[day][timeslot] = matchMake(sameSlotAppointments[day][timeslot]);
+    }
+  }
+
+  console.log(reconstructedAppointments['WED']['00:00']);
+  // console.log(sameSlotAppointments);
   return reconstructedAppointments;
 }
 
