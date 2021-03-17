@@ -114,7 +114,7 @@ const adaptSessionObj = function(sessionObj, startTimeUserTZ, dayOfWeek) {
   }
 }
 
-const rebuildAppointmentObjs = function(emptyAppointments, allAppointments, userTZ) {
+const rebuildAppointmentObjs = function(emptyAppointments, persistentAppointments, allAppointments, userTZ) {
   // deep copy emptyAppointments
   let reconstructedAppointments = {...emptyAppointments};
 
@@ -168,6 +168,14 @@ const rebuildAppointmentObjs = function(emptyAppointments, allAppointments, user
       // assign an appointment through the matchmaker
       reconstructedAppointments[day][timeslot] = matchMake(sameSlotAppointments[day][timeslot]);
     }
+  }
+
+  for (const appointment of persistentAppointments) {
+    const startTimeUserTZ = changeToUserTZ(appointment.start_time, userTZ);
+    const dayOfWeek = extractDayOfWeek(startTimeUserTZ);
+    const startTimeString = extractTimeString(startTimeUserTZ);
+
+    reconstructedAppointments[dayOfWeek][startTimeString] = adaptSessionObj(appointment, startTimeUserTZ, dayOfWeek);
   }
 
   return reconstructedAppointments;

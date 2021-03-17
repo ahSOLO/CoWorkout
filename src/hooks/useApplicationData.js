@@ -12,19 +12,36 @@ export default function useApplicationData() {
 
     const baseURL = ""; // use 'http://143.198.226.226:8081' in production
 
-    axios.get(baseURL + '/api/sessions')
-    .then((data) => {
-      // console.log(data);
-      setAppointments(prev => data);
-      setSlots(rebuildAppointmentObjs(slots, data, 'Asia/Singapore'));
-      // console.log(slots);
-    });
-
-    axios.get(baseURL + '/api/sessions', {
-      params: {
-        current_user: []
-      }
+    Promise.all([
+      axios.get(baseURL + '/api/sessions'),
+      axios.get(baseURL + '/api/sessions', {
+        params: {
+          current_user: []
+        }
+      })
+    ])
+    .then((all) => {
+      const [ retrievedAppointments, persistentAppointments ] = all;
+      
+      console.log(persistentAppointments);
+      console.log(retrievedAppointments);
+      setAppointments(prev => retrievedAppointments);
+      setSlots(rebuildAppointmentObjs(slots, persistentAppointments, retrievedAppointments, 'Asia/Singapore'));
     })
+
+    // axios.get(baseURL + '/api/sessions')
+    // .then((data) => {
+    //   // console.log(data);
+    //   setAppointments(prev => data);
+    //   setSlots(rebuildAppointmentObjs(slots, [], data, 'Asia/Singapore'));
+    //   // console.log(slots);
+    // });
+
+    // axios.get(baseURL + '/api/sessions', {
+    //   params: {
+    //     current_user: []
+    //   }
+    // })
 
   }, []);
 
