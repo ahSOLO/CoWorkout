@@ -15,12 +15,16 @@ export default function Booked(props){
     setProfileOpen(true);
   }
   const handleProfileClose = () => {
+    props.setHover(false);
+    setLeftHover(false);
     setProfileOpen(false);
   }
   const handleConfirmClick = () => {
     setConfirmOpen(true);
   }
   const handleConfirmClose = () => {
+    props.setHover(false);
+    setRightHover(false);
     setConfirmOpen(false);
   }
 

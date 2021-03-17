@@ -47,12 +47,12 @@ export default function Slot(props) {
     <div className="slot" 
       onMouseEnter={() => hoverHandler(setHover, true)}
       onMouseLeave={() => hoverHandler(setHover, false)}>
-        {mode === EMPTY && <Empty hover={hover}/>}
-        {mode === BOOKED && <Booked hover={hover} data={props.data} user={props.user} />}
-        {mode === MATCHING && <Matching hover={hover}/>}
-        {mode === MATCHED && <Matched hover={hover} data={props.data} user={props.user} />}
+        {mode === EMPTY && <Empty hover={hover} setHover={setHover}/>}
+        {mode === BOOKED && <Booked hover={hover} setHover={setHover} data={props.data} user={props.user} />}
+        {mode === MATCHING && <Matching hover={hover} setHover={setHover} />}
+        {mode === MATCHED && <Matched hover={hover} setHover={setHover} data={props.data} user={props.user} />}
         {mode === LOADING && <Status />}
-        {mode === ERROR && <Error hover={hover}/>}
+        {mode === ERROR && <Error hover={hover} setHover={setHover}/>}
     </div>
   )
 }
