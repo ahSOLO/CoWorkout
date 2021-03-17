@@ -3,4 +3,4 @@ VALUES ('Get Stronger'),
 ('Build Muscle'),
 ('Lose Weight'),
 ('Be Active'),
-('Improve Mental Health');
+('Get Toned');
