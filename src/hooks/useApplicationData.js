@@ -17,6 +17,7 @@ export default function useApplicationData() {
       setAppointments(prev => data);
       setSlots(rebuildAppointmentObjs(slots, data, 'Asia/Singapore'));
     });
+
   }, []);
 
   return {
