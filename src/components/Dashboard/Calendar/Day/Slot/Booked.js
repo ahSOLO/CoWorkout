@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Box, Avatar, Typography, Dialog, DialogTitle, DialogContent, Button } from '@material-ui/core';
+import { Box, Avatar, Typography, Dialog} from '@material-ui/core';
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
-import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 import { hoverHandler } from "helpers/utility"
 import ConfirmDialogue from "components/Dialog/ConfirmDialogue";
+import ProfileDialogue from "components/Dialog/ProfileDialog";
 
 export default function Booked(props){
   const [leftHover, setLeftHover] = useState(false);
@@ -59,12 +59,11 @@ export default function Booked(props){
           onClick= {handleConfirmClick}
           />}
       </Box>
-      {/* Profile Dialogue */}
-      <Dialog onClose={handleProfileClose} open={profileOpen}>
-        <Typography variant="body1">
-          Make an axios request here to get the full profile information
-        </Typography>
-      </Dialog>
+      
+      <ProfileDialogue
+        handleProfileClose={handleProfileClose}
+        profileOpen={profileOpen}
+      />
       <ConfirmDialogue data={props.data} handleConfirmClose={handleConfirmClose} confirmOpen={confirmOpen} />
     </Box>
     )
