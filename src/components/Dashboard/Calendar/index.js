@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Day from "./Day";
 import "./styles.scss";
 import { getWeekDates, rebuildAppointmentObjs } from "helpers/calendarHelpers";
@@ -17,6 +17,7 @@ export default function Calendar(props) {
 
   // fetch data from db
   const { slots, setSlots, appointments, setAppointments} = useApplicationData();
+  const [ targetDay, setTargetDay ] = useState(new Date());
 
   // Get scrollbar width and compensate width of calendar header accordingly
   useEffect(() => {
@@ -33,12 +34,26 @@ export default function Calendar(props) {
     document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
   }, [])
 
-  const targetDay = new Date();
+  const setWeek = function(direction) {
+    console.log('changing week...');
+    console.log('targetDay:', typeof(targetDay), targetDay);
+    if (targetDay && direction === 'forward') {
+      setTargetDay((prev) => {
+        return new Date(prev.setDate(prev.getDate() + 7));
+      });
+    } else {
+      setTargetDay((prev) => {
+        return new Date(prev.setDate(prev.getDate() - 7));
+      });
+    }
+  };
+
   // for displaying month names dynamically
   const months = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"];
 
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  console.log('type:', typeof(targetDay));
   const weekDates = getWeekDates(targetDay); // arr of dates corresponding to MON-SUN
 
   const calHeaders = weekDays.map(
@@ -76,10 +91,10 @@ export default function Calendar(props) {
           {months[targetDay.getMonth()]} {weekDates[0]} - {weekDates[0] + 6}
         </Typography>
         <IconButton variant="outlined">
-          <ArrowBackIosOutlinedIcon fontSize="large"/>
+          <ArrowBackIosOutlinedIcon fontSize="large" onClick={setWeek}/>
         </IconButton>
         <IconButton>
-          <ArrowForwardIosOutlinedIcon fontSize="large"/>
+          <ArrowForwardIosOutlinedIcon fontSize="large" onClick={() => {setWeek('forward')}} />
         </IconButton>
         <IconButton>
           <CalendarTodayOutlinedIcon fontSize="large"/>
