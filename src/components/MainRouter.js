@@ -12,7 +12,7 @@ import Friends from './Friends';
 import Profile from './Profile';
 import WorkoutCall from './WorkoutCall';
 
-const MainRouter = () => {
+const MainRouter = (props) => {
   return (
     <main>
       <Router>
@@ -32,20 +32,43 @@ const MainRouter = () => {
         </nav>
 
         <Switch>
-          <Route path="/dashboard" component={Dashboard} /> 
-          <Route path="/login" component={Login} /> 
-          <Route path="/logout" component={Logout} /> 
-          <Route path="/register" component={Registration} /> 
-          <Route path="/settings" component={Settings} /> 
-          <Route path="/account" component={Account} /> 
-          <Route path="/leaderboard" component={Leaderboard} /> 
-          <Route path="/rewards" component={Rewards} /> 
-          <Route path="/friends" component={Friends} /> 
-          <Route path="/profile" component={Profile} /> 
-          <Route path="/workout-call" component={WorkoutCall} /> 
-          <Route path="/" component={About} /> 
+          <Route path="/dashboard">
+            <Dashboard user={props.user} />
+          </Route>  
+          <Route path="/login" >
+            <Login/>
+          </Route> 
+          <Route path="/logout">
+            <Logout/>
+          </Route>
+          <Route path="/register" >
+            <Registration />
+          </Route> 
+          <Route path="/settings" >
+            <Settings />
+          </Route> 
+          <Route path="/account">
+            <Account />
+          </Route> 
+          <Route path="/leaderboard">
+            <Leaderboard />  
+          </Route>
+          <Route path="/rewards">
+            <Rewards />  
+          </Route> 
+          <Route path="/friends">
+            <Friends />  
+          </Route> 
+          <Route path="/profile">
+            <Profile user={props.user}/>  
+          </Route>
+          <Route path="/workout-call">
+            <WorkoutCall user={props.user}/>  
+          </Route> 
+          <Route path="/">
+            <About />  
+          </Route> 
         </Switch>
-
       </Router>
     </main>
   )

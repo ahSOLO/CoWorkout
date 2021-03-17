@@ -1,4 +1,5 @@
-// import axios from './fakeAxios';
+import axios from './fakeAxios';
+import { useEffect, useState } from 'react';
 // import axios from 'axios';
 import MainRouter from './components/MainRouter';
 import './basic.scss';
@@ -9,6 +10,7 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 // How to import a mat-ui component + Icon
 import Button from '@material-ui/core/Button';
 import FaceIcon from '@material-ui/icons/Face';
+import userEvent from '@testing-library/user-event';
 
 const theme = createMuiTheme({
   palette: {
@@ -44,7 +46,7 @@ const theme = createMuiTheme({
 })
 
 function App() {
-  console.log('Rerendered');
+  // console.log('Rerendered');  
 
   // const checkLogin = function() {
   //   axios.get('/api/user/testuser')
@@ -53,11 +55,23 @@ function App() {
   //     })
   // }();
 
+  // Basic implementation of getting user data, need to replace
+  const [userObj, setUserObj ] = useState(null);
+
+  const getUserObj = function() {
+    axios.get('/api/user/testuser')
+      .then((data) => setUserObj(data));
+  }
+
+  useEffect(() => {
+    getUserObj();
+  }, [])
+
   return (
     <ThemeProvider theme={theme}>
       <div>
         <nav>CoWorkout</nav>
-        <MainRouter />
+        <MainRouter user={userObj} />
         <br/> <br/>
         {/* Example of mat-UI button + how to use an Icon */}
         <Button color='primary' variant='contained' size='large' startIcon={<FaceIcon/>}>Example mat-UI Button</Button>
