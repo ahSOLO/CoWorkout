@@ -1,5 +1,5 @@
 import debounce from 'lodash.debounce';
 
 export const hoverHandler = function (hoverFunc, hoverState) {
-  debounce(() => hoverFunc(hoverState), 50)();
+  debounce(() => hoverFunc(hoverState), 40)();
 }
