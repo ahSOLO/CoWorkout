@@ -104,11 +104,17 @@ const matchMake = function(sessionPool) {
   return sessionPool[Math.floor(Math.random() * Math.floor(sessionPool.length))];
 };
 
-const adaptSessionObj = function(sessionObj, startTimeUserTZ, dayOfWeek) {
+const adaptSessionObj = function(sessionObj, userTZ) {
+
+  const startTimeUserTZ = changeToUserTZ(sessionObj.start_time, userTZ);
+  const dayOfWeek = extractDayOfWeek(startTimeUserTZ);
+  const startTimeString = extractTimeString(startTimeUserTZ);
+
   return {
     'id': sessionObj.id,
     'day': dayOfWeek,
     'start_time': startTimeUserTZ,
+    'start_time_ref': startTimeString,
     'activity_type': sessionObj.activity_type,
     'session_users': sessionObj.session_users
   }
@@ -139,26 +145,23 @@ const rebuildAppointmentObjs = function(emptyAppointments, persistentAppointment
   };
 
   for (const appointment of allAppointments) {
-    const startTimeUserTZ = changeToUserTZ(appointment.start_time, userTZ);
-    const dayOfWeek = extractDayOfWeek(startTimeUserTZ);
-    const startTimeString = extractTimeString(startTimeUserTZ);
+    const currentAppointment = adaptSessionObj(appointment, userTZ);
     
-    if (reconstructedAppointments[dayOfWeek][startTimeString].state !== 'empty') {
-
+    if (reconstructedAppointments[currentAppointment.day][currentAppointment.start_time_ref].state !== 'empty') {
       // add the existing appointment to the pool so it can be considered for the matching algorithm. Wrap in `if` statement so we don't keep adding that same appointment to the pool.
-      if (!sameSlotAppointments[dayOfWeek] || !sameSlotAppointments[dayOfWeek][startTimeString]) {
+      if (!sameSlotAppointments[currentAppointment.day] || !sameSlotAppointments[currentAppointment.day][currentAppointment.start_time_ref]) {
         // add `if` so the previous dups don't get overwritten
-        if (!sameSlotAppointments[dayOfWeek]) {
-          sameSlotAppointments[dayOfWeek] = {};
+        if (!sameSlotAppointments[currentAppointment.day]) {
+          sameSlotAppointments[currentAppointment.day] = {};
         }
-        sameSlotAppointments[dayOfWeek][startTimeString] = [reconstructedAppointments[dayOfWeek][startTimeString]];
+        sameSlotAppointments[currentAppointment.day][currentAppointment.start_time_ref] = [reconstructedAppointments[currentAppointment.day][currentAppointment.start_time_ref]];
       }
 
       // add the next appointment to the list
-      sameSlotAppointments[dayOfWeek][startTimeString].push(adaptSessionObj(appointment, startTimeUserTZ, dayOfWeek));
+      sameSlotAppointments[currentAppointment.day][currentAppointment.start_time_ref].push(currentAppointment);
 
     } else {
-      reconstructedAppointments[dayOfWeek][startTimeString] = adaptSessionObj(appointment, startTimeUserTZ, dayOfWeek);
+      reconstructedAppointments[currentAppointment.day][currentAppointment.start_time_ref] = currentAppointment;
     }
   }
 
@@ -171,11 +174,8 @@ const rebuildAppointmentObjs = function(emptyAppointments, persistentAppointment
   }
 
   for (const appointment of persistentAppointments) {
-    const startTimeUserTZ = changeToUserTZ(appointment.start_time, userTZ);
-    const dayOfWeek = extractDayOfWeek(startTimeUserTZ);
-    const startTimeString = extractTimeString(startTimeUserTZ);
-
-    reconstructedAppointments[dayOfWeek][startTimeString] = adaptSessionObj(appointment, startTimeUserTZ, dayOfWeek);
+    const currentAppointment = adaptSessionObj(appointment, userTZ);
+    reconstructedAppointments[currentAppointment.day][currentAppointment.start_time_ref] = currentAppointment;
   }
 
   return reconstructedAppointments;
