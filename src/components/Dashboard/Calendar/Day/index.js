@@ -13,11 +13,25 @@ const fakeSessions = intervals.map( interval => {
   )
 })
 
+
+
+// transform props.slots into usable data
+const renderSlots = function(slotsForDay) {
+  let slots = [];
+  for (const slot in slotsForDay) {
+    // console.log(slotsForDay[slot]);
+    slots.push(
+      <Slot content={slotsForDay[slot]} />
+    )
+  }
+  return slots;
+}
+
 export default function Day(props) {
 
   return (
     <div className="container__slots">
-      {fakeSessions}
+      {renderSlots(props.slots)}
     </div>
   )
 }
