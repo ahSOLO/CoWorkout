@@ -132,7 +132,10 @@ const rebuildAppointmentObjs = function(emptyAppointments, allAppointments, user
 
       // add the existing appointment to the pool so it can be considered for the matching algorithm. Wrap in `if` statement so we don't keep adding that same appointment to the pool.
       if (!sameSlotAppointments[dayOfWeek] || !sameSlotAppointments[dayOfWeek][startTimeString]) {
-        sameSlotAppointments[dayOfWeek] = {};
+        // add `if` so the previous dups don't get overwritten
+        if (!sameSlotAppointments[dayOfWeek]) {
+          sameSlotAppointments[dayOfWeek] = {};
+        }
         sameSlotAppointments[dayOfWeek][startTimeString] = [reconstructedAppointments[dayOfWeek][startTimeString]];
       }
 
@@ -177,12 +180,12 @@ const allSlots = autoGenerateEmptyAppointments();
 // console.log(getWeekDates("2021-03-29T19:07:04.353Z"));
 
 const fakeSessions = [
+  // 3 appointments on the same timeslot
   {
     id: 1,
     owner_first_name: 'Chuck',
     owner_profile_image_url: 'avatar',
     owner_ref_id: 'd93ghjfek',
-    day: 'TUE',
     start_time: '2021-03-15T16:00:00.000Z',
     activity_type: 'napping'
   },
@@ -191,7 +194,6 @@ const fakeSessions = [
     owner_first_name: 'Rick',
     owner_profile_image_url: 'avatar',
     owner_ref_id: 'dsa98f89b',
-    day: 'TUE',
     start_time: '2021-03-15T16:00:00.000Z',
     activity_type: 'lounging'
   },
@@ -200,8 +202,33 @@ const fakeSessions = [
     owner_first_name: 'Morty',
     owner_profile_image_url: 'avatar',
     owner_ref_id: 'fd938hgds',
-    day: 'TUE',
     start_time: '2021-03-15T16:00:00.000Z',
+    activity_type: 'sleeping'
+  },
+  // 1 appointment with no dups
+  {
+    id: 4,
+    owner_first_name: 'Coolguy',
+    owner_profile_image_url: 'avatar',
+    owner_ref_id: 'fdsegfgr0a',
+    start_time: '2021-03-15T16:30:00.000Z',
+    activity_type: 'sleeping'
+  },
+  // 2 more dup appointments
+  {
+    id: 5,
+    owner_first_name: 'Dup1',
+    owner_profile_image_url: 'avatar',
+    owner_ref_id: 'hjy5eje5',
+    start_time: '2021-03-15T17:30:00.000Z',
+    activity_type: 'sleeping'
+  },
+  {
+    id: 6,
+    owner_first_name: 'Dup2',
+    owner_profile_image_url: 'avatar',
+    owner_ref_id: 'gvrf43hj6',
+    start_time: '2021-03-15T17:30:00.000Z',
     activity_type: 'sleeping'
   },
 ];
