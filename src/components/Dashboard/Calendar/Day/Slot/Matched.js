@@ -15,7 +15,7 @@ export default function Matched(props){
         </div>
       </div>
       <Box paddingRight="5px">
-        <CloseOutlinedIcon className="clickable"/>
+        {props.hover && <CloseOutlinedIcon className="clickable"/>}
       </Box>
     </Box>
   )
