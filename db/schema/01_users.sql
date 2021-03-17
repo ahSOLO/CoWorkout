@@ -9,9 +9,8 @@ CREATE TABLE users (
   phone_number VARCHAR(255) NOT NULL,
   gender VARCHAR(16),
   birth_date DATE,
-  weight_lbs INT,
-  height_in INT,
-  city VARCHAR(255),
-  state VARCHAR(255),
+  country VARCHAR(255),
+  region VARCHAR(255),
+  timezone VARCHAR(255),
   profile_image_url VARCHAR(255)
 );
