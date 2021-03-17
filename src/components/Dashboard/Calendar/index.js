@@ -98,13 +98,13 @@ export default function Calendar(props) {
           <div className="cal__ticks">
             {calTicks}
           </div>
-            <Day />
-            <Day />
-            <Day />
-            <Day />
-            <Day />
-            <Day />
-            <Day />
+            <Day slots={slots['MON']} />
+            <Day slots={slots['TUE']} />
+            <Day slots={slots['WED']} />
+            <Day slots={slots['THU']} />
+            <Day slots={slots['FRI']} />
+            <Day slots={slots['SAT']} />
+            <Day slots={slots['SUN']} />
         </div>
       </section>
     </div>

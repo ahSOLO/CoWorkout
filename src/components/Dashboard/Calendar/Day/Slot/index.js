@@ -18,24 +18,27 @@ const LOADING = "LOADING";
 const ERROR = "ERROR";
 
 export default function Slot(props) {
+  console.log('ran slot index');
   const [mode, setMode] = useState(EMPTY);
   const [hover, setHover] = useState(false);
+  
 
   useEffect(() => {
-    if (props.content === 0) setMode(EMPTY);
-    if (props.content === 2) setMode(BOOKED);
+    if (props.content.state === 'empty') setMode(EMPTY);
+    if (props.content.state === 'pending') setMode(BOOKED);
     if (props.content === 4) setMode(MATCHING);
-    if (props.content === 6) setMode(MATCHED);
+    if (props.content.state === 'active') setMode(MATCHED);
     if (props.content === 8) setMode(LOADING);
     if (props.content === 10) setMode(ERROR);
   }, [])
+  // console.log(props.content.state);
 
   return (
     <div className="slot" 
       onMouseOver={() => hoverHandler(setHover, true)}
       onMouseOut={() => hoverHandler(setHover, false)}>
         {mode === EMPTY && <Empty hover={hover}/>}
-        {mode === BOOKED && <Booked hover={hover}/>}
+        {mode === BOOKED && <Booked hover={hover} content={props.content} />}
         {mode === MATCHING && <Matching hover={hover}/>}
         {mode === MATCHED && <Matched hover={hover}/>}
         {mode === LOADING && <Status />}
