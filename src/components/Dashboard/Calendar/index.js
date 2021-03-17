@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import Day from "./Day";
 import "./styles.scss";
-import { allSlots, changeToUserTZ, extractTimeString, getWeekDates } from "../../../calendarHelpers";
-import axios from '../../../fakeAxios';
-// import axios from 'axios';
+import { getWeekDates, rebuildAppointmentObjs } from "helpers/calendarHelpers";
+import useApplicationData from 'hooks/useApplicationData';
 
 // Material UI
 import { Typography, IconButton } from "@material-ui/core";
@@ -12,8 +11,12 @@ import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutli
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined';
 import RefreshOutlinedIcon from '@material-ui/icons/RefreshOutlined';
+import AddIcon from '@material-ui/icons/Add';
 
 export default function Calendar(props) {
+
+  // fetch data from db
+  const { slots, setSlots, appointments, setAppointments} = useApplicationData();
 
   // Get scrollbar width and compensate width of calendar header accordingly
   useEffect(() => {
@@ -29,16 +32,6 @@ export default function Calendar(props) {
     console.log(document.querySelector("div.cal__headers"));
     document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
   }, [])
-
-  axios.get('/api/sessions', {
-    params: {
-      start_datetime: 'find appointments set for dates after this',
-      end_datetime: 'find appointments set for dates before this'
-    }
-  })
-  .then((data) => {
-
-  });
 
   const targetDay = new Date();
   // for displaying month names dynamically
@@ -75,7 +68,7 @@ export default function Calendar(props) {
       )
     }
   )
-
+  // console.log(slots['WED']);
   return (
     <div class="cal__container">
       <section class="cal__top">
@@ -106,15 +99,18 @@ export default function Calendar(props) {
           <div className="cal__ticks">
             {calTicks}
           </div>
-            <Day />
-            <Day />
-            <Day />
-            <Day />
-            <Day />
-            <Day />
-            <Day />
+            <Day slots={slots['MON']} />
+            <Day slots={slots['TUE']} />
+            <Day slots={slots['WED']} />
+            <Day slots={slots['THU']} />
+            <Day slots={slots['FRI']} />
+            <Day slots={slots['SAT']} />
+            <Day slots={slots['SUN']} />
         </div>
       </section>
+      <IconButton id="bookNewButton">
+        <AddIcon fontSize="large" />
+      </IconButton>
     </div>
   )
 }

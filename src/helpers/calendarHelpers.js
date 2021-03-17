@@ -153,7 +153,8 @@ const rebuildAppointmentObjs = function(emptyAppointments, allAppointments, user
         'owner_ref_id': appointment.owner_ref_id,
         'day': dayOfWeek,
         'start_time': startTimeUserTZ,
-        'activity_type': appointment.activity_type
+        'activity_type': appointment.activity_type,
+        'state': 'pending'
       });
 
     } else {
@@ -164,7 +165,8 @@ const rebuildAppointmentObjs = function(emptyAppointments, allAppointments, user
           'owner_ref_id': appointment.owner_ref_id,
           'day': dayOfWeek,
           'start_time': startTimeUserTZ,
-          'activity_type': appointment.activity_type
+          'activity_type': appointment.activity_type,
+          'state': 'pending'
       };
     }
   }

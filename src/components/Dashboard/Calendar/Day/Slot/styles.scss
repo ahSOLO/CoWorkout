@@ -6,6 +6,23 @@
   align-items: center;
 }
 
+.slot:hover {
+  border-left: 2px solid #FBB03B;
+  border-right: 2px solid #FBB03B;
+  border-bottom: 2px solid transparent !important;
+  box-shadow:0px 2px 0px 0px #FBB03B inset;
+}
+
+.slot:hover + .slot {
+  color: transparent;
+  border-left: 2px solid #FBB03B;
+  border-right: 2px solid #FBB03B;
+  border-bottom: 2px solid #FBB03B !important;
+  img, p, svg {
+    display: none;
+  }
+}
+
 .slot:nth-child(4n) {
   border-bottom: 2px solid black;
 }

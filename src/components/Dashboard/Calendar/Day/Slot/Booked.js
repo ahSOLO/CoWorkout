@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { Box, Avatar, Typography } from '@material-ui/core';
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
-import { hoverHandler } from "../../../../../helpers/utility";
+import { hoverHandler } from "helpers/utility"
 
 export default function Booked(props){
   const [leftHover, setLeftHover] = useState(false);
@@ -14,14 +14,15 @@ export default function Booked(props){
           <Avatar 
             src="https://i.pravatar.cc/300" 
             className="clickable"
-            onMouseOver = {() => hoverHandler(setLeftHover, true)}
-            onMouseOut = {() => hoverHandler(setLeftHover, false)}/>
+            onMouseEnter = {() => hoverHandler(setLeftHover, true)}
+            onMouseLeave = {() => hoverHandler(setLeftHover, false)}
+          />
         </div>
         <div className="slot__name">
           <Typography variant="body2">
             {rightHover? "Schedule?"
             : leftHover? "View Profile?" 
-            : "Firstname L."}
+            : props.content.owner_name}
           </Typography>
         </div>
       </div>
@@ -30,8 +31,8 @@ export default function Booked(props){
         <CheckCircleOutlineOutlinedIcon 
           htmlColor="#4caf50" 
           className="clickable"
-          onMouseOver = {() => hoverHandler(setRightHover, true)}
-          onMouseOut = {() => hoverHandler(setRightHover, false)}
+          onMouseEnter = {() => hoverHandler(setRightHover, true)}
+          onMouseLeave = {() => hoverHandler(setRightHover, false)}
           />}
       </Box>
     </Box>

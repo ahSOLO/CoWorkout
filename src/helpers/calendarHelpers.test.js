@@ -1,4 +1,4 @@
-const { extractTimeString, extractDayOfWeek, changeToUserTZ, getWeekDates, rebuildAppointmentObjs } = require('./calendarHelpers');
+const { extractTimeString, extractDayOfWeek, changeToUserTZ, getWeekDates, rebuildAppointmentObjs, allSlots } = require('./calendarHelpers');
 
 const fakeSessions = [
   // 3 appointments on the same timeslot
@@ -55,6 +55,8 @@ const fakeSessions = [
 ];
 
 const allAppointments = rebuildAppointmentObjs(allSlots, fakeSessions, 'Asia/Singapore');
+
+console.log(allAppointments['WED'])
 
 
 

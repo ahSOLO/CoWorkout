@@ -1,5 +1,5 @@
 import Slot from "./Slot";
-import axios from '../../../../fakeAxios';
+import axios from 'fakeAxios';
 // import axios from 'axios';
 
 import { Typography } from "@material-ui/core";
@@ -13,11 +13,23 @@ const fakeSessions = intervals.map( interval => {
   )
 })
 
+// transform props.slots into usable data
+const renderSlots = function(slotsForDay) {
+  let slots = [];
+  for (const slot in slotsForDay) {
+  slots.push(
+    <Slot data={slotsForDay[slot]} />
+    )
+  }
+  // console.log(slotsForDay);
+  return slots;
+}
+
 export default function Day(props) {
 
   return (
     <div className="container__slots">
-      {fakeSessions}
+      {renderSlots(props.slots)}
     </div>
   )
 }
