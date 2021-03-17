@@ -67,7 +67,7 @@ export default function Calendar(props) {
       )
     }
   )
-
+  // console.log(slots['WED']);
   return (
     <div class="cal__container">
       <section class="cal__top">

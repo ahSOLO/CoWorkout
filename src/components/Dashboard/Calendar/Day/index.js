@@ -19,11 +19,11 @@ const fakeSessions = intervals.map( interval => {
 const renderSlots = function(slotsForDay) {
   let slots = [];
   for (const slot in slotsForDay) {
-    // console.log(slotsForDay[slot]);
-    slots.push(
-      <Slot content={slotsForDay[slot]} />
+  slots.push(
+    <Slot content={slotsForDay[slot]} status={} />
     )
   }
+  // console.log(slotsForDay);
   return slots;
 }
 

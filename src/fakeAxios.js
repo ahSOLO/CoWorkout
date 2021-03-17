@@ -89,7 +89,7 @@ const fakePromise = function(fakeData) {
   const fakePromise = new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve(fakeData);
-    }, 2000);
+    }, 1);
   });
   return fakePromise;
 }
