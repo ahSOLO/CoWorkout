@@ -8,7 +8,7 @@ import Matching from "./Matching";
 import Matched from "./Matched";
 import Status from "./Status";
 import Error from "./Error";
-import { hoverHandler } from "../../../../../helpers/utility";
+import { hoverHandler } from "helpers/utility";
 
 const EMPTY = "EMPTY";
 const BOOKED = "BOOKED";

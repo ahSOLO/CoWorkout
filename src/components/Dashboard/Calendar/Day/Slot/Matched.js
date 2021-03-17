@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, Avatar, Typography } from "@material-ui/core";
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
-import { hoverHandler } from "../../../../../helpers/utility";
+import { hoverHandler } from "helpers/utility";
 
 export default function Matched(props){
   const [leftHover, setLeftHover] = useState(false);

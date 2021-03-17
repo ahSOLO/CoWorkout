@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, Avatar, Typography } from '@material-ui/core';
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
-import { hoverHandler } from "../../../../../helpers/utility";
+import { hoverHandler } from "helpers/utility"
 
 export default function Booked(props){
   const [leftHover, setLeftHover] = useState(false);
