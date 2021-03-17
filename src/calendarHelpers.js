@@ -101,21 +101,67 @@ const autoGenerateEmptyAppointments = function() {
 const rebuildAppointmentObjs = function(emptyAppointments, allAppointments, userTZ) {
   // deep copy emptyAppointments
   let reconstructedAppointments = {...emptyAppointments};
+
+  // contains appointments that are on the same timeslot
+  let sameSlotAppointments = {
+    /* EXAMPLE
+    'MON': {
+      '03:00': [
+        { appointmentObj },
+        { appointmentObj },
+        { appointmentObj }
+      ],
+      '03:30': [
+        { appointmentObj },
+        { appointmentObj }
+      ]
+    },
+    'TUE': {
+      // ...
+    }
+    */
+  };
+
   for (const appointment of allAppointments) {
     const startTimeUserTZ = changeToUserTZ(appointment.start_time, userTZ);
     const dayOfWeek = extractDayOfWeek(startTimeUserTZ);
     const startTimeString = extractTimeString(startTimeUserTZ);
-    reconstructedAppointments[dayOfWeek][startTimeString] = {
+    
+
+    if (reconstructedAppointments[dayOfWeek][startTimeString].state !== 'empty') {
+
+      // add the existing appointment to the pool so it can be considered for the matching algorithm. Wrap in `if` statement so we don't keep adding that same appointment to the pool.
+      if (!sameSlotAppointments[dayOfWeek] || !sameSlotAppointments[dayOfWeek][startTimeString]) {
+        sameSlotAppointments[dayOfWeek] = {};
+        sameSlotAppointments[dayOfWeek][startTimeString] = [reconstructedAppointments[dayOfWeek][startTimeString]];
+      }
+
+      // add the next appointment to the list
+      sameSlotAppointments[dayOfWeek][startTimeString].push({
         'id': appointment.id,
         'owner_name': appointment.owner_first_name,
-        'owner_pic': appointment.onwer_profile_image_url,
+        'owner_pic': appointment.owner_profile_image_url,
         'owner_ref_id': appointment.owner_ref_id,
         'day': dayOfWeek,
         'start_time': startTimeUserTZ,
         'activity_type': appointment.activity_type
-    };
+      });
+
+    } else {
+      reconstructedAppointments[dayOfWeek][startTimeString] = {
+          'id': appointment.id,
+          'owner_name': appointment.owner_first_name,
+          'owner_pic': appointment.owner_profile_image_url,
+          'owner_ref_id': appointment.owner_ref_id,
+          'day': dayOfWeek,
+          'start_time': startTimeUserTZ,
+          'activity_type': appointment.activity_type
+      };
+    }
+
   }
-  console.log(reconstructedAppointments);
+  console.log(reconstructedAppointments['WED']);
+  console.log(sameSlotAppointments);
   return reconstructedAppointments;
 }
 
@@ -134,7 +180,7 @@ const fakeSessions = [
   {
     id: 1,
     owner_first_name: 'Chuck',
-    onwer_profile_image_url: 'avatar',
+    owner_profile_image_url: 'avatar',
     owner_ref_id: 'd93ghjfek',
     day: 'TUE',
     start_time: '2021-03-15T16:00:00.000Z',
@@ -143,7 +189,7 @@ const fakeSessions = [
   {
     id: 2,
     owner_first_name: 'Rick',
-    onwer_profile_image_url: 'avatar',
+    owner_profile_image_url: 'avatar',
     owner_ref_id: 'dsa98f89b',
     day: 'TUE',
     start_time: '2021-03-15T16:00:00.000Z',
@@ -152,7 +198,7 @@ const fakeSessions = [
   {
     id: 3,
     owner_first_name: 'Morty',
-    onwer_profile_image_url: 'avatar',
+    owner_profile_image_url: 'avatar',
     owner_ref_id: 'fd938hgds',
     day: 'TUE',
     start_time: '2021-03-15T16:00:00.000Z',
