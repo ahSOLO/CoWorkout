@@ -21,19 +21,17 @@ export default function Slot(props) {
   // console.log('ran slot index');
   const [mode, setMode] = useState(EMPTY);
   const [hover, setHover] = useState(false);
-  
-
-  console.log("render");
 
   useEffect(() => {
-    if (props.status === 'empty') setMode(EMPTY);
-    if (props.status === 'pending') setMode(BOOKED); //somebody other than you has booked and you're able to match
-    if (props.status === 4) setMode(MATCHING); // you booked and you're able to match with others
-    if (props.status === 'active') setMode(MATCHED); // match is completed
-    if (props.status === 8) setMode(LOADINGstatusoading
-    if (props.status === 10) setMode(ERROR); // error
-  }, [mode, props.content.state])
-  console.log(props.content.state);
+    if (props.data.state === 'empty') setMode(EMPTY);
+    else if (props.data.state === 'pending') {
+      setMode(BOOKED); // somebody other than you has booked and you're able to match - i.e. there is at least 1 person (not you) associated with a 'pending' session
+      // setMode(MATCHING); // you booked and you're able to match with others - i.e. you're the owner of a 'pending' session and the only person associated with it
+      // setMode(MATCHED); // match is completed - i.e. there are 2 people associated with a 'pending' session
+    }
+  }, [props.data.state])
+
+  // console.log(props.content.state);
 
   return (
     <div className="slot" 
