@@ -1,0 +1,74 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.steps--active {
+  text-align: center;
+  padding: 10px;
+  color: rgb(251, 176, 59);
+  border-bottom: 2px solid rgb(251, 176, 59);
+  width: 250px;
+}
+
+.steps--inactive {
+  text-align: center;
+  padding: 10px;
+  color: rgba(251, 176, 59, 0.4);
+  border-bottom: 2px solid rgba(251, 176, 59, 0.4);
+  width: 250px;
+}
+
+.textfield--full {
+  width: 400px;
+  height: 50px;
+}
+
+.textfield--half {
+  width: 200px;
+  height: 50px;
+}
+
+.prompt {
+  text-align: center;
+}
+
+.prompt--optional {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.button {
+  width: 400px;
+}
+
+.profile {
+  width: 420px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile--optional {
+  width: 350px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preferences {
+  display: flex;
+}
+
+.preferences > fieldset {
+  margin-top: 1em;
+  margin-left: 5em;
+  margin-right: 5em;
+  margin-bottom: 1em;
+}
