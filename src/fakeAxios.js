@@ -63,6 +63,9 @@ const fakeData = {
         // 2 appointments with no dups
         appointment4,
         appointment5,
+        appointment6,
+        appointment7,
+
       ],
 
       // APPOINTMENTS THAT THE USER HAS MADE OR MATCHED WITH
