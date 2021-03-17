@@ -104,19 +104,14 @@ const matchMake = function(sessionPool) {
   return sessionPool[Math.floor(Math.random() * Math.floor(sessionPool.length))];
 };
 
-// // helper function for rebuildAppointmentObjs
-// const assignPersistentSlots = function(persistentSlots, userTZ) {
-//   for (const slot of persistentSlots) {
-//     const slotStartTime = changeToUserTZ(slot.start_time, userTZ);
-//     const slotStartTimeRef = extractTimeString(slotStartTime);
-//     const dayOfWeek = extractDayOfWeek(slotStartTime);
-
-
-//   }
-// }
-
-const adaptSessionObj = function(sessionObj) {
-  
+const adaptSessionObj = function(sessionObj, startTimeUserTZ, dayOfWeek) {
+  return {
+    'id': sessionObj.id,
+    'day': dayOfWeek,
+    'start_time': startTimeUserTZ,
+    'activity_type': sessionObj.activity_type,
+    'session_users': sessionObj.session_users
+  }
 }
 
 const rebuildAppointmentObjs = function(emptyAppointments, allAppointments, userTZ) {
@@ -160,22 +155,10 @@ const rebuildAppointmentObjs = function(emptyAppointments, allAppointments, user
       }
 
       // add the next appointment to the list
-      sameSlotAppointments[dayOfWeek][startTimeString].push({
-        'id': appointment.id,
-        'day': dayOfWeek,
-        'start_time': startTimeUserTZ,
-        'activity_type': appointment.activity_type,
-        'session_users': appointment.session_users
-      });
+      sameSlotAppointments[dayOfWeek][startTimeString].push(adaptSessionObj(appointment, startTimeUserTZ, dayOfWeek));
 
     } else {
-      reconstructedAppointments[dayOfWeek][startTimeString] = {
-        'id': appointment.id,
-        'day': dayOfWeek,
-        'start_time': startTimeUserTZ,
-        'activity_type': appointment.activity_type,
-        'session_users': appointment.session_users
-      };
+      reconstructedAppointments[dayOfWeek][startTimeString] = adaptSessionObj(appointment, startTimeUserTZ, dayOfWeek);
     }
   }
 
