@@ -3,8 +3,7 @@ import { Box, Avatar, Typography, Dialog, DialogTitle, DialogContent, Button } f
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 import { hoverHandler } from "helpers/utility"
-
-import moment from 'moment';
+import ConfirmDialogue from "components/Dialogs/ConfirmDialogue";
 
 export default function Booked(props){
   const [leftHover, setLeftHover] = useState(false);
@@ -15,15 +14,12 @@ export default function Booked(props){
   const handleAvatarClick = () => {
     setProfileOpen(true);
   }
-
   const handleProfileClose = () => {
     setProfileOpen(false);
   }
-
   const handleConfirmClick = () => {
     setConfirmOpen(true);
   }
-
   const handleConfirmClose = () => {
     setConfirmOpen(false);
   }
@@ -66,7 +62,8 @@ export default function Booked(props){
         </Typography>
       </Dialog>
       {/* Confirm Booking Dialogue */}
-      <Dialog onClose={handleConfirmClose} open={confirmOpen}>
+      <ConfirmDialogue data={props.data} handleConfirmClose={handleConfirmClose} confirmOpen={confirmOpen} />
+      {/* <Dialog onClose={handleConfirmClose} open={confirmOpen}>
         <Box display="flex" flexDirection="row-reverse" alignItems="center" width="100%">
           <Box marginTop="10px" marginRight="10px">
             <CloseOutlinedIcon className="clickable" onClick={handleConfirmClose}/>
@@ -89,7 +86,7 @@ export default function Booked(props){
             </Button>
           </Box>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
     </Box>
     )
 }
