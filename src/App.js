@@ -7,11 +7,6 @@ import './basic.scss';
 // mat-ui theme
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-// How to import a mat-ui component + Icon
-import Button from '@material-ui/core/Button';
-import FaceIcon from '@material-ui/icons/Face';
-import userEvent from '@testing-library/user-event';
-
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -73,8 +68,6 @@ function App() {
         <nav>CoWorkout</nav>
         <MainRouter user={userObj} />
         <br/> <br/>
-        {/* Example of mat-UI button + how to use an Icon */}
-        <Button color='primary' variant='contained' size='large' startIcon={<FaceIcon/>}>Example mat-UI Button</Button>
       </div>
     </ThemeProvider>
   );
