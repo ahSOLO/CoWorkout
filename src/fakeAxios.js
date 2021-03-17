@@ -8,6 +8,7 @@ const fakeData = {
         last_name: 'Norris',
         avatar: 'https://i.pravatar.cc/300',
         gender: 'Male',
+        timezone: 'Asia/Singapore'
         // add more as needed
       },
     },

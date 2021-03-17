@@ -104,8 +104,8 @@ const matchMake = function(sessionPool) {
   return sessionPool[Math.floor(Math.random() * Math.floor(sessionPool.length))];
 };
 
+// helper function for rebuildAppointmentObjs
 const adaptSessionObj = function(sessionObj, userTZ) {
-
   const startTimeUserTZ = changeToUserTZ(sessionObj.start_time, userTZ);
   const dayOfWeek = extractDayOfWeek(startTimeUserTZ);
   const startTimeString = extractTimeString(startTimeUserTZ);
