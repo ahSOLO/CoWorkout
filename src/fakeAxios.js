@@ -2,7 +2,7 @@
 const fakeData = {
   'GET': {
     '/api/user/testuser': {
-      'default': {
+      'default': { // default means no params are passed through axios.get
         id: 1,
         first_name: 'Chuck',
         last_name: 'Norris',
@@ -13,7 +13,8 @@ const fakeData = {
     },
     
     '/api/sessions': {
-      'default': [
+      'default': [// default means no params are passed through axios.get
+
         // 3 appointments on the same timeslot
         {
           id: 1,
@@ -33,6 +34,7 @@ const fakeData = {
           start_time: '2021-03-15T16:00:00.000Z',
           activity_type: 'lounging'
         },
+
         // 1 appointment with no dups
         {
           id: 4,
@@ -40,6 +42,7 @@ const fakeData = {
           start_time: '2021-03-15T16:30:00.000Z',
           activity_type: 'lounging'
         },
+
         // 2 more dup appointments
         {
           id: 5,
@@ -53,6 +56,10 @@ const fakeData = {
           start_time: '2021-03-15T17:30:00.000Z',
           activity_type: 'sleeping'
         },
+      ],
+
+      // APPOINTMENTS THAT THE USER HAS MADE OR MATCHED WITH
+      'current_user': [ // axios.get('/api/sessions', {params: {current_user: <value is ignored>}}); /api/sessions?current_user=<value is ignored>
         // matched appointments
         {
           id: 6,
@@ -62,12 +69,13 @@ const fakeData = {
         },
         {
           id: 7,
-          session_users: [{user_id: 7, user_first_name: 'Match2', user_profile_image_url: 'https://i.pravatar.cc/300'}, {user_id: 1, user_first_name: 'Chuck', user_profile_image_url: 'https://i.pravatar.cc/300'}],
+          session_users: [{user_id: 8, user_first_name: 'Match2', user_profile_image_url: 'https://i.pravatar.cc/300'}, {user_id: 1, user_first_name: 'Chuck', user_profile_image_url: 'https://i.pravatar.cc/300'}],
           start_time: '2021-03-15T18:00:00.000Z',
           activity_type: 'circuit'
         }
-      ]
-    },
+      ],
+    }
+
     
   },
 
@@ -101,7 +109,7 @@ const axios = {
     if (!params) {
       params = 'default';
     } else {
-      params = JSON.stringify(params.params);
+      params = Object.keys(params.params)[0];
       console.log(params);
     }
 
@@ -112,7 +120,7 @@ const axios = {
     if (!params) {
       params = 'default';
     } else {
-      params = JSON.stringify(params.params);
+      params = Object.keys(params.params)[0];
     }
     return fakePromise(fakeData['POST'][route][params]); 
   },
@@ -120,11 +128,32 @@ const axios = {
     if (!params) {
       params = 'default';
     } else {
-      params = JSON.stringify(params.params);
+      params = Object.keys(params.params)[0];
     }
     return fakePromise(fakeData['DELETE'][route][params]); 
   }
 }
+
+// usage examples
+// axios.get('/api/sessions')
+// .then((data) => {
+//   console.log('test call /api/sessions')
+//   console.log(data);
+// })
+
+// axios.get('/api/sessions', { params: {
+//   current_user: 'someUser'
+// }})
+// .then((data) => {
+//   console.log('test call /api/sessions?current_user=someUser')
+//   console.log(data);
+// })
+
+// axios.get('/api/user/testuser')
+// .then((data) => {
+//   console.log('test call /api/user/testuser')
+//   console.log(data);
+// })
 
 export default axios;
 

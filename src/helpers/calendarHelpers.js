@@ -104,6 +104,21 @@ const matchMake = function(sessionPool) {
   return sessionPool[Math.floor(Math.random() * Math.floor(sessionPool.length))];
 };
 
+// // helper function for rebuildAppointmentObjs
+// const assignPersistentSlots = function(persistentSlots, userTZ) {
+//   for (const slot of persistentSlots) {
+//     const slotStartTime = changeToUserTZ(slot.start_time, userTZ);
+//     const slotStartTimeRef = extractTimeString(slotStartTime);
+//     const dayOfWeek = extractDayOfWeek(slotStartTime);
+
+
+//   }
+// }
+
+const adaptSessionObj = function(sessionObj) {
+  
+}
+
 const rebuildAppointmentObjs = function(emptyAppointments, allAppointments, userTZ) {
   // deep copy emptyAppointments
   let reconstructedAppointments = {...emptyAppointments};
