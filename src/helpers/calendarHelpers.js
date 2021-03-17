@@ -143,7 +143,6 @@ const rebuildAppointmentObjs = function(emptyAppointments, persistentAppointment
     }
     */
   };
-
   for (const appointment of allAppointments) {
     const currentAppointment = adaptSessionObj(appointment, userTZ);
     
