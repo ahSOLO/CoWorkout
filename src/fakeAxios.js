@@ -5,7 +5,7 @@ const fakeData = {
       id: 1,
       first_name: 'Chuck',
       last_name: 'Norris',
-      avatar: 'img link',
+      avatar: 'https://i.pravatar.cc/300',
       gender: 'Male',
       // add more as needed
     },
@@ -21,41 +21,54 @@ const fakeData = {
       // 3 appointments on the same timeslot
       {
         id: 1,
-        session_users: [{user_id: 2, user_first_name: 'Chuck', user_profile_image_url: '...'}],
+        session_users: [{user_id: 2, user_first_name: 'Chuck', user_profile_image_url: 'https://i.pravatar.cc/300'}],
         start_time: '2021-03-15T16:00:00.000Z',
         activity_type: 'napping'
       },
       {
         id: 2,
-        session_users: [{user_id: 3, user_first_name: 'Sandy', user_profile_image_url: '...'}],
+        session_users: [{user_id: 3, user_first_name: 'Sandy', user_profile_image_url: 'https://i.pravatar.cc/300'}],
         start_time: '2021-03-15T16:00:00.000Z',
         activity_type: 'napping'
       },
       {
         id: 3,
-        session_users: [{user_id: 4, user_first_name: 'Sandy', user_profile_image_url: '...'}],
+        session_users: [{user_id: 4, user_first_name: 'Sandy', user_profile_image_url: 'https://i.pravatar.cc/300'}],
         start_time: '2021-03-15T16:00:00.000Z',
         activity_type: 'lounging'
       },
       // 1 appointment with no dups
       {
         id: 4,
-        session_users: [{user_id: 5, user_first_name: 'Coolguy', user_profile_image_url: '...'}],
+        session_users: [{user_id: 5, user_first_name: 'Coolguy', user_profile_image_url: 'https://i.pravatar.cc/300'}],
         start_time: '2021-03-15T16:30:00.000Z',
         activity_type: 'lounging'
       },
       // 2 more dup appointments
       {
         id: 5,
-        session_users: [{user_id: 6, user_first_name: 'Dup1', user_profile_image_url: '...'}],
+        session_users: [{user_id: 6, user_first_name: 'Dup1', user_profile_image_url: 'https://i.pravatar.cc/300'}],
         start_time: '2021-03-15T17:30:00.000Z',
         activity_type: 'sleeping'
       },
       {
         id: 6,
-        session_users: [{user_id: 7, user_first_name: 'Dup2', user_profile_image_url: '...'}],
+        session_users: [{user_id: 7, user_first_name: 'Dup2', user_profile_image_url: 'https://i.pravatar.cc/300'}],
         start_time: '2021-03-15T17:30:00.000Z',
         activity_type: 'sleeping'
+      },
+      // matched appointments
+      {
+        id: 6,
+        session_users: [{user_id: 7, user_first_name: 'Match1', user_profile_image_url: 'https://i.pravatar.cc/300'}, {user_id: 1, user_first_name: 'Chuck', user_profile_image_url: 'https://i.pravatar.cc/300'}],
+        start_time: '2021-03-15T18:00:00.000Z',
+        activity_type: 'yoga'
+      },
+      {
+        id: 7,
+        session_users: [{user_id: 7, user_first_name: 'Match2', user_profile_image_url: 'https://i.pravatar.cc/300'}, {user_id: 1, user_first_name: 'Chuck', user_profile_image_url: 'https://i.pravatar.cc/300'}],
+        start_time: '2021-03-15T18:00:00.000Z',
+        activity_type: 'circuit'
       }
     ]
   },
