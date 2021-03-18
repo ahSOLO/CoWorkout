@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS workout_types CASCADE;
+
+CREATE TABLE workout_types (
+  id SERIAL PRIMARY KEY NOT NULL,
+  type VARCHAR(255) NOT NULL
+);
