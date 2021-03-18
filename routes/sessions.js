@@ -19,7 +19,9 @@ module.exports = (db) => {
     
     // console.log(start_date, end_date);
 
-    const query = `SELECT * FROM sessions
+    const query = `
+    SELECT * 
+    FROM sessions
     WHERE sessions.scheduled_at >= '${start_date.toISOString()}'
     AND sessions.scheduled_at <= '${end_date.toISOString()}';`;
 

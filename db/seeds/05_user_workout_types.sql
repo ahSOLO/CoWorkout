@@ -1,4 +1,4 @@
-INSERT INTO user_workout_interests (user_id, workout_interest_id)
+INSERT INTO user_workout_types (user_id, workout_type_id)
 VALUES (1, 4),
 (1, 1),
 (1, 6),

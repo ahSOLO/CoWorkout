@@ -1,4 +1,4 @@
-INSERT INTO workout_interests (interest)
+INSERT INTO workout_types (type)
 VALUES ('Cardio'),
 ('Weight Training'),
 ('Yoga'),
