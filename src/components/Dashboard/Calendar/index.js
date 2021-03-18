@@ -3,6 +3,7 @@ import Day from "./Day";
 import "./styles.scss";
 import { getWeekDates, rebuildAppointmentObjs } from "helpers/calendarHelpers";
 import useApplicationData from 'hooks/useApplicationData';
+import BookNew from "components/Buttons/BookNew"; 
 
 // Material UI
 import { Typography, IconButton } from "@material-ui/core";
@@ -11,7 +12,6 @@ import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutli
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined';
 import RefreshOutlinedIcon from '@material-ui/icons/RefreshOutlined';
-import AddIcon from '@material-ui/icons/Add';
 
 export default function Calendar(props) {
 
@@ -151,9 +151,7 @@ export default function Calendar(props) {
             <Day user={props.user} slots={slots['SUN']} />
         </div>
       </section>
-      <IconButton id="bookNewButton">
-        <AddIcon fontSize="large" />
-      </IconButton>
+      <BookNew />
     </div>
   )
 }
