@@ -9,13 +9,12 @@ export default function useApplicationData() {
   const [ appointments, setAppointments ] = useState([]);
 
   const constructSlots = function(startDateTime) {
-    // startDateTime = formatTimeStamp(startDateTime);
-
+    const start_date = formatTimeStamp(startDateTime);
     const baseURL = "";
     Promise.all([
       axios.get(baseURL + '/api/sessions', {
         params: {
-          start_date: startDateTime
+          start_date
         }
       }),
       axios.get(baseURL + '/api/sessions', {
@@ -33,7 +32,7 @@ export default function useApplicationData() {
   };
 
   useEffect(() => {
-    constructSlots();
+    constructSlots('2021-03-10T23:58:22.219Z');
   }, []);
 
   return {
