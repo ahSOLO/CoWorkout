@@ -17,6 +17,7 @@
     "dotenv": "^8.2.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
+    "moment-timezone": "^0.5.33",
     "node-sass": "^5.0.0",
     "normalize.css": "^8.0.1",
     "pg": "^8.5.1",
