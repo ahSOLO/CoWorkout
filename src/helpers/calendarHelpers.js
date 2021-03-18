@@ -9,7 +9,7 @@ const formatTimeStamp = function(timestamp) {
 };
 
 const extractDayOfWeek = function(timestamp) {
-  const daysOfWeek = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+  const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   const targetDay = formatTimeStamp(timestamp);
   return daysOfWeek[targetDay.getDay()];
 };
