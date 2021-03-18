@@ -62,6 +62,7 @@ export default function Matched(props){
       />
       <CancelDialogue
         data={props.data}
+        user={props.user}
         otherUserData={otherUserData}
         handleCancelClose={handleCancelClose}
         cancelOpen={cancelOpen}

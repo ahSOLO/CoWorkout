@@ -24,6 +24,7 @@ export default function BookNew(props) {
       <BookDialogue
         handleBookClose={handleBookClose}
         bookOpen={bookOpen}
+        user={props.user}
       />
     </>
   )

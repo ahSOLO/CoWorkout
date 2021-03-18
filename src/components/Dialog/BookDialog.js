@@ -2,6 +2,7 @@ import {Button, InputLabel, Input, MenuItem, FormControl, Select, Box, TextField
 import { useState, useEffect } from 'react';
 import DialogueTemplate from "./DialogueTemplate";
 import moment from 'moment-timezone';
+import axios from 'axios';
 import MomentUtils from '@date-io/moment';
 import {
   MuiPickersUtilsProvider,
@@ -24,12 +25,17 @@ export default function BookDialogue(props) {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // Everything needed for the post request: user id, activity, start_time (in UTC)
+    const constructedLocalTime = moment(date + ' ' + time.format("HH:mm"), "YYYY-MM-DD HH:mm");
+    const start_time_UTC = constructedLocalTime.tz("UTC").format();
+    // Everything needed for the axios post request: user id, activity, start_time (in UTC)
     console.log("CURRENT USER ID", props.user.id);
     console.log("ACTIVITY:", activity);
-    const constructedLocalTime = moment(date + ' ' + time.format("HH:mm"), "YYYY-MM-DD HH:mm");
-    const UTC_start_time = constructedLocalTime.tz("UTC").format();
-    console.log("SESSION START TIME (UTC)", UTC_start_time);
+    console.log("SESSION START TIME (UTC)", start_time_UTC);
+    axios.post('/sessions', {user_id: props.user.id, activity: activity, start_time: start_time_UTC})
+    .then( res => {
+        console.log("Request Complete");
+      }
+    )
   }
 
   return (

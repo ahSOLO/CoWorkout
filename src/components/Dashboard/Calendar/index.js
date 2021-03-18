@@ -149,7 +149,7 @@ export default function Calendar(props) {
           <Day user={props.user} slots={slots['SAT']} date={weekDateTimes[6]}/>
         </div>
       </section>
-      <BookNew />
+      <BookNew user={props.user} />
     </div>
   )
 }
