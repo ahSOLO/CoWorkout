@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -10,12 +11,19 @@ import Link from '@material-ui/core/Link';
 
 export class SetPreferences extends Component {
 
+  state = { redirect: null };
+
   continue = e => {
     e.preventDefault();
     this.props.handleSubmit();
+    this.setState({ redirect: "/dashboard" });
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />
+    }
+
     const { values, handleChange } = this.props;
     return (
       <div>

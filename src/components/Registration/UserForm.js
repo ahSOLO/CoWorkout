@@ -15,6 +15,7 @@ export class UserForm extends Component {
     last_name: '',
     country: '',
     region: '',
+    timezone: '',
     birth_date: '',
     gender: '',
     cardio: false,
@@ -54,19 +55,63 @@ export class UserForm extends Component {
       last_name: this.state.last_name,
       country: this.state.country,
       region: this.state.region,
+      timezone: this.state.timezone,
       birth_date: this.state.birth_date,
       gender: this.state.gender,
-      cardio: this.state.cardio,
-      weight_training: this.state.weight_training,
-      yoga: this.state.yoga,
-      circuit: this.state.circuit,
-      hiit: this.state.hiit,
-      stretching: this.state.stretching,
-      get_stronger: this.state.get_stronger,
-      build_muscle: this.state.build_muscle,
-      lose_weight: this.state.lose_weight,
-      be_active: this.state.be_active,
-      get_toned: this.state.get_toned
+      interests: [
+        { 
+          interest_id: 1,
+          name: 'cardio',
+          value: this.state.cardio 
+        },
+        { 
+          interest_id: 2,
+          name: 'weight_training',
+          value: this.state.weight_training 
+        },
+        { 
+          interest_id: 3,
+          name: 'yoga',
+          value: this.state.yoga 
+        },
+        { 
+          interest_id: 4,
+          name: 'circuit',
+          value: this.state.circuit 
+        },
+        { 
+          interest_id: 5,
+          name: 'hiit',
+          value: this.state.hiit 
+        },
+        { 
+          interest_id: 6,
+          name: 'stretching',
+          value: this.state.stretching 
+        },
+      ],
+      goals: [
+        { goal_id: 1,
+          name: 'get_stronger',
+          value: this.state.get_stronger 
+        },
+        { goal_id: 2,
+          name: 'build_muscle',
+          value: this.state.build_muscle 
+        },
+        { goal_id: 3,
+          name: 'lose_weight',
+          value: this.state.lose_weight 
+        },
+        { goal_id: 4,
+          name: 'be_active',
+          value: this.state.be_active 
+        },
+        { goal_id: 5,
+          name: 'get_toned',
+          value: this.state.get_toned 
+        }
+      ]
     })
     .then(res => {
       console.log(res.data);
@@ -74,17 +119,13 @@ export class UserForm extends Component {
   }
 
   render() {
-    const { step } = this.state;
-    const { email, password, first_name, last_name, country, region, birth_date, gender, interests, goals } = this.state;
-    const values = { email, password, first_name, last_name, country, region, birth_date, gender, interests, goals }
-
-    switch(step) {
+    switch(this.state.step) {
       case 1:
         return (
           <SignUp
             nextStep={this.nextStep}
             handleChange={this.handleChange}
-            values={values}
+            values={this.state}
           />
         )
       case 2:
@@ -92,7 +133,7 @@ export class UserForm extends Component {
           <CreateProfile
             nextStep={this.nextStep}
             handleChange={this.handleChange}
-            values={values}
+            values={this.state}
           />
         )
       case 3:
@@ -101,11 +142,10 @@ export class UserForm extends Component {
             nextStep={this.nextStep}
             handleChange={this.handleChange}
             handleSubmit={this.handleSubmit}
-            values={values}
+            values={this.state}
           />
         )
     }
-    
   }
 }
 

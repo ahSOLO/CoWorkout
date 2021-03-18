@@ -6,9 +6,11 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
+import { countryTimezones } from "helpers/timezones";
 
 const allCountries = require('country-region-data')
 const selectCountries = allCountries.filter(country => country.countryName === 'United States' || country.countryName === 'Canada')
+
 
 export class CreateProfile extends Component {
 
@@ -16,7 +18,8 @@ export class CreateProfile extends Component {
     firstNameIsInvalid: false,
     lastNameIsInvalid: false,
     countryIsInvalid: false,
-    regionIsInvalid: false
+    regionIsInvalid: false,
+    timezoneisInvalid: false
   }
 
   continue = e => {
@@ -57,7 +60,16 @@ export class CreateProfile extends Component {
         regionIsInvalid: false
       });
     }
-    if (this.props.values.first_name !== "" && this.props.values.last_name !== "" && this.props.values.country !== "" && this.props.values.region !== "") {
+    if (this.props.values.timezone === "") {
+      this.setState({
+        timezoneIsInvalid: true
+      });
+    } else {
+      this.setState({
+        timezoneIsInvalid: false
+      });
+    }
+    if (this.props.values.first_name !== "" && this.props.values.last_name !== "" && this.props.values.country !== "" && this.props.values.region !== "" && this.props.values.timezone !== "") {
       this.props.nextStep();
     }
   }
@@ -84,7 +96,7 @@ export class CreateProfile extends Component {
             What's your name?
           </Typography>
           <br/><br/>
-          <section className="profile">
+          <section className="profile--name">
             <TextField 
               required
               error={this.state.firstNameIsInvalid}
@@ -110,7 +122,7 @@ export class CreateProfile extends Component {
             Where are you located?
           </Typography>
           <br/><br/>
-          <section className="profile">
+          <section className="profile--location">
             <TextField 
               required
               error={this.state.countryIsInvalid}
@@ -139,12 +151,33 @@ export class CreateProfile extends Component {
             >
               {this.props.values.country
                 ? selectCountries
-                    .find(({ countryName }) => countryName === this.props.values.country)
-                    .regions.map((region) => (
-                      <MenuItem value={region.name} key={region.shortCode}>
-                        {region.name}
-                      </MenuItem>
-                    ))
+                  .find(({ countryName }) => countryName === this.props.values.country)
+                  .regions.map((region) => (
+                    <MenuItem value={region.name} key={region.shortCode}>
+                      {region.name}
+                    </MenuItem>
+                  ))
+                : []}
+            </TextField>
+            <br/>
+            <TextField 
+              required
+              error={this.state.timezoneIsInvalid}
+              variant="outlined"
+              select
+              label="timezone"
+              onChange={handleChange('timezone')}
+              disabled={!this.props.values.country}
+              className="textfield textfield--half"
+            >
+              {this.props.values.country
+                ? countryTimezones
+                  .find(({ countryName }) => countryName === this.props.values.country)
+                  .timezones.map((timezone) => (
+                    <MenuItem value={timezone} key={timezone}>
+                      {timezone}
+                    </MenuItem>
+                  ))
                 : []}
             </TextField>
           </section>
