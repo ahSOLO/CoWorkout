@@ -1,7 +1,7 @@
 import {Button, InputLabel, Input, MenuItem, FormControl, Select, Box } from '@material-ui/core';
 import { useState, useEffect } from 'react';
 import DialogueTemplate from "./DialogueTemplate";
-import DateFnsUtils from '@date-io/date-fns';
+import MomentUtils from '@date-io/moment';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -46,7 +46,7 @@ export default function BookDialogue(props) {
                 <MenuItem value={"Stretching"}>Stretching</MenuItem>
               </Select>
             </FormControl>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
               <KeyboardDatePicker
                 disableToolbar
                 variant="inline"
