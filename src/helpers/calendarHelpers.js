@@ -42,32 +42,32 @@ const extractTimeString = function(timestamp) {
 const getWeekDates = function(targetDate = new Date()) {
   /*
     JS Date.getDay()
-    MON: 0
-    TUE: 1
-    WED: 2
-    THU: 3
-    FRI: 4
-    SAT: 5
-    SUN: 6
+    SUN: 0
+    MON: 1
+    TUE: 2
+    WED: 3
+    THU: 4
+    FRI: 5
+    SAT: 6
   */
 
   const today = formatTimeStamp(targetDate);
-  let daysFromMon = today.getDay();
-  let daysFromSun = 6 - today.getDay();
+  let daysFromSun = today.getDay();
+  let daysFromSat = 6 - today.getDay();
   let daysBeforeToday = [];
   let daysAfterToday = [];
 
   // get dates before today up till monday
-  while (daysFromMon > 0) {
+  while (daysFromSun > 0) {
     // deep copy of today object
     let newDate = new Date(today.getTime());
-    newDate.setDate(newDate.getDate() - daysFromMon);
+    newDate.setDate(newDate.getDate() - daysFromSun);
     daysBeforeToday.push(newDate.getDate());
-    daysFromMon --;
+    daysFromSun --;
   }
 
   // get dates after today up till sunday
-  for (let dayAfter = 1; dayAfter <= daysFromSun; dayAfter++) {
+  for (let dayAfter = 1; dayAfter <= daysFromSat; dayAfter++) {
     // deep copy of today object
     let newDate = new Date(today.getTime());
     newDate.setDate(newDate.getDate() + dayAfter);
