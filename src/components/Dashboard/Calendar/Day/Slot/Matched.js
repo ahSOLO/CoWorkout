@@ -28,8 +28,10 @@ export default function Matched(props){
   }
 
   useEffect(() => {
-    setOtherUserData(props.data.session_users.find(userObj => userObj.id !== props.user.id))
-  }, [props.data])
+    if (props.user){
+      setOtherUserData(props.data.session_users.find(userObj => userObj.id !== props.user.id))
+    }
+  }, [props.data, props.user])
 
   return(
     <Box display="flex" justifyContent="space-between" width="100%" alignItems="center">
