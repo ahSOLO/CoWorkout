@@ -64,7 +64,7 @@ export default function Booked(props){
         handleProfileClose={handleProfileClose}
         profileOpen={profileOpen}
       />
-      <ConfirmDialogue data={props.data} handleConfirmClose={handleConfirmClose} confirmOpen={confirmOpen} />
+      <ConfirmDialogue data={props.data} user={props.user} handleConfirmClose={handleConfirmClose} confirmOpen={confirmOpen} />
     </Box>
     )
 }

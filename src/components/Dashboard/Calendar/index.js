@@ -54,8 +54,8 @@ export default function Calendar(props) {
 
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-  let weekDateTimes = getWeekDateTimes(targetDay);
-  let weekDates = weekDateTimes.map( dateTime => dateTime.getDate());
+  const weekDateTimes = getWeekDateTimes(targetDay);
+  const weekDates = weekDateTimes.map( dateTime => dateTime.getDate());
 
   const calHeaders = weekDays.map(
     (weekDay, i) => {

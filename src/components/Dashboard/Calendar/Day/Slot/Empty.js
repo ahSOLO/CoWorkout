@@ -27,6 +27,7 @@ export default function Empty(props){
          bookOpen={bookOpen}
          data={props.data}
          date={props.date}
+         user={props.user}
       />
     </div>
   )
