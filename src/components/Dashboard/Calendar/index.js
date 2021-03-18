@@ -16,7 +16,7 @@ import AddIcon from '@material-ui/icons/Add';
 export default function Calendar(props) {
 
   // fetch data from db
-  const { slots, setSlots, appointments, setAppointments} = useApplicationData();
+  const { slots, constructSlots } = useApplicationData();
   const [ targetDay, setTargetDay ] = useState(new Date());
 
   // Get scrollbar width and compensate width of calendar header accordingly
@@ -33,16 +33,22 @@ export default function Calendar(props) {
     console.log(document.querySelector("div.cal__headers"));
     document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
   }, [])
+  
+  const refreshSlots = function(targetDay) {
+    constructSlots(targetDay);
+  }
 
   const setWeek = function(direction) {
     if (targetDay && direction === 'forward') {
       setTargetDay((prev) => {
         return new Date(prev.setDate(prev.getDate() + 7));
       });
+      refreshSlots(targetDay);
     } else {
       setTargetDay((prev) => {
         return new Date(prev.setDate(prev.getDate() - 7));
       });
+      refreshSlots(targetDay);
     }
   };
 
@@ -124,7 +130,7 @@ export default function Calendar(props) {
             <FilterListOutlinedIcon fontSize="large"/>
           </IconButton>
           <IconButton>
-            <RefreshOutlinedIcon fontSize="large"/>
+            <RefreshOutlinedIcon fontSize="large" onClick={() => {refreshSlots(targetDay)}} />
           </IconButton>
         </div>
       </section>
