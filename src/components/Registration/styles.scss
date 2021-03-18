@@ -49,8 +49,14 @@
   width: 400px;
 }
 
-.profile {
+.profile--name {
   width: 420px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile--location {
+  width: 640px;
   display: flex;
   justify-content: space-between;
 }
