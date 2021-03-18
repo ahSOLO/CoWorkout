@@ -56,7 +56,7 @@ const fakeSessions = [
 
 const allAppointments = rebuildAppointmentObjs(allSlots, fakeSessions, 'Asia/Singapore');
 
-console.log(allAppointments['WED'])
+// console.log(allAppointments['WED'])
 
 
 

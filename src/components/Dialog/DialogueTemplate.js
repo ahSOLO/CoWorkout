@@ -23,11 +23,13 @@ export default function DialogueTemplate(props) {
         <Typography variant="h4">{props.title}</Typography>
       </Box>
       <DialogContent>
-        {props.content}
-        <br/>
-        <Box display="flex" justifyContent="center">
-          {props.button}
-        </Box>
+        <form onSubmit={props.onFormSubmit}>
+          {props.content}
+          <br/>
+          <Box display="flex" justifyContent="center">
+            {props.button}
+          </Box>
+        </form>
       </DialogContent>
     </Dialog>
   )
