@@ -13,15 +13,15 @@ module.exports = (db) => {
       end_date = new Date();
       end_date.setTime(end_date.getTime() + days_before_sat * 24 * 60 * 60 * 1000);
     } else {
-      start_date = req.query.start_date;
-      end_date = req.query.end_date;
+      start_date = new Date(req.query.start_date);
+      end_date = new Date(req.query.end_date);
     }
     
     // console.log(start_date, end_date);
 
     const query = `SELECT * FROM sessions
-    WHERE sessions.scheduled_at >= '${start_date}'
-    AND sessions.scheduled_at <= '${end_date}';`;
+    WHERE sessions.scheduled_at >= '${start_date.toISOString()}'
+    AND sessions.scheduled_at <= '${end_date.toISOString()}';`;
 
     console.log(query);
 
