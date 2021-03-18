@@ -185,6 +185,7 @@ const allSlots = autoGenerateEmptyAppointments();
 
 module.exports = {
   allSlots,
+  formatTimeStamp,
   extractTimeString,
   extractDayOfWeek,
   changeToUserTZ,
