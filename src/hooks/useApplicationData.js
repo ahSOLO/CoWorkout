@@ -35,7 +35,9 @@ export default function useApplicationData() {
       })
     ])
     .then((all) => {
-      const [ retrievedAppointments, persistentAppointments ] = all;
+      const [ allSessionsQuery, persistentSessionsQuery ] = all;
+      let retrievedAppointments = allSessionsQuery.data.rows;
+      let persistentAppointments = persistentSessionsQuery.data.rows;
       console.log(retrievedAppointments);
       setAppointments(prev => retrievedAppointments);
       setSlots(rebuildAppointmentObjs(slots, persistentAppointments, retrievedAppointments, 'Asia/Singapore')); // !! modify to use user's timezone dynamically

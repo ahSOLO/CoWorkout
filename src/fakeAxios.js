@@ -55,27 +55,35 @@ const fakeData = {
     },
     
     '/api/sessions': {
-      'start_date': [
-        // 3 appointments on the same timeslot
-        appointment1,
-        appointment2,
-        appointment3,
-        // 2 appointments with no dups
-        appointment4,
-        appointment5,
-        appointment6,
-        appointment7,
-
-      ],
+      'start_date': {
+        'data': {
+          'rows': [
+            // 3 appointments on the same timeslot
+            appointment1,
+            appointment2,
+            appointment3,
+            // 2 appointments with no dups
+            appointment4,
+            appointment5,
+            appointment6,
+            appointment7,
+          ]
+        }
+      },
 
       // APPOINTMENTS THAT THE USER HAS MADE OR MATCHED WITH
-      'current_user': [ // axios.get('/api/sessions', {params: {current_user: <value is ignored>}}); /api/sessions?current_user=<value is ignored>
-        // matched appointments
-        appointment8,
-        appointment9,
-        appointment10,
-      ],
-    }
+      // axios.get('/api/sessions', {params: {current_user: <value is ignored>}}); /api/sessions?current_user=<value is ignored>
+      'current_user': {
+        'data': {
+          'rows': [ 
+            // matched appointments
+            appointment8,
+            appointment9,
+            appointment10,
+          ]
+        }
+      }
+    },
 
     
   },
