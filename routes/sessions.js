@@ -7,7 +7,6 @@ module.exports = (db) => {
     console.log('sessions');
 
     const user_id = req.query.user_id;
-    const session_type = req.query.session_type;
     const filter = req.query.filter; 
     let start_date;
     let end_date;
@@ -23,44 +22,78 @@ module.exports = (db) => {
 
     let query_string;
 
-    if (filter === 'calendar') {
-      if (session_type === 'transient') {
-        query_string = `
-        SELECT sessions.id AS session_id
-             , ARRAY_AGG(session_users.user_id ORDER BY session_users.user_id) as session_users
-             , sessions.scheduled_at as start_time
-             , workout_types.type as workout_type
-          FROM sessions 
-          JOIN session_users
-               ON sessions.id = session_users.session_id
-          LEFT JOIN workout_types
-               ON sessions.workout_type_id = workout_types.id
-         WHERE sessions.state = 'pending'
-           AND sessions.scheduled_at >= '${start_date.toISOString()}'
-           AND sessions.scheduled_at <= '${end_date.toISOString()}'
-           AND sessions.owner_id != ${user_id}
-         GROUP BY 1, 3, 4
-        HAVING COUNT(DISTINCT session_users.user_id) = 1;
-        `
-      } else {
-        query_string = `
-        SELECT sessions.id AS session_id
-             , ARRAY_AGG(session_users.user_id ORDER BY session_users.user_id) as session_users
-             , sessions.scheduled_at as start_time
-             , workout_types.type as workout_type
-         FROM sessions
-         JOIN (SELECT session_id FROM session_users WHERE user_id = ${user_id}) us
-              ON sessions.id = us.session_id
-         JOIN session_users
+    if (filter === 'transient') {
+      query_string = `
+      SELECT sessions.id AS session_id
+            , ARRAY_AGG(session_users.user_id ORDER BY session_users.user_id) AS session_users
+            , sessions.scheduled_at AS start_time
+            , workout_types.type AS workout_type
+        FROM sessions 
+        JOIN session_users
               ON sessions.id = session_users.session_id
-         LEFT JOIN workout_types
+        LEFT JOIN workout_types
               ON sessions.workout_type_id = workout_types.id
         WHERE sessions.state = 'pending'
           AND sessions.scheduled_at >= '${start_date.toISOString()}'
           AND sessions.scheduled_at <= '${end_date.toISOString()}'
+          AND sessions.owner_id != ${user_id}
         GROUP BY 1, 3, 4
-        `
-      }
+      HAVING COUNT(DISTINCT session_users.user_id) = 1;
+      `
+    } else if (filter === 'persistent') {
+      query_string = `
+      SELECT sessions.id AS session_id
+            , ARRAY_AGG(session_users.user_id ORDER BY session_users.user_id) AS session_users
+            , sessions.scheduled_at AS start_time
+            , workout_types.type AS workout_type
+        FROM sessions
+        JOIN (SELECT session_id FROM session_users WHERE user_id = ${user_id}) us
+            ON sessions.id = us.session_id
+        JOIN session_users
+            ON sessions.id = session_users.session_id
+        LEFT JOIN workout_types
+            ON sessions.workout_type_id = workout_types.id
+      WHERE sessions.state = 'pending'
+        AND sessions.scheduled_at >= '${start_date.toISOString()}'
+        AND sessions.scheduled_at <= '${end_date.toISOString()}'
+      GROUP BY 1, 3, 4;
+      `
+    } else if (filter === 'upcoming') {
+      query_string = `
+      SELECT sessions.id AS session_id
+           , ARRAY_AGG(session_users.user_id ORDER BY session_users.user_id) AS session_users
+           , sessions.scheduled_at AS start_time
+           , workout_types.type AS workout_type
+        FROM sessions
+        JOIN (SELECT session_id FROM session_users WHERE user_id = 1) us
+             ON sessions.id = us.session_id
+        JOIN session_users
+             ON sessions.id = session_users.session_id
+        LEFT JOIN workout_types
+             ON sessions.workout_type_id = workout_types.id
+       WHERE sessions.state = 'pending'
+       GROUP BY 1, 3, 4
+       ORDER BY sessions.scheduled_at asc
+       LIMIT 3;
+      `
+    } else if (filter === 'all') {
+      query_string = `
+      SELECT sessions.id AS session_id
+           , sessions.state AS session_state
+           , ARRAY_AGG(session_users.user_id ORDER BY session_users.user_id) AS session_users
+           , sessions.scheduled_at AS start_time
+           , workout_types.type AS workout_type
+        FROM sessions
+        JOIN (SELECT session_id FROM session_users WHERE user_id = 1) us
+             ON sessions.id = us.session_id
+        JOIN session_users
+             ON sessions.id = session_users.session_id
+        LEFT JOIN workout_types
+             ON sessions.workout_type_id = workout_types.id
+       GROUP BY 1, 2, 4, 5
+       ORDER BY sessions.scheduled_at asc;
+      `
+
     }
 
     db.query(query_string)
