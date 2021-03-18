@@ -1,6 +1,7 @@
 import {Button, InputLabel, Input, MenuItem, FormControl, Select, Box } from '@material-ui/core';
 import { useState, useEffect } from 'react';
 import DialogueTemplate from "./DialogueTemplate";
+import moment from 'moment';
 import MomentUtils from '@date-io/moment';
 import {
   MuiPickersUtilsProvider,
@@ -9,7 +10,7 @@ import {
 
 export default function BookDialogue(props) {
   const [activity, setActivity] = useState("");
-  const [date, setDate] = useState(new Date.now());
+  const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
 
   useEffect(() => {
     if (props.data){
@@ -46,15 +47,15 @@ export default function BookDialogue(props) {
                 <MenuItem value={"Stretching"}>Stretching</MenuItem>
               </Select>
             </FormControl>
-            <MuiPickersUtilsProvider utils={MomentUtils}>
+            <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
               <KeyboardDatePicker
-                disableToolbar
                 variant="inline"
-                format="MM/dd/yyyy"
+                format="YYYY-MM-DD"
                 margin="normal"
                 id="date-picker-inline"
                 label="Please select a date"
                 value={date}
+                inputValue={date}
                 onChange={(e) => setDate(e.target.value)}
                 KeyboardButtonProps={{
                   'aria-label': 'change date',
