@@ -5,23 +5,23 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
     console.log('sessions');
 
-    let start_time;
-    let end_time;
-    if (!req.query.start_time || !req.query.end_time) {
-      start_time = new Date();
-      days_before_sat = 5 - start_time.getDay();
-      end_time = new Date();
-      end_time.setTime(end_time.getTime() + days_before_sat * 24 * 60 * 60 * 1000);
+    let start_date;
+    let end_date;
+    if (!req.query.start_date || !req.query.end_date) {
+      start_date = new Date();
+      days_before_sat = 5 - start_date.getDay();
+      end_date = new Date();
+      end_date.setTime(end_date.getTime() + days_before_sat * 24 * 60 * 60 * 1000);
     } else {
-      start_time = req.query.start_time;
-      end_time = req.query.end_time;
+      start_date = req.query.start_date;
+      end_date = req.query.end_date;
     }
     
-    // console.log(start_time, end_time);
+    // console.log(start_date, end_date);
 
     const query = `SELECT * FROM sessions
-    WHERE sessions.scheduled_at >= '${start_time}'
-    AND sessions.scheduled_at <= '${end_time}';`;
+    WHERE sessions.scheduled_at >= '${start_date}'
+    AND sessions.scheduled_at <= '${end_date}';`;
 
     console.log(query);
 
