@@ -20,7 +20,7 @@ export default function Day(props) {
     let slots = [];
     for (const slot in slotsForDay) {
     slots.push(
-      <Slot user={props.user} data={slotsForDay[slot]} />
+      <Slot user={props.user} data={slotsForDay[slot]} date={props.date} />
       )
     }
     // console.log(slotsForDay);

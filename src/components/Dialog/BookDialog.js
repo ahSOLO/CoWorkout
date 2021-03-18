@@ -15,9 +15,9 @@ export default function BookDialogue(props) {
   useEffect(() => {
     if (props.data){
       setActivity(props.data.activity_type);
-      setDate(props.data.start_time);
+      setDate(moment(props.date).set({ "hour": props.data.hour, "minute": props.data.minute }).format("YYYY-MM-DD"));
     }
-  }, [props.data])
+  }, [props.data, props.date])
 
   return (
     <DialogueTemplate
@@ -56,7 +56,7 @@ export default function BookDialogue(props) {
                 label="Please select a date"
                 value={date}
                 inputValue={date}
-                onChange={(e) => setDate(e.target.value)}
+                onChange={(d) => setDate(moment(d).format("YYYY-MM-DD"))}
                 KeyboardButtonProps={{
                   'aria-label': 'change date',
                 }}
