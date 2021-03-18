@@ -19,7 +19,7 @@ export default function DialogueTemplate(props) {
           <CloseOutlinedIcon className="clickable" onClick={props.handleClose}/>
         </Box>
       </Box>
-      <Box display="flex" justifyContent="center">
+      <Box display="flex" justifyContent="center" padding="0px 20px">
         <Typography variant="h4">{props.title}</Typography>
       </Box>
       <DialogContent>
