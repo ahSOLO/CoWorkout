@@ -1,7 +1,7 @@
 import {Button, InputLabel, Input, MenuItem, FormControl, Select, Box, TextField } from '@material-ui/core';
 import { useState, useEffect } from 'react';
 import DialogueTemplate from "./DialogueTemplate";
-import moment from 'moment';
+import moment from 'moment-timezone';
 import MomentUtils from '@date-io/moment';
 import {
   MuiPickersUtilsProvider,
@@ -24,12 +24,12 @@ export default function BookDialogue(props) {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // Everything needed for the post request: user id, activity, start_time
+    // Everything needed for the post request: user id, activity, start_time (in UTC)
     console.log("CURRENT USER ID", props.user.id);
     console.log("ACTIVITY:", activity);
-    const constructedLocalTime = moment(date + ' ' + time.format("HH:mm"), "YYYY-MM-DD HH:mm").format()
-    const UTC_start_time = 
-    console.log("SESSION START TIME (UTC)", start_time);
+    const constructedLocalTime = moment(date + ' ' + time.format("HH:mm"), "YYYY-MM-DD HH:mm");
+    const UTC_start_time = constructedLocalTime.tz("UTC").format();
+    console.log("SESSION START TIME (UTC)", UTC_start_time);
   }
 
   return (
