@@ -16,7 +16,18 @@ export class UserForm extends Component {
     country: '',
     region: '',
     birth_date: '',
-    gender: ''
+    gender: '',
+    cardio: false,
+    weight_training: false,
+    yoga: false,
+    circuit: false,
+    hiit: false,
+    stretching: false,
+    get_stronger: false,
+    build_muscle: false,
+    lose_weight: false,
+    be_active: false,
+    get_toned: false
   }
 
   // Proceed to the next step
@@ -30,7 +41,7 @@ export class UserForm extends Component {
   // Handle field change
   handleChange = input => event => {
     this.setState({
-      [input]: event.target.value
+      [input]: event.target.value || event.target.checked
     });
   }
 
@@ -44,7 +55,18 @@ export class UserForm extends Component {
       country: this.state.country,
       region: this.state.region,
       birth_date: this.state.birth_date,
-      gender: this.state.gender
+      gender: this.state.gender,
+      cardio: this.state.cardio,
+      weight_training: this.state.weight_training,
+      yoga: this.state.yoga,
+      circuit: this.state.circuit,
+      hiit: this.state.hiit,
+      stretching: this.state.stretching,
+      get_stronger: this.state.get_stronger,
+      build_muscle: this.state.build_muscle,
+      lose_weight: this.state.lose_weight,
+      be_active: this.state.be_active,
+      get_toned: this.state.get_toned
     })
     .then(res => {
       console.log(res.data);
@@ -53,8 +75,8 @@ export class UserForm extends Component {
 
   render() {
     const { step } = this.state;
-    const { email, password, first_name, last_name, country, region, birth_date, gender } = this.state;
-    const values = { email, password, first_name, last_name, country, region, birth_date, gender }
+    const { email, password, first_name, last_name, country, region, birth_date, gender, interests, goals } = this.state;
+    const values = { email, password, first_name, last_name, country, region, birth_date, gender, interests, goals }
 
     switch(step) {
       case 1:

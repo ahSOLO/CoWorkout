@@ -17,9 +17,16 @@ module.exports = (db) => {
   });
 
   router.post("/", (req, res) => {
+    const first_name = req.body.first_name;
+    const last_name = req.body.last_name;
     const email = req.body.email;
     const password = req.body.password;
-    const queryParams = [email, password];
+    const gender = req.body.gender;
+    const birth_date = req.body.birth_date;
+    const country = req.body.country;
+    const region = req.body.region;
+    const timezone = 'US/Pacific'; // hardcoded for now
+    const queryParams = [first_name, last_name, email, password, gender, birth_date, country, region, timezone];
 
     const queryString = `
     INSERT INTO users (first_name, last_name, email, password, gender, birth_date, country, region, timezone) 
