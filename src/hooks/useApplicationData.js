@@ -37,8 +37,6 @@ export default function useApplicationData() {
 
   return {
     slots,
-    appointments,
-    setSlots,
-    setAppointments,
+    constructSlots
   }
 };
