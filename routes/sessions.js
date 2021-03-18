@@ -3,7 +3,29 @@ const router  = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    db.query(`SELECT * FROM sessions;`)
+    console.log('sessions');
+
+    let start_date;
+    let end_date;
+    if (!req.query.start_date || !req.query.end_date) {
+      start_date = new Date();
+      days_before_sat = 5 - start_date.getDay();
+      end_date = new Date();
+      end_date.setTime(end_date.getTime() + days_before_sat * 24 * 60 * 60 * 1000);
+    } else {
+      start_date = new Date(req.query.start_date);
+      end_date = new Date(req.query.end_date);
+    }
+    
+    // console.log(start_date, end_date);
+
+    const query = `SELECT * FROM sessions
+    WHERE sessions.scheduled_at >= '${start_date.toISOString()}'
+    AND sessions.scheduled_at <= '${end_date.toISOString()}';`;
+
+    console.log(query);
+
+    db.query(query)
       .then(data => {
         const sessions = data.rows;
         res.json({ sessions });

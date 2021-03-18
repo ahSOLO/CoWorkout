@@ -56,7 +56,7 @@ export default function Calendar(props) {
   const months = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"];
 
-  const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const weekDates = getWeekDates(targetDay); // arr of dates corresponding to MON-SUN
 
   const calHeaders = weekDays.map(
@@ -79,8 +79,8 @@ export default function Calendar(props) {
     const toDate = weekDates.slice(-1)[0];
 
     // get monday's date
-    const daysFromMon = targetDay.getDay();
-    const startDate = new Date(targetDay.getTime() - (daysFromMon * 24 * 60 * 60 * 1000));
+    const daysFromSun = targetDay.getDay();
+    const startDate = new Date(targetDay.getTime() - (daysFromSun * 24 * 60 * 60 * 1000));
     const monthInt = startDate.getMonth();
     const fromMonth = months[monthInt];
     let toMonth = '';
