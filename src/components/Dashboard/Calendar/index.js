@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Day from "./Day";
 import "./styles.scss";
-import { getWeekDates, rebuildAppointmentObjs } from "helpers/calendarHelpers";
+import { getWeekDates, getWeekDateTimes, rebuildAppointmentObjs } from "helpers/calendarHelpers";
 import useApplicationData from 'hooks/useApplicationData';
 import BookNew from "components/Buttons/BookNew"; 
 
@@ -27,10 +27,6 @@ export default function Calendar(props) {
       innerWidth += ele.offsetWidth;
     });
     const scrollBarWidth = outerWidth - innerWidth;
-    console.log(outerWidth);
-    console.log(innerWidth);
-    console.log(scrollBarWidth);
-    console.log(document.querySelector("div.cal__headers"));
     document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
   }, [])
   
@@ -57,7 +53,9 @@ export default function Calendar(props) {
   "July", "August", "September", "October", "November", "December"];
 
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const weekDates = getWeekDates(targetDay); // arr of dates corresponding to MON-SUN
+
+  let weekDateTimes = getWeekDateTimes(targetDay);
+  let weekDates = weekDateTimes.map( dateTime => dateTime.getDate());
 
   const calHeaders = weekDays.map(
     (weekDay, i) => {
@@ -142,13 +140,13 @@ export default function Calendar(props) {
           <div className="cal__ticks">
             {calTicks}
           </div>
-            <Day user={props.user} slots={slots['MON']} />
-            <Day user={props.user} slots={slots['TUE']} />
-            <Day user={props.user} slots={slots['WED']} />
-            <Day user={props.user} slots={slots['THU']} />
-            <Day user={props.user} slots={slots['FRI']} />
-            <Day user={props.user} slots={slots['SAT']} />
-            <Day user={props.user} slots={slots['SUN']} />
+          <Day user={props.user} slots={slots['SUN']} date={weekDateTimes[0]}/>
+          <Day user={props.user} slots={slots['MON']} date={weekDateTimes[1]}/>
+          <Day user={props.user} slots={slots['TUE']} date={weekDateTimes[2]}/>
+          <Day user={props.user} slots={slots['WED']} date={weekDateTimes[3]}/>
+          <Day user={props.user} slots={slots['THU']} date={weekDateTimes[4]}/>
+          <Day user={props.user} slots={slots['FRI']} date={weekDateTimes[5]}/>
+          <Day user={props.user} slots={slots['SAT']} date={weekDateTimes[6]}/>
         </div>
       </section>
       <BookNew />
