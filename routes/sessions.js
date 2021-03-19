@@ -135,12 +135,12 @@ module.exports = (db) => {
         })
         .catch(err => {
           console.log("Error inserting session_users record");
-          res.status(500);
-        })
+          res.status(500).send("Failure");
+        });
+      })
       .catch(err => {
         console.log("Error inserting sessions record");
-        res.status(500);
-      })
+        res.status(500).send("Failure");
     });
   });
 

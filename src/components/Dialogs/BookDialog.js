@@ -33,13 +33,20 @@ export default function BookDialog(props) {
     console.log("CURRENT USER ID", props.user.id);
     console.log("ACTIVITY:", activity);
     console.log("SESSION START TIME (UTC)", start_time_UTC);
+    props.setMode("LOADING");
+    props.handleBookClose();
     axios.post(BASE_URL + '/api/sessions', {user_id: props.user.id, activity: activity, start_time: start_time_UTC})
     .then( res => {
         if (res.status===201) {
-          props.handleBookClose();
+          props.setMode("MATCHING");
+        } else {
+          props.setMode("ERROR");
         }
       }
     )
+    .catch( err => {
+      props.setMode("ERROR");
+    })
   }
 
   return (

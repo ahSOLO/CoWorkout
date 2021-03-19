@@ -89,7 +89,7 @@ const fakeData = {
             appointment15,
             appointment16,
             appointment17,
-            appointment18
+            appointment18,
           ]
         }
       },
@@ -102,6 +102,9 @@ const fakeData = {
             appointment8,
             appointment9,
             appointment10,
+            appointment19,
+            appointment20,
+            appointment21
           ]
         }
       }
