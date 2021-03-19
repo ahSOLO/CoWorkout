@@ -38,7 +38,7 @@ export default function useApplicationData() {
       const [ allSessionsQuery, persistentSessionsQuery ] = all;
       let retrievedAppointments = allSessionsQuery.data.rows;
       let persistentAppointments = persistentSessionsQuery.data.rows;
-      console.log(retrievedAppointments);
+      // console.log(retrievedAppointments);
       setAppointments(prev => retrievedAppointments);
       setSlots(rebuildAppointmentObjs(slots, persistentAppointments, retrievedAppointments, 'America/Vancouver')); // !! modify to use user's timezone dynamically
     })

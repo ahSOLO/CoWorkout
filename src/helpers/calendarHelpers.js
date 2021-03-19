@@ -125,7 +125,7 @@ const autoGenerateEmptyAppointments = function() {
     
     while (hour < 24) {
       let timeString = generateTimeString(hour, minute);
-      emptyAppointments[day][timeString] = { hour: hour, minute: minute, 'session_users': [] };
+      emptyAppointments[day][timeString] = { hour: hour, minute: minute, 'session_users': [], state: 'empty' };
       minute += 15;
       if (minute === 60) {
         hour += 1;
@@ -133,6 +133,7 @@ const autoGenerateEmptyAppointments = function() {
       }
     };
   }
+
   return emptyAppointments;
 };
 

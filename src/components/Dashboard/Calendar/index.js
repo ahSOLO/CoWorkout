@@ -4,7 +4,7 @@ import "./styles.scss";
 import { getWeekDates, getWeekDateTimes, rebuildAppointmentObjs } from "helpers/calendarHelpers";
 import useApplicationData from 'hooks/useApplicationData';
 import BookNew from "components/Buttons/BookNew"; 
-import FilterDialog from "components/Dialogs/FilterDialog"
+import FilterDialog from "components/Dialogs/FilterDialog";
 
 // Material UI
 import { Typography, IconButton } from "@material-ui/core";
