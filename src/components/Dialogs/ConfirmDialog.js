@@ -28,7 +28,7 @@ export default function ConfirmDialog(props) {
 
   useEffect(() => {
     if (props.data.session_users.length > 0) {
-      setName(JSON.parse(props.data.session_users[0]).user_first_name)
+      setName(props.data.session_users[0].user_first_name)
     }
   }, [props.data.session_users])
 

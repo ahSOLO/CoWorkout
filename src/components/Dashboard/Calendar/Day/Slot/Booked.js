@@ -15,8 +15,8 @@ export default function Booked(props){
 
   useEffect(() => {
     if (props.data.session_users.length > 0) {
-      setAvatarURL(JSON.parse(props.data.session_users[0]).user_profile_image_url);
-      setName(JSON.parse(props.data.session_users[0]).user_first_name);
+      setAvatarURL(props.data.session_users[0].user_profile_image_url);
+      setName(props.data.session_users[0].user_first_name);
     }
   }, [props.data.session_users])
 

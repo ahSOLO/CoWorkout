@@ -21,7 +21,7 @@ export default function CancelDialog(props) {
     axios.put(BASE_URL + '/api/session_users/cancel', {user_id: props.user.id, session_id: props.data.id})
     .then( res => {
       if (res.status===201) {
-        props.setMode("EMPTY");
+        props.setMode("LOADING");
         props.refreshSlots(props.targetDay);
       } else {
         props.setMode("ERROR");
