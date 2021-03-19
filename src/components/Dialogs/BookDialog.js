@@ -19,7 +19,7 @@ export default function BookDialog(props) {
 
   useEffect(() => {
     if (props.data){
-      setActivity(props.data.activity_type || "0");
+      setActivity(props.data.activity_type || 0);
       setDate(moment(props.date).format("YYYY-MM-DD"));
       setTime(time.set({ "hour": props.data.hour, "minute": props.data.minute }))
     }
