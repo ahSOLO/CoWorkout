@@ -107,5 +107,42 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+  
+  // BOOK A NEW SESSION
+  router.post("/", (req, res) => {
+
+    let { user_id, activity, start_time } = req.body;
+
+    if (activity === 0) activity = null; // set workout type id to null if user chose "any" activity
+
+    const query_string1 = `
+    INSERT INTO sessions (scheduled_at, workout_type_id, owner_id)
+    VALUES ($1, $2, $3)
+    RETURNING id;
+    `
+    const query_string2 = `
+    INSERT INTO session_users (session_id, user_id)
+    VALUES ($1, $2);
+    `
+    db.query(query_string1, [start_time, activity, user_id])
+      .then( data => {
+      const session_id = data.rows[0].id;
+      console.log("Inserted sessions record");
+      db.query(query_string2, [session_id, user_id])
+        .then( data => {
+          res.status(201).send("Success");
+          console.log("Inserted session_users record");
+        })
+        .catch(err => {
+          console.log("Error inserting session_users record");
+          res.status(500);
+        })
+      .catch(err => {
+        console.log("Error inserting sessions record");
+        res.status(500);
+      })
+    });
+  });
+
   return router;
 };
