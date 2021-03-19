@@ -63,6 +63,9 @@ export default function Matched(props){
       <CancelDialog
         data={props.data}
         user={props.user}
+        setMode={props.setMode}
+        refreshSlots={props.refreshSlots}
+        targetDay={props.targetDay}
         otherUserData={otherUserData}
         handleCancelClose={handleCancelClose}
         cancelOpen={cancelOpen}

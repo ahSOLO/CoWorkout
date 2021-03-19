@@ -152,13 +152,13 @@ export default function Calendar(props) {
           <div className="cal__ticks">
             {calTicks}
           </div>
-          <Day key={0} user={props.user} slots={slots['SUN']} date={weekDateTimes[0]}/>
-          <Day key={1} user={props.user} slots={slots['MON']} date={weekDateTimes[1]}/>
-          <Day key={2} user={props.user} slots={slots['TUE']} date={weekDateTimes[2]}/>
-          <Day key={3} user={props.user} slots={slots['WED']} date={weekDateTimes[3]}/>
-          <Day key={4} user={props.user} slots={slots['THU']} date={weekDateTimes[4]}/>
-          <Day key={5} user={props.user} slots={slots['FRI']} date={weekDateTimes[5]}/>
-          <Day key={6} user={props.user} slots={slots['SAT']} date={weekDateTimes[6]}/>
+          <Day key={0} user={props.user} slots={slots['SUN']} date={weekDateTimes[0]} refreshSlots={refreshSlots} targetDay={targetDay}/>
+          <Day key={1} user={props.user} slots={slots['MON']} date={weekDateTimes[1]} refreshSlots={refreshSlots} targetDay={targetDay}/>
+          <Day key={2} user={props.user} slots={slots['TUE']} date={weekDateTimes[2]} refreshSlots={refreshSlots} targetDay={targetDay}/>
+          <Day key={3} user={props.user} slots={slots['WED']} date={weekDateTimes[3]} refreshSlots={refreshSlots} targetDay={targetDay}/>
+          <Day key={4} user={props.user} slots={slots['THU']} date={weekDateTimes[4]} refreshSlots={refreshSlots} targetDay={targetDay}/>
+          <Day key={5} user={props.user} slots={slots['FRI']} date={weekDateTimes[5]} refreshSlots={refreshSlots} targetDay={targetDay}/>
+          <Day key={6} user={props.user} slots={slots['SAT']} date={weekDateTimes[6]} refreshSlots={refreshSlots} targetDay={targetDay}/>
         </div>
       </section>
       <BookNew user={props.user} />
@@ -166,7 +166,8 @@ export default function Calendar(props) {
         filterOpen={filterOpen}
         handleFilterClose={handleFilterClose}
         user={props.user}
-        refreshSlots={refreshSlots}  
+        refreshSlots={refreshSlots}
+        targetDay={targetDay}  
       />
     </div>
   )
