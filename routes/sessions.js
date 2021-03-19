@@ -113,7 +113,8 @@ module.exports = (db) => {
 
     let { user_id, activity, start_time } = req.body;
 
-    if (activity === 0) activity = null; // set workout type id to null if user chose "any" activity
+    // set workout type id to null if user chose "any" activity. Conversion has to happen here instead of in front end to prevent visual display bug with matUI dropdowns.
+    if (activity === 0) activity = null;
 
     const query_string1 = `
     INSERT INTO sessions (scheduled_at, workout_type_id, owner_id)

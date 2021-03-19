@@ -3,6 +3,8 @@ import DialogTemplate from "./DialogTemplate";
 import moment from 'moment';
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export default function ConfirmDialog(props) {
 
   const handleFormSubmit = (e) => {
@@ -10,7 +12,7 @@ export default function ConfirmDialog(props) {
     // Everything needed for the axios post request (create a new session_users row): user id, session id
     console.log("USER ID", props.user.id);
     console.log("SESSION ID", props.data.id);  
-    axios.post('/session_users', {user_id: props.user.id, session_id: props.data.id})
+    axios.post(BASE_URL + '/api/session_users', {user_id: props.user.id, session_id: props.data.id})
       .then( res => {
           console.log("Request Complete");
         }
