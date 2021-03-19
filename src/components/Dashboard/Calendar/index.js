@@ -51,7 +51,7 @@ export default function Calendar(props) {
   const calHeaders = weekDays.map(
     (weekDay, i) => {
       return (
-      <header className="cal">
+      <header key={i} className="cal">
         <Typography variant='h3'>
           {weekDates[i]}
         </Typography>
@@ -119,32 +119,32 @@ export default function Calendar(props) {
   
   // console.log(slots['WED']);
   return (
-    <div class="cal__container">
-      <section class="cal__top">
-        <div class="top__text">
+    <div className="cal__container">
+      <section className="cal__top">
+        <div className="top__text">
           <Typography variant='h4'>
             {displayCurrentMonthDay(weekDates, months, targetDay)}
           </Typography>
         </div>
-        <div class="top__icons">
-          <IconButton variant="outlined">
-            <ArrowBackIosOutlinedIcon fontSize="large" onClick={setWeek}/>
+        <div className="top__icons">
+          <IconButton key={0} variant="outlined" onClick={setWeek}>
+            <ArrowBackIosOutlinedIcon fontSize="large"/>
           </IconButton>
-          <IconButton>
-            <ArrowForwardIosOutlinedIcon fontSize="large" onClick={() => {setWeek('forward')}} />
+          <IconButton key={1} onClick={() => {setWeek('forward')}}>
+            <ArrowForwardIosOutlinedIcon fontSize="large" />
           </IconButton>
-          <IconButton>
+          <IconButton key={2}>
             <CalendarTodayOutlinedIcon fontSize="large"/>
           </IconButton>
-          <IconButton>
-            <FilterListOutlinedIcon fontSize="large" onClick={handleFilterOpen}/>
+          <IconButton key={3} onClick={handleFilterOpen}>
+            <FilterListOutlinedIcon fontSize="large" />
           </IconButton>
-          <IconButton>
-            <RefreshOutlinedIcon fontSize="large" onClick={() => {refreshSlots(targetDay)}} />
+          <IconButton key={4} onClick={() => {refreshSlots(targetDay)}}>
+            <RefreshOutlinedIcon fontSize="large" />
           </IconButton>
         </div>
       </section>
-      <section class="cal__main">
+      <section className="cal__main">
         <div className="cal__headers">
           {calHeaders}
         </div>
@@ -152,13 +152,13 @@ export default function Calendar(props) {
           <div className="cal__ticks">
             {calTicks}
           </div>
-          <Day user={props.user} slots={slots['SUN']} date={weekDateTimes[0]}/>
-          <Day user={props.user} slots={slots['MON']} date={weekDateTimes[1]}/>
-          <Day user={props.user} slots={slots['TUE']} date={weekDateTimes[2]}/>
-          <Day user={props.user} slots={slots['WED']} date={weekDateTimes[3]}/>
-          <Day user={props.user} slots={slots['THU']} date={weekDateTimes[4]}/>
-          <Day user={props.user} slots={slots['FRI']} date={weekDateTimes[5]}/>
-          <Day user={props.user} slots={slots['SAT']} date={weekDateTimes[6]}/>
+          <Day key={0} user={props.user} slots={slots['SUN']} date={weekDateTimes[0]}/>
+          <Day key={1} user={props.user} slots={slots['MON']} date={weekDateTimes[1]}/>
+          <Day key={2} user={props.user} slots={slots['TUE']} date={weekDateTimes[2]}/>
+          <Day key={3} user={props.user} slots={slots['WED']} date={weekDateTimes[3]}/>
+          <Day key={4} user={props.user} slots={slots['THU']} date={weekDateTimes[4]}/>
+          <Day key={5} user={props.user} slots={slots['FRI']} date={weekDateTimes[5]}/>
+          <Day key={6} user={props.user} slots={slots['SAT']} date={weekDateTimes[6]}/>
         </div>
       </section>
       <BookNew user={props.user} />
