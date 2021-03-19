@@ -1,9 +1,12 @@
+import { useState } from 'react'; 
 import Grid from '@material-ui/core/Grid';
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/EditOutlined';
+import EditProfileDialog from 'components/Dialog/EditProfileDialog';
 import useApplicationData from 'hooks/useApplicationData';
 import "./styles.scss";
 
@@ -11,13 +14,20 @@ import "./styles.scss";
 export default function Profile(props) {
   
   const { user } = useApplicationData();
+
+  const [profileEditOpen, setProfileEditOpen] = useState(false);
+  const handleProfileEditClick = () => {
+    setProfileEditOpen(true);
+  }
+  const handleProfileEditClose = () => {
+    setProfileEditOpen(false);
+  }
   
   return (
     <div>
       <Grid container className="profile__grid">
         <Grid item xs={2} className="profile__margin">
-          <Box>
-          </Box>
+          <Box />
         </Grid>
         <Grid item xs={8} className="profile__center">
           <Box className="profile__center__header">
@@ -36,7 +46,17 @@ export default function Profile(props) {
               <Box className="profile__section">
                 <Typography variant="h6" className="profile__heading">
                   <b>My Profile</b>
-                  <EditIcon style={{ fontSize: 18 }} className="profile__heading__edit"/>
+                  <IconButton>
+                    <EditIcon 
+                      style={{ fontSize: 18 }}
+                      className="profile__heading__edit" 
+                      onClick={handleProfileEditClick}
+                    />
+                  </IconButton>
+                  <EditProfileDialog
+                    handleProfileEditClose={handleProfileEditClose}
+                    profileEditOpen={profileEditOpen}
+                  />
                 </Typography>
                 <br/>
                 <Typography variant="subtitle1">
@@ -60,7 +80,6 @@ export default function Profile(props) {
               <Box className="profile__section">
                 <Typography variant="h6" className="profile__heading">
                   <b>Achievements</b>
-                  <EditIcon style={{ fontSize: 18 }} className="profile__heading__edit"/>
                 </Typography>
                 <br/>
                 <Box className="profile__emojis">
@@ -75,7 +94,6 @@ export default function Profile(props) {
               <Box className="profile__section">
                 <Typography variant="h6" className="profile__heading">
                   <b>Stats</b>
-                  <EditIcon style={{ fontSize: 18 }} className="profile__heading__edit"/>
                 </Typography>
                 <br/>
                 <Typography variant="subtitle1">
@@ -94,8 +112,7 @@ export default function Profile(props) {
           </Box>
         </Grid>
         <Grid item xs={2} className="profile__margin">
-          <Box>
-          </Box>
+          <Box />
         </Grid>
       </Grid>
     </div>
