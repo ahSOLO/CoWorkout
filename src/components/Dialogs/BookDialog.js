@@ -1,7 +1,8 @@
 import {Button, InputLabel, Input, MenuItem, FormControl, Select, Box, TextField } from '@material-ui/core';
 import { useState, useEffect } from 'react';
-import DialogueTemplate from "./DialogueTemplate";
+import DialogTemplate from "./DialogTemplate";
 import moment from 'moment-timezone';
+import axios from 'axios';
 import MomentUtils from '@date-io/moment';
 import {
   MuiPickersUtilsProvider,
@@ -9,14 +10,16 @@ import {
   KeyboardTimePicker,
 } from '@material-ui/pickers';
 
-export default function BookDialogue(props) {
-  const [activity, setActivity] = useState("any");
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
+export default function BookDialog(props) {
+  const [activity, setActivity] = useState("0");
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
   const [time, setTime] = useState(moment().endOf('hour'));
 
   useEffect(() => {
     if (props.data){
-      setActivity(props.data.activity_type || "any");
+      setActivity(props.data.activity_type || "0");
       setDate(moment(props.date).format("YYYY-MM-DD"));
       setTime(time.set({ "hour": props.data.hour, "minute": props.data.minute }))
     }
@@ -24,16 +27,23 @@ export default function BookDialogue(props) {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // Everything needed for the post request: user id, activity, start_time (in UTC)
+    const constructedLocalTime = moment(date + ' ' + time.format("HH:mm"), "YYYY-MM-DD HH:mm");
+    const start_time_UTC = constructedLocalTime.tz("UTC").format();
+    // Everything needed for the axios post request: user id, activity, start_time (in UTC)
     console.log("CURRENT USER ID", props.user.id);
     console.log("ACTIVITY:", activity);
-    const constructedLocalTime = moment(date + ' ' + time.format("HH:mm"), "YYYY-MM-DD HH:mm");
-    const UTC_start_time = constructedLocalTime.tz("UTC").format();
-    console.log("SESSION START TIME (UTC)", UTC_start_time);
+    console.log("SESSION START TIME (UTC)", start_time_UTC);
+    axios.post(BASE_URL + '/api/sessions', {user_id: props.user.id, activity: activity, start_time: start_time_UTC})
+    .then( res => {
+        if (res.status===201) {
+          props.handleBookClose();
+        }
+      }
+    )
   }
 
   return (
-    <DialogueTemplate
+    <DialogTemplate
       handleClose = {props.handleBookClose}
       open = {props.bookOpen}
       title = "Book a Workout"
@@ -49,13 +59,13 @@ export default function BookDialogue(props) {
                 onChange={(e) => setActivity(e.target.value)}
                 input={<Input />}
               >
-                <MenuItem value={"any"}>Any</MenuItem>
-                <MenuItem value={"cardio"}>Cardio</MenuItem>
-                <MenuItem value={"weight training"}>Weight Training</MenuItem>
-                <MenuItem value={"yoga"}>Yoga</MenuItem>
-                <MenuItem value={"circuit"}>Circuit</MenuItem>
-                <MenuItem value={"HIIT"}>HIIT</MenuItem>
-                <MenuItem value={"Stretching"}>Stretching</MenuItem>
+                <MenuItem value={0}>Any</MenuItem>
+                <MenuItem value={1}>Cardio</MenuItem>
+                <MenuItem value={2}>Weight Training</MenuItem>
+                <MenuItem value={3}>Yoga</MenuItem>
+                <MenuItem value={4}>Circuit</MenuItem>
+                <MenuItem value={5}>HIIT</MenuItem>
+                <MenuItem value={6}>Stretching</MenuItem>
               </Select>
             </FormControl>
             <br/>

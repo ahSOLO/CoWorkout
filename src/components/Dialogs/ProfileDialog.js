@@ -1,9 +1,9 @@
 import {Typography, Button } from '@material-ui/core';
-import DialogueTemplate from "./DialogueTemplate";
+import DialogTemplate from "./DialogTemplate";
 
-export default function ProfileDialogue(props) {
+export default function ProfileDialog(props) {
   return (
-    <DialogueTemplate
+    <DialogTemplate
       handleClose = {props.handleProfileClose}
       open = {props.profileOpen}
       content = {

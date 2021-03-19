@@ -5,14 +5,6 @@ import axios from 'fakeAxios';
 import { Typography } from "@material-ui/core";
 import "./styles.scss";
 
-// 96 15-minute intervals in a day
-const intervals = [...Array(96).keys()]
-const fakeSessions = intervals.map( interval => {
-  return (
-    <Slot content={interval}/>
-  )
-})
-
 export default function Day(props) {
 
   // transform props.slots into usable data

@@ -1,6 +1,6 @@
 import axios from './fakeAxios';
-import { useEffect, useState } from 'react';
 // import axios from 'axios';
+import { useEffect, useState } from 'react';
 import MainRouter from './components/MainRouter';
 import './basic.scss';
 

@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-import BookDialogue from 'components/Dialog/BookDialog';
+import BookDialog from 'components/Dialogs/BookDialog';
 
 export default function Empty(props){
   const [bookOpen, setBookOpen] = useState(false);
@@ -22,7 +22,7 @@ export default function Empty(props){
         onClick= {handleBookClick}
       />}
 
-      <BookDialogue
+      <BookDialog
          handleBookClose={handleBookClose}
          bookOpen={bookOpen}
          data={props.data}

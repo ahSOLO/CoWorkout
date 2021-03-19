@@ -52,7 +52,7 @@ const getWeekDates = function(targetDate = new Date()) {
   */
 
   const today = formatTimeStamp(targetDate);
-  let daysFromSun = today.getDay();
+  let daysFromSun = today.getDay(); // getDay defaults to browser local time, may want to convert this to the local time according to the user's stored timezone.
   let daysFromSat = 6 - today.getDay();
   let daysBeforeToday = [];
   let daysAfterToday = [];
@@ -90,7 +90,7 @@ const getWeekDateTimes = function(targetDate = new Date()) {
   */
 
   const today = formatTimeStamp(targetDate);
-  let daysFromSun = today.getDay();
+  let daysFromSun = today.getDay(); 
   let daysFromSat = 6 - today.getDay();
   let daysBeforeToday = [];
   let daysAfterToday = [];

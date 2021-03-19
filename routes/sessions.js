@@ -25,14 +25,16 @@ module.exports = (db) => {
     if (filter === 'transient') {
       query_string = `
       SELECT sessions.id AS session_id
-            , ARRAY_AGG(session_users.user_id ORDER BY session_users.user_id) AS session_users
+            , ARRAY_AGG('{user_id: ' || session_users.user_id || ', user_first_name: "' || users.first_name || '", user_profile_image_url: "' || users.profile_image_url || '"}' ORDER BY session_users.user_id) AS session_users
             , sessions.scheduled_at AS start_time
             , workout_types.type AS workout_type
         FROM sessions 
         JOIN session_users
-              ON sessions.id = session_users.session_id AND session_users.state = 'pending'
+             ON sessions.id = session_users.session_id AND session_users.state = 'pending'
+        JOIN users 
+             ON session_users.user_id = users.id
         LEFT JOIN workout_types
-              ON sessions.workout_type_id = workout_types.id
+             ON sessions.workout_type_id = workout_types.id
         WHERE sessions.state = 'pending'
           AND sessions.scheduled_at >= '${start_date.toISOString()}'
           AND sessions.scheduled_at <= '${end_date.toISOString()}'
@@ -43,14 +45,16 @@ module.exports = (db) => {
     } else if (filter === 'persistent') {
       query_string = `
       SELECT sessions.id AS session_id
-            , ARRAY_AGG(session_users.user_id ORDER BY session_users.user_id) AS session_users
+            , ARRAY_AGG('{user_id: ' || session_users.user_id || ', user_first_name: "' || users.first_name || '", user_profile_image_url: "' || users.profile_image_url || '"}' ORDER BY session_users.user_id) AS session_users
             , sessions.scheduled_at AS start_time
             , workout_types.type AS workout_type
         FROM sessions
         JOIN (SELECT session_id FROM session_users WHERE user_id = ${user_id} AND state = 'pending') us
-            ON sessions.id = us.session_id
+             ON sessions.id = us.session_id
         JOIN session_users
-            ON sessions.id = session_users.session_id AND session_users.state = 'pending'
+             ON sessions.id = session_users.session_id AND session_users.state = 'pending'
+        JOIN users 
+             ON session_users.user_id = users.id
         LEFT JOIN workout_types
             ON sessions.workout_type_id = workout_types.id
       WHERE sessions.state = 'pending'
@@ -107,5 +111,42 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+  
+  // BOOK A NEW SESSION
+  router.post("/", (req, res) => {
+
+    let { user_id, activity, start_time } = req.body;
+
+    if (activity === 0) activity = null; // set workout type id to null if user chose "any" activity
+
+    const query_string1 = `
+    INSERT INTO sessions (scheduled_at, workout_type_id, owner_id)
+    VALUES ($1, $2, $3)
+    RETURNING id;
+    `
+    const query_string2 = `
+    INSERT INTO session_users (session_id, user_id)
+    VALUES ($1, $2);
+    `
+    db.query(query_string1, [start_time, activity, user_id])
+      .then( data => {
+      const session_id = data.rows[0].id;
+      console.log("Inserted sessions record");
+      db.query(query_string2, [session_id, user_id])
+        .then( data => {
+          res.status(201).send("Success");
+          console.log("Inserted session_users record");
+        })
+        .catch(err => {
+          console.log("Error inserting session_users record");
+          res.status(500);
+        })
+      .catch(err => {
+        console.log("Error inserting sessions record");
+        res.status(500);
+      })
+    });
+  });
+
   return router;
 };
