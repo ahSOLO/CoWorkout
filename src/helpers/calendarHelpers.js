@@ -163,7 +163,11 @@ const adaptSessionObj = function(sessionObj, userTZ) {
 
 const rebuildAppointmentObjs = function(emptyAppointments, persistentAppointments, allAppointments, userTZ) {
   // deep copy emptyAppointments
-  let reconstructedAppointments = {...emptyAppointments};
+  // let reconstructedAppointments = {...emptyAppointments};
+
+  // reconstruct emptyAppointments
+  let reconstructedAppointments = autoGenerateEmptyAppointments();
+  console.log(reconstructedAppointments);
 
   // contains appointments that are on the same timeslot
   let sameSlotAppointments = {

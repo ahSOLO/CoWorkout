@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import {Typography, Button } from '@material-ui/core';
 import DialogTemplate from "./DialogTemplate";
 import moment from 'moment';
@@ -6,6 +7,7 @@ import axios from 'axios';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export default function ConfirmDialog(props) {
+  const [name, setName] = useState("")
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -24,6 +26,12 @@ export default function ConfirmDialog(props) {
       })
   }
 
+  useEffect(() => {
+    if (props.data.session_users.length > 0) {
+      setName(JSON.parse(props.data.session_users[0]).user_first_name)
+    }
+  }, [props.data.session_users])
+
   return (
     <DialogTemplate
       handleClose = {props.handleConfirmClose}
@@ -36,7 +44,7 @@ export default function ConfirmDialog(props) {
             Please confirm you would like to schedule this session:
           </Typography>
           <Typography variant="body1">
-            {moment(props.data.start_time).format("dddd, MMM do [at] h:mm")} with {JSON.parse(props.data.session_users[0]).user_first_name}
+            {moment(props.data.start_time).format("dddd, MMM do [at] h:mm")} with {name}
           </Typography>
         </>
       }
