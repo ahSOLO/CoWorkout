@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from 'fakeAxios';
-// import axios from 'axios';
+// import axios from 'fakeAxios';
+import axios from 'axios';
 import { allSlots, rebuildAppointmentObjs, formatTimeStamp } from "helpers/calendarHelpers";
 
 export default function useApplicationData() {
@@ -48,8 +48,24 @@ export default function useApplicationData() {
     constructSlots();
   }, []);
 
+  const [ user, setUser ] = useState([]);
+  const user_id = 2;
+
+  useEffect(() => {
+    Promise.all([
+      axios.get("http://143.198.226.226:8081/api/users", {
+        params: {
+          user_id
+        }
+      })
+    ]).then((all) => {
+      setUser(all[0].data.users[0]);
+    })
+  }, [])
+
   return {
     slots,
-    constructSlots
+    constructSlots,
+    user
   }
 };

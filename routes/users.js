@@ -4,7 +4,41 @@ const router  = express.Router();
 module.exports = (db) => {
 
   router.get("/", (req, res) => {
-    db.query(`SELECT * FROM users;`)
+
+    const user_id = req.query.user_id;
+
+    const query_string = `
+    SELECT users.id as user_id
+         , users.first_name || ' ' || users.last_name as name
+         , users.country
+         , users.region
+         , users.timezone
+         , users.profile_image_url
+         , STRING_AGG(DISTINCT wt.type, ', ') as fitness_interests
+         , STRING_AGG(DISTINCT wg.goal, ', ') as fitness_goals
+         , COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end) as completed_sessions
+         , COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end)::NUMERIC / COUNT(DISTINCT su.session_id) as completion_rate
+         , AVG(sessions.actual_duration) as avg_session_length
+         , CASE WHEN COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end) >= 1 then TRUE else FALSE end as one_completed_badge
+         , CASE WHEN COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end) >= 10 then TRUE else FALSE end as ten_completed_badge
+      FROM users
+      LEFT JOIN user_workout_types uwt
+           ON users.id = uwt.user_id
+      LEFT JOIN workout_types wt
+           ON uwt.workout_type_id = wt.id 
+      LEFT JOIN user_workout_goals uwg
+           ON users.id = uwg.user_id
+      LEFT JOIN workout_goals wg
+           ON uwg.workout_goal_id = wg.id
+      LEFT JOIN session_users su
+           ON users.id = su.user_id and su.state != 'pending'
+      LEFT JOIN sessions
+           ON su.session_id = sessions.id
+     WHERE users.id = ${user_id}
+     GROUP BY 1, 2, 3, 4, 5, 6;
+    `
+
+    db.query(query_string)
       .then(data => {
         const users = data.rows;
         res.json({ users });
