@@ -125,7 +125,7 @@ const autoGenerateEmptyAppointments = function() {
     
     while (hour < 24) {
       let timeString = generateTimeString(hour, minute);
-      emptyAppointments[day][timeString] = { hour: hour, minute: minute, 'session_users': [], state: 'empty' };
+      emptyAppointments[day][timeString] = { hour: hour, minute: minute, 'session_users': [] };
       minute += 15;
       if (minute === 60) {
         hour += 1;
@@ -185,7 +185,7 @@ const rebuildAppointmentObjs = function(emptyAppointments, persistentAppointment
   for (const appointment of allAppointments) {
     const currentAppointment = adaptSessionObj(appointment, userTZ);
     
-    if (reconstructedAppointments[currentAppointment.day][currentAppointment.start_time_ref].state !== 'empty') {
+    if (reconstructedAppointments[currentAppointment.day][currentAppointment.start_time_ref].session_users.length > 0) {
       // add the existing appointment to the pool so it can be considered for the matching algorithm. Wrap in `if` statement so we don't keep adding that same appointment to the pool.
       if (!sameSlotAppointments[currentAppointment.day] || !sameSlotAppointments[currentAppointment.day][currentAppointment.start_time_ref]) {
         // add `if` so the previous dups don't get overwritten
