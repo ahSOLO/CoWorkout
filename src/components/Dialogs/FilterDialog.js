@@ -8,7 +8,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 console.log(BASE_URL);
 
 export default function FilterDialog(props) {
-  const [activity, setActivity] = useState("any");
+  const [activity, setActivity] = useState("0");
   const [options, setOptions] = useState({
     sameGender: false,
     reputable: false
@@ -49,13 +49,13 @@ export default function FilterDialog(props) {
                 onChange={(e) => setActivity(e.target.value)}
                 input={<Input />}
               >
-                <MenuItem value={"any"}>Any</MenuItem>
-                <MenuItem value={"cardio"}>Cardio</MenuItem>
-                <MenuItem value={"weight training"}>Weight Training</MenuItem>
-                <MenuItem value={"yoga"}>Yoga</MenuItem>
-                <MenuItem value={"circuit"}>Circuit</MenuItem>
-                <MenuItem value={"HIIT"}>HIIT</MenuItem>
-                <MenuItem value={"Stretching"}>Stretching</MenuItem>
+                <MenuItem value={0}>Any</MenuItem>
+                <MenuItem value={1}>Cardio</MenuItem>
+                <MenuItem value={2}>Weight Training</MenuItem>
+                <MenuItem value={3}>Yoga</MenuItem>
+                <MenuItem value={4}>Circuit</MenuItem>
+                <MenuItem value={5}>HIIT</MenuItem>
+                <MenuItem value={6}>Stretching</MenuItem>
               </Select>
             </FormControl>
             <br /><br />

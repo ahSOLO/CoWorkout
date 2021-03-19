@@ -13,13 +13,13 @@ import {
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export default function BookDialog(props) {
-  const [activity, setActivity] = useState("any");
+  const [activity, setActivity] = useState("0");
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
   const [time, setTime] = useState(moment().endOf('hour'));
 
   useEffect(() => {
     if (props.data){
-      setActivity(props.data.activity_type || "any");
+      setActivity(props.data.activity_type || "0");
       setDate(moment(props.date).format("YYYY-MM-DD"));
       setTime(time.set({ "hour": props.data.hour, "minute": props.data.minute }))
     }
@@ -35,7 +35,9 @@ export default function BookDialog(props) {
     console.log("SESSION START TIME (UTC)", start_time_UTC);
     axios.post(BASE_URL + '/api/sessions', {user_id: props.user.id, activity: activity, start_time: start_time_UTC})
     .then( res => {
-        console.log("Request Complete");
+        if (res.status===201) {
+          props.handleBookClose();
+        }
       }
     )
   }
@@ -57,13 +59,13 @@ export default function BookDialog(props) {
                 onChange={(e) => setActivity(e.target.value)}
                 input={<Input />}
               >
-                <MenuItem value={"any"}>Any</MenuItem>
-                <MenuItem value={"cardio"}>Cardio</MenuItem>
-                <MenuItem value={"weight training"}>Weight Training</MenuItem>
-                <MenuItem value={"yoga"}>Yoga</MenuItem>
-                <MenuItem value={"circuit"}>Circuit</MenuItem>
-                <MenuItem value={"HIIT"}>HIIT</MenuItem>
-                <MenuItem value={"Stretching"}>Stretching</MenuItem>
+                <MenuItem value={0}>Any</MenuItem>
+                <MenuItem value={1}>Cardio</MenuItem>
+                <MenuItem value={2}>Weight Training</MenuItem>
+                <MenuItem value={3}>Yoga</MenuItem>
+                <MenuItem value={4}>Circuit</MenuItem>
+                <MenuItem value={5}>HIIT</MenuItem>
+                <MenuItem value={6}>Stretching</MenuItem>
               </Select>
             </FormControl>
             <br/>
