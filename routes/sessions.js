@@ -25,8 +25,7 @@ module.exports = (db) => {
     if (filter === 'transient') {
       query_string = `
       SELECT sessions.id AS session_id
-            , ARRAY_AGG('{user_id: ' || session_users.user_id || ', user_first_name: "' || users.first_name || '", user_profile_image_url: "' || users.profile_image_url || '"}' ORDER BY session_users.user_id) AS session_users
-            , sessions.scheduled_at AS start_time
+            , ARRAY_AGG('{"user_id": ' || session_users.user_id || ', "user_first_name": "' || users.first_name || '", "user_profile_image_url": "' || users.profile_image_url || '"}' ORDER BY session_users.user_id) AS session_users            , sessions.scheduled_at AS start_time
             , workout_types.type AS workout_type
         FROM sessions 
         JOIN session_users
@@ -45,7 +44,7 @@ module.exports = (db) => {
     } else if (filter === 'persistent') {
       query_string = `
       SELECT sessions.id AS session_id
-            , ARRAY_AGG('{user_id: ' || session_users.user_id || ', user_first_name: "' || users.first_name || '", user_profile_image_url: "' || users.profile_image_url || '"}' ORDER BY session_users.user_id) AS session_users
+            , ARRAY_AGG('{"user_id": ' || session_users.user_id || ', "user_first_name": "' || users.first_name || '", "user_profile_image_url": "' || users.profile_image_url || '"}' ORDER BY session_users.user_id) AS session_users
             , sessions.scheduled_at AS start_time
             , workout_types.type AS workout_type
         FROM sessions

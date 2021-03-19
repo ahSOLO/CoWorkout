@@ -33,7 +33,7 @@ export default function Booked(props){
       <div className="slot__booked">
         <div className="slot__avatar">
           <Avatar 
-            src={props.data.session_users[0].user_profile_image_url} 
+            src={JSON.parse(props.data.session_users[0]).user_profile_image_url} 
             className="clickable"
             onMouseEnter = {() => hoverHandler(setLeftHover, true)}
             onMouseLeave = {() => hoverHandler(setLeftHover, false)}
@@ -44,7 +44,7 @@ export default function Booked(props){
           <Typography variant="body2">
             {rightHover? "Schedule?"
             : leftHover? "View Profile?" 
-            : props.data.session_users[0].user_first_name
+            : JSON.parse(props.data.session_users[0]).user_first_name
             }
           </Typography>
         </div>

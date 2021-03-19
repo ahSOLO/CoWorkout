@@ -36,7 +36,7 @@ export default function ConfirmDialog(props) {
             Please confirm you would like to schedule this session:
           </Typography>
           <Typography variant="body1">
-            {moment(props.data.start_time).format("dddd, MMM do [at] h:mm")} with {props.data.session_users[0].user_first_name}
+            {moment(props.data.start_time).format("dddd, MMM do [at] h:mm")} with {JSON.parse(props.data.session_users[0]).user_first_name}
           </Typography>
         </>
       }
