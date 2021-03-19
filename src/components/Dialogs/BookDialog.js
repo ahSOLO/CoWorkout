@@ -28,7 +28,9 @@ export default function BookDialog(props) {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const constructedLocalTime = moment(date + ' ' + time.format("HH:mm"), "YYYY-MM-DD HH:mm");
+    console.log(constructedLocalTime);
     const start_time_UTC = constructedLocalTime.tz("UTC").format();
+    console.log(start_time_UTC);
     // Everything needed for the axios post request: user id, activity, start_time (in UTC)
     console.log("CURRENT USER ID", props.user.id);
     console.log("ACTIVITY:", activity);

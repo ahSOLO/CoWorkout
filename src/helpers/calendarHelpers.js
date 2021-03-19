@@ -14,11 +14,13 @@ const extractDayOfWeek = function(timestamp) {
   return daysOfWeek[targetDay.getDay()];
 };
 
+// Modified to calculate user TZ based on client local time
 const changeToUserTZ = function(timestamp, userTZ) {
   // changeToUserTZ('2021-03-16T07:29:39.503Z', 'Asia/Singapore')
   const targetDatetime = formatTimeStamp(timestamp);
-  const timeString = targetDatetime.toLocaleString('en-US',{ timeZone: userTZ}).toString();
-  return new Date(timeString);
+  // const timeString = targetDatetime.toLocaleString('en-US',{ timeZone: userTZ})
+  
+  return new Date(Date.UTC(targetDatetime.getFullYear(), targetDatetime.getMonth(), targetDatetime.getDate(), targetDatetime.getHours(), targetDatetime.getMinutes(), targetDatetime.getSeconds()));
 };
 
 const generateTimeString = function(hour, minute) {
@@ -154,7 +156,7 @@ const adaptSessionObj = function(sessionObj, userTZ) {
     'day': dayOfWeek,
     'start_time': startTimeUserTZ,
     'start_time_ref': startTimeString,
-    'activity_type': sessionObj.activity_type,
+    'activity_type': sessionObj.workout_type,
     'session_users': sessionObj.session_users
   }
 }
