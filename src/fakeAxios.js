@@ -21,7 +21,7 @@ class Appointment {
 }
 
 // fake objects
-const user1 = new User(1, 'Chuck', 'Norris', 'https://i.pravatar.cc/300', 'Male', 'Asia/Singapore');
+const user1 = new User(1, 'Chuck', 'Norris', 'https://i.pravatar.cc/300', 'Male', 'America/Vancouver');
 const user2 = new User(2, 'Stan', 'Lee', 'https://i.pravatar.cc/300', 'Male', 'Asia/Singapore');
 const user3 = new User(3, 'Bruce', 'Lee', 'https://i.pravatar.cc/300', 'Male', 'Asia/Singapore');
 const user4 = new User(4, 'Rick', 'Astley', 'https://i.pravatar.cc/300', 'Male', 'Asia/Singapore');
@@ -46,6 +46,21 @@ const appointment10 = new Appointment(10, [user1, user2], '2021-03-15T23:00:00.0
 // matched, but does not involve user1
 const appointment11 = new Appointment(11, [user2, user3], '2021-03-15T23:30:00.000Z', 'napping');
 
+// More appointments
+// same timeslot (booked)
+const appointment12 = new Appointment(12, [user2], '2021-03-15T07:00:00.000Z', 'napping');
+const appointment13 = new Appointment(13, [user3], '2021-03-15T07:00:00.000Z', 'napping');
+const appointment14 = new Appointment(14, [user4], '2021-03-15T07:00:00.000Z', 'napping');
+// different timeslots (booked)
+const appointment15 = new Appointment(15, [user5], '2021-03-15T07:30:00.000Z', 'napping');
+const appointment16 = new Appointment(16, [user3], '2021-03-15T08:00:00.000Z', 'napping');
+// matching
+const appointment17 = new Appointment(17, [user1], '2021-03-15T08:30:00.000Z', 'napping');
+const appointment18 = new Appointment(18, [user1], '2021-03-15T09:00:00.000Z', 'napping');
+// matched
+const appointment19 = new Appointment(19, [user2, user1], '2021-03-15T15:00:00.000Z', 'napping');
+const appointment20 = new Appointment(20, [user3, user1], '2021-03-15T16:00:00.000Z', 'napping');
+const appointment21 = new Appointment(21, [user1, user2], '2021-03-15T17:00:00.000Z', 'napping');
 
 // fake data
 const fakeData = {
@@ -67,10 +82,17 @@ const fakeData = {
             appointment5,
             appointment6,
             appointment7,
+            // More appointments
+            appointment12,
+            appointment13,
+            appointment14,
+            appointment15,
+            appointment16,
+            appointment17,
+            appointment18
           ]
         }
       },
-
       // APPOINTMENTS THAT THE USER HAS MADE OR MATCHED WITH
       // axios.get('/api/sessions', {params: {current_user: <value is ignored>}}); /api/sessions?current_user=<value is ignored>
       'current_user': {

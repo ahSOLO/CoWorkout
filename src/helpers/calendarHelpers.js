@@ -9,7 +9,7 @@ const formatTimeStamp = function(timestamp) {
 };
 
 const extractDayOfWeek = function(timestamp) {
-  const daysOfWeek = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+  const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   const targetDay = formatTimeStamp(timestamp);
   return daysOfWeek[targetDay.getDay()];
 };
@@ -77,9 +77,47 @@ const getWeekDates = function(targetDate = new Date()) {
   return [...daysBeforeToday, today.getDate(), ...daysAfterToday]
 };
 
+const getWeekDateTimes = function(targetDate = new Date()) {
+  /*
+    JS Date.getDay()
+    SUN: 0
+    MON: 1
+    TUE: 2
+    WED: 3
+    THU: 4
+    FRI: 5
+    SAT: 6
+  */
+
+  const today = formatTimeStamp(targetDate);
+  let daysFromSun = today.getDay();
+  let daysFromSat = 6 - today.getDay();
+  let daysBeforeToday = [];
+  let daysAfterToday = [];
+
+  // get dates before today up till monday
+  while (daysFromSun > 0) {
+    // deep copy of today object
+    let newDate = new Date(today.getTime());
+    newDate.setDate(newDate.getDate() - daysFromSun);
+    daysBeforeToday.push(newDate);
+    daysFromSun --;
+  }
+
+  // get dates after today up till sunday
+  for (let dayAfter = 1; dayAfter <= daysFromSat; dayAfter++) {
+    // deep copy of today object
+    let newDate = new Date(today.getTime());
+    newDate.setDate(newDate.getDate() + dayAfter);
+    daysAfterToday.push(newDate);
+  }
+
+  return [...daysBeforeToday, today, ...daysAfterToday]
+};
+
 const autoGenerateEmptyAppointments = function() {
   let emptyAppointments = {};
-  const weekDays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+  const weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   for (const day of weekDays) {
     emptyAppointments[day] = {};
     let hour = 0;
@@ -87,7 +125,7 @@ const autoGenerateEmptyAppointments = function() {
     
     while (hour < 24) {
       let timeString = generateTimeString(hour, minute);
-      emptyAppointments[day][timeString] = { 'state': 'empty', 'session_users': [] };
+      emptyAppointments[day][timeString] = { hour: hour, minute: minute, 'session_users': [] };
       minute += 15;
       if (minute === 60) {
         hour += 1;
@@ -190,5 +228,6 @@ module.exports = {
   extractDayOfWeek,
   changeToUserTZ,
   getWeekDates,
+  getWeekDateTimes,
   rebuildAppointmentObjs
 };
