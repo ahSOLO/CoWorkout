@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CancelDialogue from "components/Dialog/CancelDialogue";
+import CancelDialog from "components/Dialogs/CancelDialog";
 import { Box, Typography } from "@material-ui/core";
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 
@@ -24,7 +24,7 @@ export default function Matching(props){
             onClick={handleCancelClick}
           />}
       </Box>
-      <CancelDialogue
+      <CancelDialog
         data={props.data}
         user={props.user}
         handleCancelClose={handleCancelClose}

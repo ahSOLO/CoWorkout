@@ -4,6 +4,7 @@ import "./styles.scss";
 import { getWeekDates, getWeekDateTimes, rebuildAppointmentObjs } from "helpers/calendarHelpers";
 import useApplicationData from 'hooks/useApplicationData';
 import BookNew from "components/Buttons/BookNew"; 
+import FilterDialog from "components/Dialogs/FilterDialog"
 
 // Material UI
 import { Typography, IconButton } from "@material-ui/core";
@@ -14,25 +15,11 @@ import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined';
 import RefreshOutlinedIcon from '@material-ui/icons/RefreshOutlined';
 
 export default function Calendar(props) {
-
+  
   // fetch data from db
   const { slots, constructSlots } = useApplicationData();
   const [ targetDay, setTargetDay ] = useState(new Date());
-
-  // Get scrollbar width and compensate width of calendar header accordingly
-  useEffect(() => {
-    const outerWidth = document.querySelector("div.cal__days").offsetWidth;
-    let innerWidth = document.querySelector("div.cal__ticks").offsetWidth; 
-    document.querySelectorAll("div.container__slots").forEach( ele => {
-      innerWidth += ele.offsetWidth;
-    });
-    const scrollBarWidth = outerWidth - innerWidth;
-    document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
-  }, [])
-  
-  const refreshSlots = function(targetDay) {
-    constructSlots(targetDay);
-  }
+  const [ filterOpen, setFilterOpen ] = useState(false);
 
   const setWeek = function(direction) {
     if (targetDay && direction === 'forward') {
@@ -105,6 +92,31 @@ export default function Calendar(props) {
       )
     }
   )
+
+  // Filter Button
+  const handleFilterOpen = () => {
+    setFilterOpen(true);
+  }
+
+  const handleFilterClose = () => {
+    setFilterOpen(false);
+  }
+
+  // Get scrollbar width and compensate width of calendar header accordingly
+  useEffect(() => {
+    const outerWidth = document.querySelector("div.cal__days").offsetWidth;
+    let innerWidth = document.querySelector("div.cal__ticks").offsetWidth; 
+    document.querySelectorAll("div.container__slots").forEach( ele => {
+      innerWidth += ele.offsetWidth;
+    });
+    const scrollBarWidth = outerWidth - innerWidth;
+    document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
+  }, [])
+  
+  const refreshSlots = function(targetDay) {
+    constructSlots(targetDay);
+  }
+  
   // console.log(slots['WED']);
   return (
     <div class="cal__container">
@@ -125,7 +137,7 @@ export default function Calendar(props) {
             <CalendarTodayOutlinedIcon fontSize="large"/>
           </IconButton>
           <IconButton>
-            <FilterListOutlinedIcon fontSize="large"/>
+            <FilterListOutlinedIcon fontSize="large" onClick={handleFilterOpen}/>
           </IconButton>
           <IconButton>
             <RefreshOutlinedIcon fontSize="large" onClick={() => {refreshSlots(targetDay)}} />
@@ -150,6 +162,12 @@ export default function Calendar(props) {
         </div>
       </section>
       <BookNew user={props.user} />
+      <FilterDialog 
+        open={filterOpen}
+        handleClose={handleFilterClose}
+        user={props.user}
+        refreshSlots={refreshSlots}  
+      />
     </div>
   )
 }

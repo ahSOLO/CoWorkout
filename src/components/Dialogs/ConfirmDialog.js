@@ -1,9 +1,9 @@
 import {Typography, Button } from '@material-ui/core';
-import DialogueTemplate from "./DialogueTemplate";
+import DialogTemplate from "./DialogTemplate";
 import moment from 'moment';
 import axios from 'axios';
 
-export default function ConfirmDialogue(props) {
+export default function ConfirmDialog(props) {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -18,7 +18,7 @@ export default function ConfirmDialogue(props) {
   }
 
   return (
-    <DialogueTemplate
+    <DialogTemplate
       handleClose = {props.handleConfirmClose}
       open = {props.confirmOpen}
       title = "Confirm Session"

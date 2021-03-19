@@ -11,7 +11,7 @@ import moment from 'moment';
   - button (jsx)
 */
 
-export default function DialogueTemplate(props) {
+export default function DialogTemplate(props) {
   return (
     <Dialog onClose={props.handleClose} open={props.open}>
       <Box display="flex" flexDirection="row-reverse" alignItems="center" width="100%">

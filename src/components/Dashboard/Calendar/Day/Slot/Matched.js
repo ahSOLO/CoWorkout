@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { Box, Avatar, Typography } from "@material-ui/core";
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 import { hoverHandler } from "helpers/utility";
-import ProfileDialogue from "components/Dialog/ProfileDialog";
-import CancelDialogue from "components/Dialog/CancelDialogue";
+import ProfileDialog from "components/Dialogs/ProfileDialog";
+import CancelDialog from "components/Dialogs/CancelDialog";
 
 export default function Matched(props){
   const [leftHover, setLeftHover] = useState(false);
@@ -55,12 +55,12 @@ export default function Matched(props){
         {props.hover && <CloseOutlinedIcon className="clickable" onClick={handleCancelClick}/>}
       </Box>
 
-      <ProfileDialogue
+      <ProfileDialog
         data={props.data}
         handleProfileClose={handleProfileClose}
         profileOpen={profileOpen}  
       />
-      <CancelDialogue
+      <CancelDialog
         data={props.data}
         user={props.user}
         otherUserData={otherUserData}

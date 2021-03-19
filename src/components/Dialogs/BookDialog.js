@@ -1,6 +1,6 @@
 import {Button, InputLabel, Input, MenuItem, FormControl, Select, Box, TextField } from '@material-ui/core';
 import { useState, useEffect } from 'react';
-import DialogueTemplate from "./DialogueTemplate";
+import DialogTemplate from "./DialogTemplate";
 import moment from 'moment-timezone';
 import axios from 'axios';
 import MomentUtils from '@date-io/moment';
@@ -10,7 +10,7 @@ import {
   KeyboardTimePicker,
 } from '@material-ui/pickers';
 
-export default function BookDialogue(props) {
+export default function BookDialog(props) {
   const [activity, setActivity] = useState("any");
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
   const [time, setTime] = useState(moment().endOf('hour'));
@@ -31,7 +31,7 @@ export default function BookDialogue(props) {
     console.log("CURRENT USER ID", props.user.id);
     console.log("ACTIVITY:", activity);
     console.log("SESSION START TIME (UTC)", start_time_UTC);
-    axios.post('/sessions', {user_id: props.user.id, activity: activity, start_time: start_time_UTC})
+    axios.post('http://localhost:8081/api/sessions', {user_id: props.user.id, activity: activity, start_time: start_time_UTC})
     .then( res => {
         console.log("Request Complete");
       }
@@ -39,7 +39,7 @@ export default function BookDialogue(props) {
   }
 
   return (
-    <DialogueTemplate
+    <DialogTemplate
       handleClose = {props.handleBookClose}
       open = {props.bookOpen}
       title = "Book a Workout"

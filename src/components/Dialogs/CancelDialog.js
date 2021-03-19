@@ -1,9 +1,9 @@
 import {Typography, Button } from '@material-ui/core';
-import DialogueTemplate from "./DialogueTemplate";
+import DialogTemplate from "./DialogTemplate";
 import moment from 'moment';
 import axios from 'axios';
 
-export default function CancelDialogue(props) {
+export default function CancelDialog(props) {
   const otherUserString = props.otherUserData?
     `with ${props.otherUserData.user_first_name}`
     : "";
@@ -13,7 +13,7 @@ export default function CancelDialogue(props) {
     // Everything needed for the axios delete request (delete a session_users row): user id, session id
     console.log("USER ID", props.user.id);
     console.log("SESSION ID", props.data.id);
-    axios.delete('/session_users', {user_id: props.user.id, session_id: props.data.id})
+    axios.put('/session_users', {user_id: props.user.id, session_id: props.data.id, state: ""})
     .then( res => {
         console.log("Request Complete");
       }
@@ -21,7 +21,7 @@ export default function CancelDialogue(props) {
   }
 
   return (
-    <DialogueTemplate
+    <DialogTemplate
       handleClose = {props.handleCancelClose}
       open = {props.cancelOpen}
       title = "Cancel Session"
