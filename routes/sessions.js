@@ -30,7 +30,7 @@ module.exports = (db) => {
             , workout_types.type AS workout_type
         FROM sessions 
         JOIN session_users
-              ON sessions.id = session_users.session_id
+              ON sessions.id = session_users.session_id AND session_users.state = 'pending'
         LEFT JOIN workout_types
               ON sessions.workout_type_id = workout_types.id
         WHERE sessions.state = 'pending'
@@ -47,10 +47,10 @@ module.exports = (db) => {
             , sessions.scheduled_at AS start_time
             , workout_types.type AS workout_type
         FROM sessions
-        JOIN (SELECT session_id FROM session_users WHERE user_id = ${user_id}) us
+        JOIN (SELECT session_id FROM session_users WHERE user_id = ${user_id} AND state = 'pending') us
             ON sessions.id = us.session_id
         JOIN session_users
-            ON sessions.id = session_users.session_id
+            ON sessions.id = session_users.session_id AND session_users.state = 'pending'
         LEFT JOIN workout_types
             ON sessions.workout_type_id = workout_types.id
       WHERE sessions.state = 'pending'
@@ -65,10 +65,10 @@ module.exports = (db) => {
            , sessions.scheduled_at AS start_time
            , workout_types.type AS workout_type
         FROM sessions
-        JOIN (SELECT session_id FROM session_users WHERE user_id = 1) us
+        JOIN (SELECT session_id FROM session_users WHERE user_id = 1 AND state = 'pending') us
              ON sessions.id = us.session_id
         JOIN session_users
-             ON sessions.id = session_users.session_id
+             ON sessions.id = session_users.session_id AND session_users.state = 'pending'
         LEFT JOIN workout_types
              ON sessions.workout_type_id = workout_types.id
        WHERE sessions.state = 'pending'
@@ -87,7 +87,7 @@ module.exports = (db) => {
         JOIN (SELECT session_id FROM session_users WHERE user_id = 1) us
              ON sessions.id = us.session_id
         JOIN session_users
-             ON sessions.id = session_users.session_id
+             ON sessions.id = session_users.session_id AND session_users.state = 'pending'
         LEFT JOIN workout_types
              ON sessions.workout_type_id = workout_types.id
        GROUP BY 1, 2, 4, 5
