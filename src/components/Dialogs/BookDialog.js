@@ -10,6 +10,8 @@ import {
   KeyboardTimePicker,
 } from '@material-ui/pickers';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export default function BookDialog(props) {
   const [activity, setActivity] = useState("any");
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
@@ -31,7 +33,7 @@ export default function BookDialog(props) {
     console.log("CURRENT USER ID", props.user.id);
     console.log("ACTIVITY:", activity);
     console.log("SESSION START TIME (UTC)", start_time_UTC);
-    axios.post('http://localhost:8081/api/sessions', {user_id: props.user.id, activity: activity, start_time: start_time_UTC})
+    axios.post(BASE_URL + '/api/sessions', {user_id: props.user.id, activity: activity, start_time: start_time_UTC})
     .then( res => {
         console.log("Request Complete");
       }

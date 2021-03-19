@@ -4,6 +4,9 @@ import { useState } from 'react';
 import DialogTemplate from "./DialogTemplate";
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+console.log(BASE_URL);
+
 export default function FilterDialog(props) {
   const [activity, setActivity] = useState("any");
   const [options, setOptions] = useState({
@@ -15,27 +18,26 @@ export default function FilterDialog(props) {
     setOptions({...options, [e.target.name]: e.target.checked })
   };
 
-  // const handleFormSubmit = (e) => {
-  //   e.preventDefault();
-  //   const constructedLocalTime = moment(date + ' ' + time.format("HH:mm"), "YYYY-MM-DD HH:mm");
-  //   const start_time_UTC = constructedLocalTime.tz("UTC").format();
-  //   // Everything needed for the axios post request: user id, activity, start_time (in UTC)
-  //   console.log("CURRENT USER ID", props.user.id);
-  //   console.log("ACTIVITY:", activity);
-  //   console.log("SESSION START TIME (UTC)", start_time_UTC);
-  //   axios.post('/sessions', {user_id: props.user.id, activity: activity, start_time: start_time_UTC})
-  //   .then( res => {
-  //       console.log("Request Complete");
-  //     }
-  //   )
-  // }
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    // Everything needed for the axios get request: activity, sameGender, reputable
+    console.log("CURRENT USER ID", props.user.id);
+    console.log("ACTIVITY:", activity);
+    console.log("SAME GENDER", options.sameGender);
+    console.log("REPUTABLE", options.reputable);
+    axios.get(BASE_URL + '/api/sessions', { user_id: props.user.id, activity: activity, sameGender: options.sameGender, reputable: options.reputable })
+    .then( res => {
+        console.log("Request Complete");
+      }
+    )
+  }
 
   return (
     <DialogTemplate
       handleClose = {props.handleFilterClose}
       open = {props.filterOpen}
       title = "Filter Sessions"
-      // onFormSubmit={handleFormSubmit}
+      onFormSubmit={handleFormSubmit}
       content = {
         <Box display="flex" flexDirection="column" width="100%">
             <FormControl>
@@ -56,19 +58,20 @@ export default function FilterDialog(props) {
                 <MenuItem value={"Stretching"}>Stretching</MenuItem>
               </Select>
             </FormControl>
+            <br /><br />
             <FormControl component="fieldset">
-              <FormLabel component="legend">Assign responsibility</FormLabel>
+              <FormLabel component="legend">Preferences</FormLabel>
               <FormGroup>
                 <FormControlLabel
                   control={<Switch checked={options.sameGender} onChange={handleChange} name="sameGender" />}
                   label="Only show same gender:"
                 />
+                <br />
                 <FormControlLabel
                   control={<Switch checked={options.reputable} onChange={handleChange} name="reputable" />}
                   label="Only show reputable users:"
                 />
               </FormGroup>
-              <FormHelperText>Be careful</FormHelperText>
             </FormControl>
         </Box>
       }

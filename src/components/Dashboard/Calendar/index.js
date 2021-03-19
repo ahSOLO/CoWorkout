@@ -21,6 +21,10 @@ export default function Calendar(props) {
   const [ targetDay, setTargetDay ] = useState(new Date());
   const [ filterOpen, setFilterOpen ] = useState(false);
 
+  const refreshSlots = function(targetDay) {
+    constructSlots(targetDay);
+  }
+
   const setWeek = function(direction) {
     if (targetDay && direction === 'forward') {
       setTargetDay((prev) => {
@@ -113,10 +117,6 @@ export default function Calendar(props) {
     document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
   }, [])
   
-  const refreshSlots = function(targetDay) {
-    constructSlots(targetDay);
-  }
-  
   // console.log(slots['WED']);
   return (
     <div class="cal__container">
@@ -163,8 +163,8 @@ export default function Calendar(props) {
       </section>
       <BookNew user={props.user} />
       <FilterDialog 
-        open={filterOpen}
-        handleClose={handleFilterClose}
+        filterOpen={filterOpen}
+        handleFilterClose={handleFilterClose}
         user={props.user}
         refreshSlots={refreshSlots}  
       />
