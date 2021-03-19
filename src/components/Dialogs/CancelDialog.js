@@ -3,6 +3,8 @@ import DialogTemplate from "./DialogTemplate";
 import moment from 'moment';
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export default function CancelDialog(props) {
   const otherUserString = props.otherUserData?
     `with ${props.otherUserData.user_first_name}`
@@ -13,11 +15,18 @@ export default function CancelDialog(props) {
     // Everything needed for the axios delete request (delete a session_users row): user id, session id
     console.log("USER ID", props.user.id);
     console.log("SESSION ID", props.data.id);
-    axios.put('/session_users', {user_id: props.user.id, session_id: props.data.id, state: ""})
+    props.setMode("LOADING");
+    props.handleCancelClose();
+    // Axios request will also change the session state to canceled if cancelling user is the only pending user of the session.
+    axios.put(BASE_URL + '/api/session_users/cancel', {user_id: props.user.id, session_id: props.data.id})
     .then( res => {
-        console.log("Request Complete");
+      if (res.status===201) {
+        props.setMode("LOADING");
+        props.refreshSlots(props.targetDay);
+      } else {
+        props.setMode("ERROR");
       }
-    )
+    })
   }
 
   return (

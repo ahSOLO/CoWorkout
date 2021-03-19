@@ -15,10 +15,9 @@ export default function BookNew(props) {
 
   return (
     <>
-      <IconButton id="bookNewButton">
+      <IconButton id="bookNewButton" onClick={handleBookClick} >
         <AddIcon 
           fontSize="large"
-          onClick={handleBookClick} 
         />
       </IconButton>
       <BookDialog

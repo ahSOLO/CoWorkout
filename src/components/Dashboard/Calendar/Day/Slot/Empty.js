@@ -28,6 +28,7 @@ export default function Empty(props){
          data={props.data}
          date={props.date}
          user={props.user}
+         setMode={props.setMode}
       />
     </div>
   )

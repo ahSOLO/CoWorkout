@@ -34,11 +34,13 @@ export default function Slot(props) {
       setMode(EMPTY);
     } else if (usersNum === 1) {
       const isMySession = props.user && Boolean(props.data.session_users[0].user_id === props.user.id);
+      console.log("SETTING MATCHING/BOOKED WITH:", props.data.session_users);
       // MATCHING: you booked and you're able to match with others - i.e. you're the owner of a 'pending' session and the only person associated with it
       // BOOKED: somebody other than you has booked and you're able to match - i.e. there is at least 1 person (not you) associated with a 'pending' session
       isMySession? setMode(MATCHING) : setMode(BOOKED);      
     } else if (usersNum === 2) {
       // MATCHED: match is completed - i.e. there are 2 people associated with a 'pending' session and you are one of the two
+      console.log("SETTING MATCHED WITH:", props.data.session_users);
       setMode(MATCHED);
     }
   }, [props.data, props.user])
@@ -47,12 +49,12 @@ export default function Slot(props) {
     <div className="slot" 
       onMouseEnter={() => hoverHandler(setHover, true)}
       onMouseLeave={() => hoverHandler(setHover, false)}>
-        {mode === EMPTY && <Empty hover={hover} setHover={setHover} data={props.data} date={props.date} user={props.user}/>}
-        {mode === BOOKED && <Booked hover={hover} setHover={setHover} data={props.data} user={props.user} />}
-        {mode === MATCHING && <Matching hover={hover} setHover={setHover} data={props.data} user={props.user} />}
-        {mode === MATCHED && <Matched hover={hover} setHover={setHover} data={props.data} user={props.user} />}
-        {mode === LOADING && <Status />}
-        {mode === ERROR && <Error hover={hover} setHover={setHover}/>}
+        {mode === EMPTY && <Empty hover={hover} setHover={setHover} setMode={setMode} data={props.data} date={props.date} user={props.user}/>}
+        {mode === BOOKED && <Booked hover={hover} setHover={setHover} setMode={setMode} data={props.data} user={props.user} />}
+        {mode === MATCHING && <Matching hover={hover} setHover={setHover} setMode={setMode} data={props.data} user={props.user} refreshSlots={props.refreshSlots} targetDay={props.targetDay}/>}
+        {mode === MATCHED && <Matched hover={hover} setHover={setHover} setMode={setMode} data={props.data} user={props.user} refreshSlots={props.refreshSlots} targetDay={props.targetDay}/>}
+        {mode === LOADING && <Status setMode={setMode} />}
+        {mode === ERROR && <Error hover={hover} setHover={setHover} setMode={setMode} refreshSlots={props.refreshSlots} targetDay={props.targetDay}/>}
     </div>
   )
 }

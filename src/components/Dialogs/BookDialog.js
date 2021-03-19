@@ -15,11 +15,11 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 export default function BookDialog(props) {
   const [activity, setActivity] = useState("0");
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
-  const [time, setTime] = useState(moment().endOf('hour'));
+  const [time, setTime] = useState(moment().add(1, 'hour').startOf('hour'));
 
   useEffect(() => {
     if (props.data){
-      setActivity(props.data.activity_type || "0");
+      setActivity(props.data.activity_type || 0);
       setDate(moment(props.date).format("YYYY-MM-DD"));
       setTime(time.set({ "hour": props.data.hour, "minute": props.data.minute }))
     }
@@ -28,18 +28,27 @@ export default function BookDialog(props) {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const constructedLocalTime = moment(date + ' ' + time.format("HH:mm"), "YYYY-MM-DD HH:mm");
+    console.log(constructedLocalTime);
     const start_time_UTC = constructedLocalTime.tz("UTC").format();
+    console.log(start_time_UTC);
     // Everything needed for the axios post request: user id, activity, start_time (in UTC)
     console.log("CURRENT USER ID", props.user.id);
     console.log("ACTIVITY:", activity);
     console.log("SESSION START TIME (UTC)", start_time_UTC);
+    props.setMode("LOADING");
+    props.handleBookClose();
     axios.post(BASE_URL + '/api/sessions', {user_id: props.user.id, activity: activity, start_time: start_time_UTC})
     .then( res => {
         if (res.status===201) {
-          props.handleBookClose();
+          props.setMode("MATCHING");
+        } else {
+          props.setMode("ERROR");
         }
       }
     )
+    .catch( err => {
+      props.setMode("ERROR");
+    })
   }
 
   return (

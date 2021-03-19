@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, Avatar, Typography, Dialog} from '@material-ui/core';
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
 import { hoverHandler } from "helpers/utility"
@@ -10,6 +10,15 @@ export default function Booked(props){
   const [rightHover, setRightHover] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [avatarURL, setAvatarURL] = useState("");
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    if (props.data.session_users.length > 0) {
+      setAvatarURL(props.data.session_users[0].user_profile_image_url);
+      setName(props.data.session_users[0].user_first_name);
+    }
+  }, [props.data.session_users])
 
   const handleAvatarClick = () => {
     setProfileOpen(true);
@@ -33,7 +42,7 @@ export default function Booked(props){
       <div className="slot__booked">
         <div className="slot__avatar">
           <Avatar 
-            src={props.data.session_users[0].user_profile_image_url} 
+            src={avatarURL} 
             className="clickable"
             onMouseEnter = {() => hoverHandler(setLeftHover, true)}
             onMouseLeave = {() => hoverHandler(setLeftHover, false)}
@@ -44,7 +53,7 @@ export default function Booked(props){
           <Typography variant="body2">
             {rightHover? "Schedule?"
             : leftHover? "View Profile?" 
-            : props.data.session_users[0].user_first_name
+            : name
             }
           </Typography>
         </div>
@@ -64,7 +73,7 @@ export default function Booked(props){
         handleProfileClose={handleProfileClose}
         profileOpen={profileOpen}
       />
-      <ConfirmDialog data={props.data} user={props.user} handleConfirmClose={handleConfirmClose} confirmOpen={confirmOpen} />
+      <ConfirmDialog data={props.data} user={props.user} setMode={props.setMode} handleConfirmClose={handleConfirmClose} confirmOpen={confirmOpen} />
     </Box>
     )
 }

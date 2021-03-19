@@ -14,11 +14,13 @@ const extractDayOfWeek = function(timestamp) {
   return daysOfWeek[targetDay.getDay()];
 };
 
+// Modified to calculate user TZ based on client local time
 const changeToUserTZ = function(timestamp, userTZ) {
   // changeToUserTZ('2021-03-16T07:29:39.503Z', 'Asia/Singapore')
   const targetDatetime = formatTimeStamp(timestamp);
-  const timeString = targetDatetime.toLocaleString('en-US',{ timeZone: userTZ}).toString();
-  return new Date(timeString);
+  // const timeString = targetDatetime.toLocaleString('en-US',{ timeZone: userTZ})
+  
+  return new Date(Date.UTC(targetDatetime.getFullYear(), targetDatetime.getMonth(), targetDatetime.getDate(), targetDatetime.getHours(), targetDatetime.getMinutes(), targetDatetime.getSeconds()));
 };
 
 const generateTimeString = function(hour, minute) {
@@ -133,6 +135,7 @@ const autoGenerateEmptyAppointments = function() {
       }
     };
   }
+
   return emptyAppointments;
 };
 
@@ -153,14 +156,18 @@ const adaptSessionObj = function(sessionObj, userTZ) {
     'day': dayOfWeek,
     'start_time': startTimeUserTZ,
     'start_time_ref': startTimeString,
-    'activity_type': sessionObj.activity_type,
-    'session_users': sessionObj.session_users
+    'activity_type': sessionObj.workout_type,
+    'session_users': sessionObj.session_users.map( userJSONObj => JSON.parse(userJSONObj))
   }
 }
 
 const rebuildAppointmentObjs = function(emptyAppointments, persistentAppointments, allAppointments, userTZ) {
   // deep copy emptyAppointments
-  let reconstructedAppointments = {...emptyAppointments};
+  // let reconstructedAppointments = {...emptyAppointments};
+
+  // reconstruct emptyAppointments
+  let reconstructedAppointments = autoGenerateEmptyAppointments();
+  console.log(reconstructedAppointments);
 
   // contains appointments that are on the same timeslot
   let sameSlotAppointments = {
@@ -184,7 +191,7 @@ const rebuildAppointmentObjs = function(emptyAppointments, persistentAppointment
   for (const appointment of allAppointments) {
     const currentAppointment = adaptSessionObj(appointment, userTZ);
     
-    if (reconstructedAppointments[currentAppointment.day][currentAppointment.start_time_ref].state !== 'empty') {
+    if (reconstructedAppointments[currentAppointment.day][currentAppointment.start_time_ref].session_users.length > 0) {
       // add the existing appointment to the pool so it can be considered for the matching algorithm. Wrap in `if` statement so we don't keep adding that same appointment to the pool.
       if (!sameSlotAppointments[currentAppointment.day] || !sameSlotAppointments[currentAppointment.day][currentAppointment.start_time_ref]) {
         // add `if` so the previous dups don't get overwritten
