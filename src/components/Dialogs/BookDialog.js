@@ -15,7 +15,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 export default function BookDialog(props) {
   const [activity, setActivity] = useState("0");
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
-  const [time, setTime] = useState(moment().endOf('hour'));
+  const [time, setTime] = useState(moment().add(1, 'hour').startOf('hour'));
 
   useEffect(() => {
     if (props.data){
