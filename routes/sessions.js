@@ -4,10 +4,11 @@ const router  = express.Router();
 module.exports = (db) => {
   router.get("/", (req, res) => {
 
-    console.log('sessions');
-
     const user_id = req.query.user_id;
     const filter = req.query.filter; 
+
+    console.log('Getting sessions data:', filter);
+
     let start_date;
     let end_date;
     if (!req.query.start_date || !req.query.end_date) {

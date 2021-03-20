@@ -42,7 +42,7 @@ export default function SideNav(props) {
         <Typography variant="subtitle1"><b>See All</b></Typography>
       </Box>
       <Box display="flex" flexDirection="column" width="100%">
-        <Typography>Debug Links (Will replace for production)</Typography>
+        <Typography><b>Debug Links (Will replace for production)</b></Typography>
         <Link to="/">Home</Link>
         <Link to="/dashboard">Dashboard</Link>
         <Link to="/login">Login</Link>
@@ -57,11 +57,11 @@ export default function SideNav(props) {
         <Link to="/workout-call">Workout Session</Link>
       </Box>
       <Box display="flex" flexDirection="column" width="100%">
-        <Typography variable="body2">About</Typography>
+        <Typography variant="body2">About</Typography>
         <br/>
-        <Typography variable="body2">Contact Us</Typography>
+        <Typography variant="body2">Contact Us</Typography>
         <br/>
-        <Typography variable="body2">Terms &amp; Conditions</Typography>
+        <Typography variant="body2">Terms &amp; Conditions</Typography>
       </Box>
     </nav>
   )
