@@ -45,6 +45,7 @@ export default function BookDialog(props) {
     axios.post(BASE_URL + '/api/sessions', {user_id: props.user.id, activity: activity, start_time: start_time_UTC})
     .then( res => {
         if (res.status===201) {
+          props.setNewSessionId(res.data);
           props.setMode("MATCHING");
         } else {
           props.setMode("ERROR");

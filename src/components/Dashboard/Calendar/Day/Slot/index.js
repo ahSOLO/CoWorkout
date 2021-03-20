@@ -26,6 +26,7 @@ const ERROR = "ERROR";
 
 export default function Slot(props) {
   const [mode, setMode] = useState(EMPTY);
+  const [newSessionId, setNewSessionId] =useState(null);
   const [hover, setHover] = useState(false);
 
   useEffect(() => {
@@ -47,9 +48,9 @@ export default function Slot(props) {
     <div className="slot" 
       onMouseEnter={() => hoverHandler(setHover, true)}
       onMouseLeave={() => hoverHandler(setHover, false)}>
-        {mode === EMPTY && <Empty hover={hover} setHover={setHover} setMode={setMode} data={props.data} date={props.date} user={props.user}/>}
+        {mode === EMPTY && <Empty hover={hover} setHover={setHover} setMode={setMode} data={props.data} date={props.date} user={props.user} setNewSessionId={setNewSessionId}/>}
         {mode === BOOKED && <Booked hover={hover} setHover={setHover} setMode={setMode} data={props.data} user={props.user} />}
-        {mode === MATCHING && <Matching hover={hover} setHover={setHover} setMode={setMode} data={props.data} user={props.user} refreshSlots={props.refreshSlots} targetDay={props.targetDay}/>}
+        {mode === MATCHING && <Matching hover={hover} setHover={setHover} setMode={setMode} data={props.data} user={props.user} refreshSlots={props.refreshSlots} targetDay={props.targetDay} newSessionId={newSessionId}/>}
         {mode === MATCHED && <Matched hover={hover} setHover={setHover} setMode={setMode} data={props.data} user={props.user} refreshSlots={props.refreshSlots} targetDay={props.targetDay}/>}
         {mode === LOADING && <Status setMode={setMode} />}
         {mode === ERROR && <Error hover={hover} setHover={setHover} setMode={setMode} refreshSlots={props.refreshSlots} targetDay={props.targetDay}/>}

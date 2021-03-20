@@ -27,6 +27,7 @@ export default function Matching(props){
       <CancelDialog
         data={props.data}
         user={props.user}
+        newSessionId={props.newSessionId}
         setMode={props.setMode}
         refreshSlots={props.refreshSlots}
         targetDay={props.targetDay}

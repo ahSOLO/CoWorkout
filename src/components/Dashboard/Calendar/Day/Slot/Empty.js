@@ -29,6 +29,7 @@ export default function Empty(props){
          date={props.date}
          user={props.user}
          setMode={props.setMode}
+         setNewSessionId={props.setNewSessionId}
       />
     </div>
   )

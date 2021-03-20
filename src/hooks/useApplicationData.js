@@ -16,7 +16,7 @@ export default function useApplicationData() {
   const constructSlots = function(startDateTime = new Date()) {
     const today = new Date();
     // If target date is any day other than today, begin the start date on a Sunday - necessary for views outside of the current week.
-    if (startDateTime.getDate() != today.getDate() || startDateTime.getMonth() != today.getMonth()) {
+    if (startDateTime.getDate() !== today.getDate() || startDateTime.getMonth() !== today.getMonth()) {
       startDateTime.setDate(startDateTime.getDate() - startDateTime.getDay());
     }
 
@@ -24,7 +24,7 @@ export default function useApplicationData() {
     const start_date = new Date(`${start_date_exact.getDate()} ${months[start_date_exact.getMonth()]}, ${start_date_exact.getFullYear()}`);
     // console.log(start_date);
     const start_date_days_from_sunday = 7 - start_date.getDay();
-    const end_date = new Date(start_date.getTime() + start_date_days_from_sunday * 24 * 60 * 59 * 1000); // 1 minute before midnight because we don't want to grab next sunday's 12am session
+    const end_date = new Date(start_date.getTime() + start_date_days_from_sunday * 24 * 60 * 59 * 1000); // 1 minute before midnight because we don't want to grab next week's sessions
 
     console.log('START:', start_date, '\n', 'END:', end_date);
     Promise.all([

@@ -94,7 +94,7 @@ module.exports = (db) => {
         db.query(query_string2, [session_id])
         .then( data => {
           cancelSession = data.rows[0].cancel_session;
-          console.log("Checking whether to the session should be cancelled:", cancelSession);
+          console.log("Checking whether the session should be cancelled:", cancelSession);
           if (!cancelSession) {
             res.status(201).send("Success");
           }
