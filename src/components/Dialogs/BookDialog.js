@@ -1,4 +1,4 @@
-import {Button, InputLabel, Input, MenuItem, FormControl, Select, Box, TextField } from '@material-ui/core';
+import {Button, InputLabel, Input, MenuItem, FormControl, Select, Box, Typography } from '@material-ui/core';
 import { useState, useEffect } from 'react';
 import DialogTemplate from "./DialogTemplate";
 import moment from 'moment-timezone';
@@ -17,6 +17,7 @@ export default function BookDialog(props) {
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
   const [time, setTime] = useState(moment().add(1, 'hour').startOf('hour'));
   const [yesterday, setYesterday] = useState(moment().subtract(1,'days'));
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (props.data){
@@ -30,7 +31,9 @@ export default function BookDialog(props) {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const constructedLocalTime = moment(date + ' ' + time.format("HH:mm"), "YYYY-MM-DD HH:mm");
-    console.log(constructedLocalTime);
+    if (constructedLocalTime.isBefore(moment())) {
+      return setMessage("Please select a time in the future.")
+    }
     const start_time_UTC = constructedLocalTime.tz("UTC").format();
     console.log(start_time_UTC);
     // Everything needed for the axios post request: user id, activity, start_time (in UTC)
@@ -42,6 +45,7 @@ export default function BookDialog(props) {
     axios.post(BASE_URL + '/api/sessions', {user_id: props.user.id, activity: activity, start_time: start_time_UTC})
     .then( res => {
         if (res.status===201) {
+          props.setNewSessionId(res.data);
           props.setMode("MATCHING");
         } else {
           props.setMode("ERROR");
@@ -61,6 +65,9 @@ export default function BookDialog(props) {
       onFormSubmit={handleFormSubmit}
       content = {
         <Box display="flex" flexDirection="column" width="100%">
+            <Typography variant="subtitle1" color="error">
+              {message}
+            </Typography>
             <FormControl>
               <InputLabel id="activity-label">Activity</InputLabel>
               <Select
@@ -101,6 +108,7 @@ export default function BookDialog(props) {
                 margin="normal"
                 id="time-picker"
                 label="Please select a time"
+                minTime={moment().startOf('hour').format()}
                 value={time}
                 onChange={(d) => setTime(moment(d))}
                 minutesStep={15}

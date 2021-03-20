@@ -5,6 +5,7 @@ import { getWeekDates, getWeekDateTimes, rebuildAppointmentObjs } from "helpers/
 import useApplicationData from 'hooks/useApplicationData';
 import BookNew from "components/Buttons/BookNew"; 
 import FilterDialog from "components/Dialogs/FilterDialog";
+import throttle from 'lodash/throttle';
 
 // Material UI
 import { Typography, IconButton } from "@material-ui/core";
@@ -21,9 +22,7 @@ export default function Calendar(props) {
   const [ targetDay, setTargetDay ] = useState(new Date());
   const [ filterOpen, setFilterOpen ] = useState(false);
 
-  const refreshSlots = function(targetDay) {
-    constructSlots(targetDay);
-  }
+  const refreshSlots = throttle(() => constructSlots(targetDay), 500);
 
   const setWeek = function(direction) {
     if (targetDay && direction === 'forward') {
@@ -67,7 +66,7 @@ export default function Calendar(props) {
     const fromDate = weekDates[0];
     const toDate = weekDates.slice(-1)[0];
 
-    // get monday's date
+    // get sunday's date
     const daysFromSun = targetDay.getDay();
     const startDate = new Date(targetDay.getTime() - (daysFromSun * 24 * 60 * 60 * 1000));
     const monthInt = startDate.getMonth();

@@ -25,7 +25,8 @@ module.exports = (db) => {
     if (filter === 'transient') {
       query_string = `
       SELECT sessions.id AS session_id
-            , ARRAY_AGG('{"user_id": ' || session_users.user_id || ', "user_first_name": "' || users.first_name || '", "user_profile_image_url": "' || users.profile_image_url || '"}' ORDER BY session_users.user_id) AS session_users            , sessions.scheduled_at AS start_time
+            , ARRAY_AGG('{"user_id": ' || session_users.user_id || ', "user_first_name": "' || users.first_name || '", "user_profile_image_url": "' || users.profile_image_url || '"}' ORDER BY session_users.user_id) AS session_users            
+            , sessions.scheduled_at AS start_time
             , workout_types.type AS workout_type
         FROM sessions 
         JOIN session_users
@@ -116,6 +117,8 @@ module.exports = (db) => {
 
     let { user_id, activity, start_time } = req.body;
 
+    console.log(start_time);
+
     // set workout type id to null if user chose "any" activity. Conversion has to happen here instead of in front end to prevent visual display bug with matUI dropdowns.
     if (activity === 0) activity = null;
 
@@ -134,7 +137,7 @@ module.exports = (db) => {
       console.log("Inserted sessions record");
       db.query(query_string2, [session_id, user_id])
         .then( data => {
-          res.status(201).send("Success");
+          res.status(201).json(session_id);
           console.log("Inserted session_users record");
         })
         .catch(err => {

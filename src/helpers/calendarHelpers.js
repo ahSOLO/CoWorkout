@@ -17,9 +17,11 @@ const extractDayOfWeek = function(timestamp) {
 // Modified to calculate user TZ based on client local time
 const changeToUserTZ = function(timestamp, userTZ) {
   // changeToUserTZ('2021-03-16T07:29:39.503Z', 'Asia/Singapore')
+  console.log("UNCHANGED:", timestamp);
   const targetDatetime = formatTimeStamp(timestamp);
   // const timeString = targetDatetime.toLocaleString('en-US',{ timeZone: userTZ})
   
+  console.log("CHANGED:", new Date(Date.UTC(targetDatetime.getFullYear(), targetDatetime.getMonth(), targetDatetime.getDate(), targetDatetime.getHours(), targetDatetime.getMinutes(), targetDatetime.getSeconds())));
   return new Date(Date.UTC(targetDatetime.getFullYear(), targetDatetime.getMonth(), targetDatetime.getDate(), targetDatetime.getHours(), targetDatetime.getMinutes(), targetDatetime.getSeconds()));
 };
 
