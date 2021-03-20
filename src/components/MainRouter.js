@@ -20,9 +20,9 @@ const MainRouter = (props) => {
   return (
     <main>
       <Router>
-        <Header />
+        <Header user={props.user} />
         <Box display="flex" justifyContent="stretch" height="100%" width="100%" position="fixed" marginTop="50px">
-          <SideNav />
+          <SideNav user={props.user} />
           <div id="main-container">
             <Switch>
               <Route path="/dashboard">
