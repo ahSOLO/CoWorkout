@@ -7,22 +7,46 @@ import Paper from "@material-ui/core/Paper";
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/EditOutlined';
 import EditProfileDialog from 'components/Dialogs/EditProfileDialog';
+import Popover from '@material-ui/core/Popover';
+import { makeStyles } from '@material-ui/core/styles';
 import useApplicationData from 'hooks/useApplicationData';
 import "./styles.scss";
 
+const useStyles = makeStyles((theme) => ({
+  popover: {
+    pointerEvents: 'none',
+  }
+}));
 
 export default function Profile(props) {
   
   const { user, setUser } = useApplicationData();
 
   const [profileEditOpen, setProfileEditOpen] = useState(false);
-
   const handleProfileEditClick = () => {
     setProfileEditOpen(true);
   }
   const handleProfileEditClose = () => {
     setProfileEditOpen(false);
   }
+
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
+  const [anchorEl2, setAnchorEl2] = useState(null);
+  const handlePopoverOpen2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+  const handlePopoverClose2 = () => {
+    setAnchorEl2(null);
+  };
+  const open2 = Boolean(anchorEl2);
   
   return (
     <div>
@@ -87,8 +111,66 @@ export default function Profile(props) {
                 </Typography>
                 <br/>
                 <Box className="profile__emojis">
-                  {user.one_completed_badge && (<Paper elevation={4} className="emoji">&#127895;</Paper>)}
-                  {user.ten_completed_badge && (<Paper elevation={4} className="emoji">&#127941;</Paper>)}
+                  {user.one_completed_badge && (
+                    <div>
+                      <Paper 
+                        elevation={4}
+                        aria-owns={open ? "mouse-over-popover" : undefined}
+                        aria-haspopup="true"
+                        onMouseEnter={handlePopoverOpen} 
+                        onMouseLeave={handlePopoverClose} 
+                        className="emoji"
+                      >
+                        &#127895;
+                      </Paper>
+                      <Popover
+                        className={classes.popover}
+                        open={open}
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'left',
+                        }}
+                        onClose={handlePopoverClose}
+                      >
+                        <Typography variant="subtitle1" className="acheivement_badge">Completed first workout!</Typography>
+                      </Popover>
+                    </div>
+                  )}
+                  {user.ten_completed_badge && (
+                    <div>
+                      <Paper 
+                        elevation={4}
+                        aria-owns={open2 ? "mouse-over-popover" : undefined}
+                        aria-haspopup="true"
+                        onMouseEnter={handlePopoverOpen2} 
+                        onMouseLeave={handlePopoverClose2} 
+                        className="emoji"
+                      >
+                        &#127941;
+                      </Paper>
+                      <Popover
+                        className={classes.popover}
+                        open={open2}
+                        anchorEl={anchorEl2}
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'left',
+                        }}
+                        onClose={handlePopoverClose2}
+                      >
+                        <Typography variant="subtitle1" className="acheivement_badge">Completed 10 workouts!</Typography>
+                      </Popover>
+                    </div>
+                  )}
                   {false && (<Paper elevation={4} className="emoji">&#127942;</Paper>)}
                   {false && (<Paper elevation={4} className="emoji">&#128293;</Paper>)}
                 </Box>
