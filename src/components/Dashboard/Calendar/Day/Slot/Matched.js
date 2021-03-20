@@ -29,7 +29,7 @@ export default function Matched(props){
 
   useEffect(() => {
     if (props.user){
-      setOtherUserData(props.data.session_users.find(userObj => userObj.id !== props.user.id));
+      setOtherUserData(props.data.session_users.find(userObj => userObj.user_id !== props.user.id));
     }
   }, [props.data, props.user])
 
