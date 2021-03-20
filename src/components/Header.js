@@ -47,7 +47,7 @@ export default function Header(props) {
   return (
     <header id="app-header" className={style}>
       <Box paddingLeft="25px">
-        <Typography variant="h4">CoWorkout</Typography>
+        <Typography variant="h4" className="clickable" onClick={() => props.user ? history.push("/dashboard") : history.push("/")}>CoWorkout</Typography>
       </Box>
       <Box paddingRight="50px" display="flex" alignItems="center" >
         {headerRight()}
