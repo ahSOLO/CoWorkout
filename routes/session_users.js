@@ -20,18 +20,41 @@ module.exports = (db) => {
 
     let { user_id, session_id } = req.body;
 
-    const query_string = `
+    // if user is already a session user (e.g. cancel and rejoin), modify their status to 'pending'
+    const query_string1 = `
+    UPDATE session_users
+    SET state = 'pending'
+    WHERE session_id = $1
+    AND user_id = $2
+    RETURNING id;
+    `
+    
+    const query_string2 = `
     INSERT INTO session_users (session_id, user_id)
     VALUES ($1, $2);
     `
-    db.query(query_string, [session_id, user_id])
+
+    db.query(query_string1, [session_id, user_id])
       .then( data => {
-        res.status(201).send("Success");
-        console.log("Inserted session_users record");
+        if (data.rows[0]) {
+          res.status(201).send("Success");
+          console.log("User already a session_user, updated status to 'pending'");
+        } else {
+          console.log("User not a session_user, inserting...");
+          db.query(query_string2, [session_id, user_id])
+          .then( data => {
+            res.status(201).send("Success");
+            console.log("Inserted session_users record");
+          })
+          .catch( err => {
+            res.status(500).send("Failure");
+            console.log("Error inserting session_users record");
+          })
+        }
       })
       .catch( err => {
         res.status(500).send("Failure");
-        console.log("Error inserting session_users record");
+        console.log("Error running update query on session_users");
       })
   });
 

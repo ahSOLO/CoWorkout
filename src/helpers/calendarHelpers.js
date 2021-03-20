@@ -152,7 +152,7 @@ const adaptSessionObj = function(sessionObj, userTZ) {
   const startTimeString = extractTimeString(startTimeUserTZ);
 
   return {
-    'id': sessionObj.id,
+    'id': sessionObj.session_id,
     'day': dayOfWeek,
     'start_time': startTimeUserTZ,
     'start_time_ref': startTimeString,
