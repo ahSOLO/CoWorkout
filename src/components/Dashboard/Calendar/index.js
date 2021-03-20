@@ -5,6 +5,7 @@ import { getWeekDates, getWeekDateTimes, rebuildAppointmentObjs } from "helpers/
 import useApplicationData from 'hooks/useApplicationData';
 import BookNew from "components/Buttons/BookNew"; 
 import FilterDialog from "components/Dialogs/FilterDialog";
+import throttle from 'lodash/throttle';
 
 // Material UI
 import { Typography, IconButton } from "@material-ui/core";
@@ -22,7 +23,8 @@ export default function Calendar(props) {
   const [ filterOpen, setFilterOpen ] = useState(false);
 
   const refreshSlots = function(targetDay) {
-    constructSlots(targetDay);
+    // Add throttler to limit refresh spamming
+    throttle(() => constructSlots(targetDay), 500)();
   }
 
   const setWeek = function(direction) {
