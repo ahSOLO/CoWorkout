@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import axios from 'fakeAxios';
+import fakeAxios from 'fakeAxios';
 import axios from 'axios';
 import { allSlots, rebuildAppointmentObjs, formatTimeStamp } from "helpers/calendarHelpers";
 
@@ -22,13 +22,13 @@ export default function useApplicationData() {
     console.log('START:', start_date, '\n', 'END:', end_date);
     const baseURL = "";
     Promise.all([
-      axios.get(baseURL + '/api/sessions', {
+      fakeAxios.get(baseURL + '/api/sessions', {
         params: {
           start_date,
           end_date
         }
       }),
-      axios.get(baseURL + '/api/sessions', {
+      fakeAxios.get(baseURL + '/api/sessions', {
         params: {
           current_user: []
         }
@@ -66,6 +66,7 @@ export default function useApplicationData() {
   return {
     slots,
     constructSlots,
-    user
+    user,
+    setUser
   }
 };

@@ -1,4 +1,4 @@
-import { useState } from 'react'; 
+import { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
@@ -6,16 +6,17 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/EditOutlined';
-import EditProfileDialog from 'components/Dialog/EditProfileDialog';
+import EditProfileDialog from 'components/Dialogs/EditProfileDialog';
 import useApplicationData from 'hooks/useApplicationData';
 import "./styles.scss";
 
 
 export default function Profile(props) {
   
-  const { user } = useApplicationData();
+  const { user, setUser } = useApplicationData();
 
   const [profileEditOpen, setProfileEditOpen] = useState(false);
+
   const handleProfileEditClick = () => {
     setProfileEditOpen(true);
   }
@@ -51,11 +52,13 @@ export default function Profile(props) {
                       style={{ fontSize: 18 }}
                       className="profile__heading__edit" 
                       onClick={handleProfileEditClick}
-                    />
+                      />
                   </IconButton>
                   <EditProfileDialog
                     handleProfileEditClose={handleProfileEditClose}
                     profileEditOpen={profileEditOpen}
+                    user={user}
+                    setUser={setUser}
                   />
                 </Typography>
                 <br/>

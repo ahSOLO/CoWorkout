@@ -15,7 +15,9 @@ module.exports = (db) => {
          , users.timezone
          , users.profile_image_url
          , STRING_AGG(DISTINCT wt.type, ', ') as fitness_interests
+         , ARRAY_AGG(DISTINCT wt.type) as fitness_interests_array
          , STRING_AGG(DISTINCT wg.goal, ', ') as fitness_goals
+         , ARRAY_AGG(DISTINCT wg.goal) as fitness_goals_array
          , COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end) as completed_sessions
          , COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end)::NUMERIC / COUNT(DISTINCT su.session_id) as completion_rate
          , AVG(sessions.actual_duration) as avg_session_length
@@ -111,6 +113,81 @@ module.exports = (db) => {
       })
       .then((data) => {
         res.status(200)
+      })
+      .catch(error => console.log(error));
+  });
+
+  router.put("/", (req, res) => {
+    const user_id = req.body.user_id;
+    const country = req.body.country;
+    const region = req.body.region;
+    const timezone = req.body.timezone;
+    
+    const interests = req.body.interests;
+    const interests_to_add = [];
+    let i = 1;
+
+    for (interest in interests) {
+      if (interests[interest]) {
+        interests_to_add.push(i);
+      }
+      i += 1;
+    }
+
+    const goals = req.body.goals;
+    const goals_to_add = [];
+    let g = 1;
+
+    for (goal in goals) {
+      if (goals[goal]) {
+        goals_to_add.push(g);
+      }
+      g += 1;
+    }
+
+    const queryString = `UPDATE users SET (country, region, timezone) = ('${country}', '${region}', '${timezone}') WHERE id = ${user_id} RETURNING *;`;
+
+    const queryDeleteInterests = `DELETE FROM user_workout_types WHERE user_id = ${user_id};`;
+    let queryInsertInterests = `INSERT INTO user_workout_types (user_id, workout_type_id) VALUES `
+
+    const queryDeleteGoals = `DELETE FROM user_workout_goals WHERE user_id = ${user_id};`;
+    let queryInsertGoals = `INSERT INTO user_workout_goals (user_id, workout_goal_id) VALUES `
+
+    db.query(queryString)
+      .then((data) => {
+        return db.query(queryDeleteInterests);
+      })
+      .then((data) => {
+        let interests_added = 0;
+        for (interest of interests_to_add) {
+          queryInsertInterests += `(${user_id}, ${interest}), `;
+          interests_added += 1;
+        }
+        if (interests_added > 0) {
+          queryInsertInterests = queryInsertInterests.slice(0, -2) + ';';
+        } else {
+          queryInsertInterests = '';
+        }
+        return db.query(queryInsertInterests);
+      })
+      .then((data) => {
+        return db.query(queryDeleteGoals);
+      })
+      .then((data) => {
+        let goals_added = 0;
+        for (goal of goals_to_add) {
+          queryInsertGoals += `(${user_id}, ${goal}), `;
+          goals_added += 1;
+        }
+        if (goals_added > 0) {
+          queryInsertGoals = queryInsertGoals.slice(0, -2) + ';';
+        } else {
+          queryInsertGoals = '';
+        }
+        return db.query(queryInsertGoals);
+      })
+      .then((data) => {
+        res.status(201).send("Success");
       })
       .catch(error => console.log(error));
   });
