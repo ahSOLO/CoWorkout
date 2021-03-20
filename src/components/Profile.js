@@ -27,15 +27,17 @@ export default function Profile(props) {
   return (
     <div>
       <Grid container className="profile__grid">
-        <Grid item xs={2} className="profile__margin">
+        <Grid item xs={3} className="profile__margin">
           <Box />
         </Grid>
-        <Grid item xs={8} className="profile__center">
+        <Grid item xs={6} className="profile__center">
           <Box className="profile__center__header">
             <div id="profile__avatar">
               <img src={user.profile_image_url} />
             </div>
-            <EditIcon id="profile__avatar__edit"/>
+            <IconButton id="profile__avatar__edit">
+              <EditIcon />
+            </IconButton>
           </Box>
           <Box className="profile__center__body">
             <Container className="profile__center_content">
@@ -50,9 +52,8 @@ export default function Profile(props) {
                   <IconButton>
                     <EditIcon 
                       style={{ fontSize: 18 }}
-                      className="profile__heading__edit" 
                       onClick={handleProfileEditClick}
-                      />
+                    />
                   </IconButton>
                   <EditProfileDialog
                     handleProfileEditClose={handleProfileEditClose}
@@ -114,7 +115,7 @@ export default function Profile(props) {
             </Container>
           </Box>
         </Grid>
-        <Grid item xs={2} className="profile__margin">
+        <Grid item xs={3} className="profile__margin">
           <Box />
         </Grid>
       </Grid>

@@ -118,8 +118,8 @@ export default function BookDialogue(props) {
       title = "Edit Profile"
       onFormSubmit={handleFormSubmit}
       content = {
-        <Box display="flex" flexDirection="column" width="100%">
-          <FormControl>
+        <Box display="flex" flexDirection="column" width="100%" alignItems="center" mt={2}>
+          <FormControl style={{width: 200}}>
             <InputLabel id="activity-label">Country</InputLabel>
             <Select
               labelId="activity-label"
@@ -136,7 +136,7 @@ export default function BookDialogue(props) {
             </Select>
           </FormControl>
           <br/>
-          <FormControl>
+          <FormControl style={{width: 200}}>
             <InputLabel id="activity-label">Region</InputLabel>
             <Select
               labelId="activity-label"
@@ -156,7 +156,7 @@ export default function BookDialogue(props) {
             </Select>
           </FormControl>
           <br/>
-          <FormControl>
+          <FormControl style={{width: 200}}>
             <InputLabel id="activity-label">Timezone</InputLabel>
             <Select
               labelId="activity-label"
@@ -177,7 +177,7 @@ export default function BookDialogue(props) {
           </FormControl>
           <br/>
           <section className="preferences">
-            <FormControl component="fieldset">
+            <FormControl style={{margin: 30}}>
               <FormLabel component="legend">Fitness Interests</FormLabel>
               <FormGroup>
                 <FormControlLabel
@@ -206,8 +206,7 @@ export default function BookDialogue(props) {
                 />
               </FormGroup>
             </FormControl>
-            <br/><br/>
-            <FormControl component="fieldset">
+            <FormControl style={{margin: 30}}>
               <FormLabel component="legend">Workout Goals</FormLabel>
                 <FormGroup>
                   <FormControlLabel

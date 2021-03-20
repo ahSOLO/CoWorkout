@@ -4,11 +4,11 @@
 
 .profile__margin {
   background-color: #C4C4C4;
-  height: 100vh;
+  height: calc(100vh + 20vw);
 }
 
 .profile__center {
-  height: 100vh;
+  height: calc(100vh + 20vw);
   display: flex;
   flex-direction: column;
 }
@@ -43,7 +43,7 @@
   position: absolute;
   top: calc(Min(200px, 25vw) + Min(200px, 15vw) / 2);
   left: calc(50% + Min(200px, 15vw) / 2);
-  transform: translate(-100%, -100%);
+  transform: translate(-75%, -75%);
 }
 
 .profile__center__body {
