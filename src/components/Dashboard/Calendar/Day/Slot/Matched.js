@@ -29,7 +29,7 @@ export default function Matched(props){
 
   useEffect(() => {
     if (props.user){
-      setOtherUserData(props.data.session_users.find(userObj => userObj.id !== props.user.id))
+      setOtherUserData(props.data.session_users.find(userObj => userObj.user_id !== props.user.id));
     }
   }, [props.data, props.user])
 
@@ -63,6 +63,9 @@ export default function Matched(props){
       <CancelDialog
         data={props.data}
         user={props.user}
+        setMode={props.setMode}
+        refreshSlots={props.refreshSlots}
+        targetDay={props.targetDay}
         otherUserData={otherUserData}
         handleCancelClose={handleCancelClose}
         cancelOpen={cancelOpen}
