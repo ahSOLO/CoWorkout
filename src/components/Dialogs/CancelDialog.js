@@ -22,7 +22,9 @@ export default function CancelDialog(props) {
     .then( res => {
       if (res.status===201) {
         props.setMode("LOADING");
-        props.refreshSlots(props.targetDay);
+        setTimeout(() => {
+          props.refreshSlots(props.targetDay);
+        }, 1000);
       } else {
         props.setMode("ERROR");
       }

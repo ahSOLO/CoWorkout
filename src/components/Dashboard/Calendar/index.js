@@ -22,10 +22,7 @@ export default function Calendar(props) {
   const [ targetDay, setTargetDay ] = useState(new Date());
   const [ filterOpen, setFilterOpen ] = useState(false);
 
-  const refreshSlots = function(targetDay) {
-    // Add throttler to limit refresh spamming
-    throttle(() => constructSlots(targetDay), 500)();
-  }
+  const refreshSlots = throttle(() => constructSlots(targetDay), 500);
 
   const setWeek = function(direction) {
     if (targetDay && direction === 'forward') {
