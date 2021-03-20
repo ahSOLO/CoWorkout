@@ -24,7 +24,7 @@ export default function useApplicationData() {
     const start_date = new Date(`${start_date_exact.getDate()} ${months[start_date_exact.getMonth()]}, ${start_date_exact.getFullYear()}`);
     // console.log(start_date);
     const start_date_days_from_sunday = 7 - start_date.getDay();
-    const end_date = new Date(start_date.getTime() + start_date_days_from_sunday * 24 * 60 * 60 * 1000);
+    const end_date = new Date(start_date.getTime() + start_date_days_from_sunday * 24 * 60 * 59 * 1000); // 1 minute before midnight because we don't want to grab next sunday's 12am session
 
     console.log('START:', start_date, '\n', 'END:', end_date);
     Promise.all([
