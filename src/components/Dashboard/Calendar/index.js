@@ -67,7 +67,7 @@ export default function Calendar(props) {
     const fromDate = weekDates[0];
     const toDate = weekDates.slice(-1)[0];
 
-    // get monday's date
+    // get sunday's date
     const daysFromSun = targetDay.getDay();
     const startDate = new Date(targetDay.getTime() - (daysFromSun * 24 * 60 * 60 * 1000));
     const monthInt = startDate.getMonth();
