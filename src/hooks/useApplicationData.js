@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import axios from 'fakeAxios';
+import fakeAxios from 'fakeAxios';
 import axios from 'axios';
 import { allSlots, rebuildAppointmentObjs, formatTimeStamp } from "helpers/calendarHelpers";
 
@@ -28,7 +28,7 @@ export default function useApplicationData() {
 
     console.log('START:', start_date, '\n', 'END:', end_date);
     Promise.all([
-      axios.get(BASE_URL + '/api/sessions', {
+      fakeAxios.get(baseURL + '/api/sessions', {
         params: {
           user_id: 1,
           filter: "transient",
@@ -36,7 +36,7 @@ export default function useApplicationData() {
           end_date,
         }
       }),
-      axios.get(BASE_URL + '/api/sessions', {
+      fakeAxios.get(baseURL + '/api/sessions', {
         params: {
           user_id: 1,
           filter: "persistent",
@@ -59,8 +59,25 @@ export default function useApplicationData() {
     constructSlots();
   }, []);
 
+  const [ user, setUser ] = useState([]);
+  const user_id = 2;
+
+  useEffect(() => {
+    Promise.all([
+      axios.get("http://143.198.226.226:8081/api/users", {
+        params: {
+          user_id
+        }
+      })
+    ]).then((all) => {
+      setUser(all[0].data.users[0]);
+    })
+  }, [])
+
   return {
     slots,
-    constructSlots
+    constructSlots,
+    user,
+    setUser
   }
 };
