@@ -14,13 +14,16 @@ export default function useApplicationData() {
   "July", "August", "September", "October", "November", "December"];
 
   const constructSlots = function(startDateTime = new Date()) {
+
+    // Clone the start datetime so we don't change the targetDate state directly - needed to make sure we don't display past days when user scrolls back to current week.
+    const dateClone = new Date(startDateTime.getTime());
     const today = new Date();
     // If target date is any day other than today, begin the start date on a Sunday - necessary for views outside of the current week.
-    if (startDateTime.getDate() !== today.getDate() || startDateTime.getMonth() !== today.getMonth()) {
-      startDateTime.setDate(startDateTime.getDate() - startDateTime.getDay());
+    if (dateClone.getDate() !== today.getDate() || dateClone.getMonth() !== today.getMonth()) {
+      dateClone.setDate(dateClone.getDate() - dateClone.getDay());
     }
 
-    const start_date_exact = formatTimeStamp(startDateTime);
+    const start_date_exact = formatTimeStamp(dateClone);
     const start_date = new Date(`${start_date_exact.getDate()} ${months[start_date_exact.getMonth()]}, ${start_date_exact.getFullYear()}`);
     // console.log(start_date);
     const start_date_days_from_sunday = 7 - start_date.getDay();
