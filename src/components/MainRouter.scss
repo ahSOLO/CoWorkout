@@ -1,0 +1,13 @@
+main {
+  height: 100%;
+}
+
+#main-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  flex-grow: 1;
+  height: 100%;
+  position: relative;
+  overflow-y: auto;
+}

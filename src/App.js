@@ -2,9 +2,6 @@ import axios from './fakeAxios';
 // import axios from 'axios';
 import { useEffect, useState } from 'react';
 import MainRouter from './components/MainRouter';
-import './basic.scss';
-
-// mat-ui theme
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
@@ -47,15 +44,6 @@ const theme = createMuiTheme({
 })
 
 function App() {
-  // console.log('Rerendered');  
-
-  // const checkLogin = function() {
-  //   axios.get('/api/user/testuser')
-  //     .then((data) => {
-  //       console.log(data);
-  //     })
-  // }();
-
   // Basic implementation of getting user data, need to replace
   const [userObj, setUserObj ] = useState(null);
 
@@ -70,11 +58,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div>
-        <nav>CoWorkout</nav>
         <MainRouter user={userObj} />
-        <br/> <br/>
-      </div>
     </ThemeProvider>
   );
 }

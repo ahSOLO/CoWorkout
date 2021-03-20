@@ -10,7 +10,7 @@ import EditProfileDialog from 'components/Dialogs/EditProfileDialog';
 import Popover from '@material-ui/core/Popover';
 import { makeStyles } from '@material-ui/core/styles';
 import useApplicationData from 'hooks/useApplicationData';
-import "./styles.scss";
+import "./Profile.scss";
 
 const useStyles = makeStyles((theme) => ({
   popover: {
@@ -49,7 +49,7 @@ export default function Profile(props) {
   const open2 = Boolean(anchorEl2);
   
   return (
-    <div>
+    <Box display="flex" flexDirection="column" height="100%" width="100%">
       <Grid container className="profile__grid">
         <Grid item xs={3} className="profile__margin">
           <Box />
@@ -201,6 +201,6 @@ export default function Profile(props) {
           <Box />
         </Grid>
       </Grid>
-    </div>
+    </Box>
   )
 }

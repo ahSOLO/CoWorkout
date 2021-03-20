@@ -1,0 +1,27 @@
+#app-header {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+  height: 50px;
+  width: 100%;
+
+  &.dark {
+    background-color: #23262A;
+    color: white;
+  }
+
+  &.light {
+    background-color: white;
+    color:black;
+  }
+}
+
+.header__avatar {
+  margin: 10px;
+}
+
+.header__name {
+  margin: 10px;
+}
