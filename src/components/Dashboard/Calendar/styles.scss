@@ -4,11 +4,12 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  overflow-x: hidden;
 }
 
 section.cal__top {
   margin-left: 150px;
-  width: 85%;
+  width: 90%;
   display: flex;
   align-items: center;
 
@@ -39,7 +40,7 @@ header.cal + header.cal {
 }
 
 section.cal__main {
-  width: 85%;
+  width: 90%;
   display: flex;
   flex-direction: column;
 }
@@ -78,7 +79,7 @@ section.cal__main {
 
 #bookNewButton {
   background-color: #FBB03B;
-  right: 15%;
-  bottom: 7.5%;
+  right: 12%;
+  bottom: 10%;
   position:fixed
 }

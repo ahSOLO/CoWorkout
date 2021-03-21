@@ -32,6 +32,7 @@ export default function Header(props) {
   }
 
   useEffect(() => {
+    if (lightPaths.includes(history.location.pathname)) setStyle(true);
     const unlisten = history.listen((location, action) => {
       if (lightPaths.includes(location.pathname)) {
         setStyle("light");

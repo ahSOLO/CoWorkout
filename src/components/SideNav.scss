@@ -2,5 +2,26 @@
   background-color: #FBB03B;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   min-width: 15%;
+  padding: 40px 20px;
+}
+
+#app-mininav {
+  padding: 40px 0px;
+  width: 0%;
+  display: flex;
+  justify-content: row-reverse;
+}
+
+#menu-icon {
+  position: relative;
+  right: -65px;
+  z-index: 2;
+}
+
+#menu-icon-minimized {
+  position: relative;
+  right: -20px;
+  z-index: 2;
 }

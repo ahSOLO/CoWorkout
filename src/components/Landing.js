@@ -7,7 +7,7 @@ export default function Landing(props) {
   return (
     <>
       <h1>Landing Page</h1>
-      <Box>
+      <Box display="flex" flexDirection="column" justifyContent="center">
         <Button onClick={() => history.push("/register")}>
           Register
         </Button>

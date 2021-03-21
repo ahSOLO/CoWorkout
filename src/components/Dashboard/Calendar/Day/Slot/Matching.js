@@ -15,8 +15,8 @@ export default function Matching(props){
   }
 
   return(
-    <>
-      <Box display="flex" justifyContent="space-between" width="100%" alignItems="center" paddingLeft="5px" paddingRight="5px">
+    <Box display="flex" flexDirection="column" width="100%" alignItems="center" paddingLeft="5px" paddingRight="5px">
+      <Box display="flex" justifyContent="space-between" width="100%" alignItems="center">
         <Typography variant="body2"> Matching... </Typography>
         {props.hover && 
           <CloseOutlinedIcon 
@@ -34,6 +34,11 @@ export default function Matching(props){
         handleCancelClose={handleCancelClose}
         cancelOpen={cancelOpen}
       />
-    </>
+      {props.hover && <div className="slot__float">
+        <Typography variant="body2">
+          {props.activity}
+        </Typography>
+    </div>}
+  </Box>
   )
 }
