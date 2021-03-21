@@ -13,6 +13,9 @@ export default function Header(props) {
     if (props.user) {
       return (
         <>
+          <Button color="primary">
+            Demo Video Call
+          </Button>
           <Avatar className="header__avatar"/>
           <Typography variant="subtitle1" className="header__name">Firstname H</Typography>
         </>
