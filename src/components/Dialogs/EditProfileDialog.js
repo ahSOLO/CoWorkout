@@ -11,6 +11,7 @@ import { countryTimezones } from "helpers/timezones";
 const allCountries = require('country-region-data')
 const selectCountries = allCountries.filter(country => country.countryName === 'United States' || country.countryName === 'Canada')
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export default function BookDialogue(props) {
 
@@ -65,7 +66,7 @@ export default function BookDialogue(props) {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    axios.put('http://143.198.226.226:8081/api/users', {
+    axios.put(BASE_URL + '/api/users', {
       user_id: props.user.user_id,
       country,
       region,
