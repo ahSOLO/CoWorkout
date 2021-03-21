@@ -5,11 +5,12 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from "axios";
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export default function Login(props) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [page, setPage] = useState({ redirect: null });
   const history = useHistory();
 
   const handleEmailChange = event => {
@@ -23,7 +24,7 @@ export default function Login(props) {
   const handleSubmit = event => {
     event.preventDefault();
 
-    axios.post('http://143.198.226.226:8081/login', {
+    axios.post(BASE_URL + '/login', {
       email: email,
       password: password
     })
@@ -31,7 +32,7 @@ export default function Login(props) {
       props.setCookie("user_id", res.data.user.id, {
         path: "/"
       });
-      return axios.get("http://143.198.226.226:8081/api/users", {
+      return axios.get(BASE_URL + '/api/users', {
         params: {
           user_id: res.data.user.id
         }

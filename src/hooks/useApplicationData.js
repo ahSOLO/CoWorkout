@@ -68,7 +68,7 @@ export default function useApplicationData() {
   const user_id = cookies.user_id;
 
   useEffect(() => {
-    axios.get("http://143.198.226.226:8081/api/users", {
+    axios.get(BASE_URL + '/api/users', {
       params: {
         user_id
       }
