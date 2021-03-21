@@ -8,7 +8,6 @@
 }
 
 #app-mininav {
-  margin-left: -25px;
   padding: 40px 0px;
   width: 0%;
   display: flex;
@@ -17,6 +16,12 @@
 
 #menu-icon {
   position: relative;
-  right: -55px;
+  right: -65px;
+  z-index: 2;
+}
+
+#menu-icon-minimized {
+  position: relative;
+  right: -20px;
   z-index: 2;
 }

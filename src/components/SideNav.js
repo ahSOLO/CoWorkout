@@ -34,7 +34,7 @@ export default function SideNav(props) {
 
   if (minimized) return (
     <nav id="app-mininav">
-      <MenuOutlinedIcon className="clickable" id="menu-icon" onClick={clickHandler}/>
+      <MenuOutlinedIcon className="clickable" id="menu-icon-minimized" onClick={clickHandler}/>
     </nav>
   )
 
