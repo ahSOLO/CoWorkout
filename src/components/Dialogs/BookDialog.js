@@ -11,6 +11,7 @@ import {
 } from '@material-ui/pickers';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
+const activityMap = {0: "Any Exercise", 1:"Cardio", 2:"Weight Training", 3:"Yoga", 4:"Circuit", 5:"HIIT", 6:"Stretching"};
 
 export default function BookDialog(props) {
   const [activity, setActivity] = useState("0");
@@ -46,6 +47,7 @@ export default function BookDialog(props) {
     .then( res => {
         if (res.status===201) {
           props.setNewSessionId(res.data);
+          props.setActivity(activityMap[activity]);
           props.setMode("MATCHING");
         } else {
           props.setMode("ERROR");
@@ -108,7 +110,6 @@ export default function BookDialog(props) {
                 margin="normal"
                 id="time-picker"
                 label="Please select a time"
-                minTime={moment().startOf('hour').format()}
                 value={time}
                 onChange={(d) => setTime(moment(d))}
                 minutesStep={15}

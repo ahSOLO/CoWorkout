@@ -30,6 +30,7 @@ export default function Empty(props){
          user={props.user}
          setMode={props.setMode}
          setNewSessionId={props.setNewSessionId}
+         setActivity={props.setActivity}
       />
     </div>
   )

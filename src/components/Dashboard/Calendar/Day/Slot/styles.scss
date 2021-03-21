@@ -49,3 +49,12 @@
 .slot__name {
   padding-left: 5px;
 }
+
+.slot__float {
+  height: 0px;
+  width: 100%;
+  top: 25px;
+  display:flex;
+  justify-content: center;
+  position: relative;
+}

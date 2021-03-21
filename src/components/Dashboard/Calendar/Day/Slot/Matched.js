@@ -34,6 +34,7 @@ export default function Matched(props){
   }, [props.data, props.user])
 
   return(
+  <Box display="flex" flexDirection="column" width="100%" alignItems="center">
     <Box display="flex" justifyContent="space-between" width="100%" alignItems="center">
       <div className="slot__booked">
         <div className="slot__avatar">
@@ -71,5 +72,11 @@ export default function Matched(props){
         cancelOpen={cancelOpen}
       />
     </Box>
+    {props.hover && <div className="slot__float">
+    <Typography variant="body2">
+      {props.activity}
+    </Typography>
+    </div>}
+  </Box>
   )
 }
