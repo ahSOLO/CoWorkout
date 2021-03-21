@@ -64,12 +64,12 @@ export default function FilterDialog(props) {
               <FormGroup>
                 <FormControlLabel
                   control={<Switch checked={options.sameGender} onChange={handleChange} name="sameGender" />}
-                  label="Only show same gender:"
+                  label="Only show same gender"
                 />
                 <br />
                 <FormControlLabel
                   control={<Switch checked={options.reputable} onChange={handleChange} name="reputable" />}
-                  label="Only show reputable users:"
+                  label="Only show reputable users"
                 />
               </FormGroup>
             </FormControl>

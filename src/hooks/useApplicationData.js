@@ -15,6 +15,8 @@ export default function useApplicationData() {
 
   const constructSlots = function(startDateTime = new Date()) {
 
+    console.log("UAD-TD", startDateTime);
+
     // Clone the start datetime so we don't change the targetDate state directly - needed to make sure we don't display past days when user scrolls back to current week.
     const dateClone = new Date(startDateTime.getTime());
     const today = new Date();
@@ -67,7 +69,7 @@ export default function useApplicationData() {
 
   useEffect(() => {
     Promise.all([
-      axios.get("http://143.198.226.226:8081/api/users", {
+      axios.get(BASE_URL + "/api/users", {
         params: {
           user_id
         }
