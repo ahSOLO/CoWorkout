@@ -3,6 +3,7 @@ import axios from './fakeAxios';
 import { useEffect, useState } from 'react';
 import MainRouter from './components/MainRouter';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import useApplicationData from 'hooks/useApplicationData';
 
 const theme = createMuiTheme({
   palette: {
@@ -44,21 +45,18 @@ const theme = createMuiTheme({
 })
 
 function App() {
-  // Basic implementation of getting user data, need to replace
-  const [userObj, setUserObj ] = useState(null);
 
-  const getUserObj = function() {
-    axios.get('/api/user/testuser')
-      .then((data) => setUserObj(data));
-  }
-
-  useEffect(() => {
-    getUserObj();
-  }, [])
+  const { user, setUser, cookies, setCookie, removeCookie } = useApplicationData();
 
   return (
     <ThemeProvider theme={theme}>
-        <MainRouter user={userObj} />
+        <MainRouter 
+          user={user} 
+          setUser={setUser}
+          cookies={cookies}
+          setCookie={setCookie}
+          removeCookie={removeCookie}
+        />
     </ThemeProvider>
   );
 }

@@ -20,7 +20,7 @@ const MainRouter = (props) => {
   return (
     <main>
       <Router>
-        <Header user={props.user} />
+        <Header user={props.user} removeCookie={props.removeCookie} />
         <Box display="flex" justifyContent="stretch" height={"calc(100% - 40px)"} width="100%" position="fixed" marginTop="40px">
           <SideNav user={props.user} />
           <div id="main-container">
@@ -29,7 +29,7 @@ const MainRouter = (props) => {
                 <Dashboard user={props.user} />
               </Route>  
               <Route path="/login" >
-                <Login/>
+                <Login cookies={props.cookies} setCookie={props.setCookie} />
               </Route> 
               <Route path="/logout">
                 <Logout/>
@@ -53,7 +53,7 @@ const MainRouter = (props) => {
                 <Friends />  
               </Route> 
               <Route path="/profile">
-                <Profile user={props.user}/>  
+                <Profile user={props.user} setUser={props.setUser}/>  
               </Route>
               <Route path="/workout-call">
                 <WorkoutCall user={props.user}/>  

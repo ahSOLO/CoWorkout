@@ -9,6 +9,16 @@ export default function Header(props) {
   const [style, setStyle] = useState("dark");
   const history = useHistory();
 
+  const handleLogOut = event => {
+    event.preventDefault();
+
+    props.removeCookie("user_id", {
+        path: "/"
+    });
+
+    // setPage({ redirect: "/dashboard" });
+  }
+
   const headerRight = function() {
     if (props.user) {
       return (
@@ -16,8 +26,11 @@ export default function Header(props) {
           <Button color="primary">
             Demo Video Call
           </Button>
+          <Button color="primary" onClick={handleLogOut}>
+            Log Out
+          </Button>
           <Avatar className="header__avatar"/>
-          <Typography variant="subtitle1" className="header__name">Firstname H</Typography>
+          <Typography variant="subtitle1" className="header__name">{props.user.name}</Typography>
         </>
       )
     } else {

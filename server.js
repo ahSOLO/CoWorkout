@@ -50,6 +50,7 @@ const user_workout_interests = require("./routes/user_workout_interests");
 const user_workout_goals = require("./routes/user_workout_goals");
 const session_users = require("./routes/session_users");
 const ratings = require("./routes/ratings");
+const login = require("./routes/login");
 
 app.use("/api/users", users(db));
 app.use("/api/sessions", sessions(db));
@@ -59,6 +60,7 @@ app.use("/api/user_workout_interests", user_workout_interests(db));
 app.use("/api/user_workout_goals", user_workout_goals(db));
 app.use("/api/session_users", session_users(db));
 app.use("/api/ratings", ratings(db));
+app.use("/login", login(db));
 
 app.get('*', (_, res) => res.sendFile(path.join(__dirname, 'build/index.html')));
 

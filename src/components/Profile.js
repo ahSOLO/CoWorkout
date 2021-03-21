@@ -9,7 +9,6 @@ import EditIcon from '@material-ui/icons/EditOutlined';
 import EditProfileDialog from 'components/Dialogs/EditProfileDialog';
 import Popover from '@material-ui/core/Popover';
 import { makeStyles } from '@material-ui/core/styles';
-import useApplicationData from 'hooks/useApplicationData';
 import "./Profile.scss";
 
 const useStyles = makeStyles((theme) => ({
@@ -19,8 +18,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Profile(props) {
-  
-  const { user, setUser } = useApplicationData();
 
   const [profileEditOpen, setProfileEditOpen] = useState(false);
   const handleProfileEditClick = () => {
@@ -57,7 +54,7 @@ export default function Profile(props) {
         <Grid item xs={6} className="profile__center">
           <Box className="profile__center__header">
             <div id="profile__avatar">
-              <img src={user.profile_image_url} />
+              <img src={props.user.profile_image_url} />
             </div>
             <IconButton id="profile__avatar__edit">
               <EditIcon />
@@ -67,7 +64,7 @@ export default function Profile(props) {
             <Container className="profile__center_content">
               <br/>
               <Typography variant="h5" id="profile__name">
-                <b>{user.name}</b>
+                <b>{props.user.name}</b>
               </Typography>
               <br/><br/>
               <Box className="profile__section">
@@ -82,25 +79,25 @@ export default function Profile(props) {
                   <EditProfileDialog
                     handleProfileEditClose={handleProfileEditClose}
                     profileEditOpen={profileEditOpen}
-                    user={user}
-                    setUser={setUser}
+                    user={props.user}
+                    setUser={props.setUser}
                   />
                 </Typography>
                 <br/>
                 <Typography variant="subtitle1">
-                  Location: {user.region}, {user.country}
+                  Location: {props.user.region}, {props.user.country}
                 </Typography>
                 <br/>
                 <Typography variant="subtitle1">
-                  Timezone: {user.timezone}
+                  Timezone: {props.user.timezone}
                 </Typography>
                 <br/>
                 <Typography variant="subtitle1">
-                  Fitness Interests: {user.fitness_interests}
+                  Fitness Interests: {props.user.fitness_interests}
                 </Typography>
                 <br/>
                 <Typography variant="subtitle1">
-                  Fitness Goals: {user.fitness_goals}
+                  Fitness Goals: {props.user.fitness_goals}
                 </Typography>
                 <br/>
               </Box>
@@ -111,7 +108,7 @@ export default function Profile(props) {
                 </Typography>
                 <br/>
                 <Box className="profile__emojis">
-                  {user.one_completed_badge && (
+                  {props.user.one_completed_badge && (
                     <div>
                       <Paper 
                         elevation={4}
@@ -141,7 +138,7 @@ export default function Profile(props) {
                       </Popover>
                     </div>
                   )}
-                  {user.ten_completed_badge && (
+                  {props.user.ten_completed_badge && (
                     <div>
                       <Paper 
                         elevation={4}
@@ -183,15 +180,15 @@ export default function Profile(props) {
                 </Typography>
                 <br/>
                 <Typography variant="subtitle1">
-                  Completed Sessions: {user.completed_sessions}
+                  Completed Sessions: {props.user.completed_sessions}
                 </Typography>
                 <br/>
                 <Typography variant="subtitle1">
-                  Completion Rate: {Math.round(user.completion_rate * 100)}%
+                  Completion Rate: {Math.round(props.user.completion_rate * 100)}%
                 </Typography>
                 <br/>
                 <Typography variant="subtitle1">
-                  Avg Session Length: {Math.round(user.avg_session_length, 2)} minutes
+                  Avg Session Length: {Math.round(props.user.avg_session_length, 2)} minutes
                 </Typography>
               </Box>
             </Container>
