@@ -17,7 +17,7 @@ export default function BookDialog(props) {
   const [activity, setActivity] = useState("0");
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
   const [time, setTime] = useState(moment().add(1, 'hour').startOf('hour'));
-  const [yesterday, setYesterday] = useState(moment().subtract(1,'days'));
+  const [minDate, setminDate] = useState(moment());
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function BookDialog(props) {
       setActivity(props.data.activity_type || 0);
       setDate(moment(props.date).format("YYYY-MM-DD"));
       setTime(time.set({ "hour": props.data.hour, "minute": props.data.minute }))
-      setYesterday(moment().subtract(1,'days'));
+      setminDate(moment().subtract(1,'days'));
     }
   }, [props.data, props.date])
 
@@ -96,7 +96,7 @@ export default function BookDialog(props) {
                 margin="normal"
                 id="date-picker-inline"
                 label="Please select a date"
-                minDate={yesterday.format()}
+                minDate={minDate.format()}
                 minDateMessage="Please select a time in the future"
                 value={date}
                 inputValue={date}

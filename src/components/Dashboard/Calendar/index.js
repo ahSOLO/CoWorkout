@@ -6,14 +6,20 @@ import useApplicationData from 'hooks/useApplicationData';
 import BookNew from "components/Buttons/BookNew"; 
 import FilterDialog from "components/Dialogs/FilterDialog";
 import throttle from 'lodash/throttle';
+import MomentUtils from '@date-io/moment';
+import moment from "moment";
 
 // Material UI
-import { Typography, IconButton } from "@material-ui/core";
+import { Typography, IconButton, Box } from "@material-ui/core";
 import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined';
 import RefreshOutlinedIcon from '@material-ui/icons/RefreshOutlined';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 export default function Calendar(props) {
   
@@ -21,22 +27,41 @@ export default function Calendar(props) {
   const { slots, constructSlots } = useApplicationData();
   const [ targetDay, setTargetDay ] = useState(new Date());
   const [ filterOpen, setFilterOpen ] = useState(false);
+  const [date, setDate] = useState(moment());
+  const [minDate, setMinDate] = useState(moment().startOf('day'));
+  const [openDatePicker, setOpenDatePicker] = useState(false);
 
-  const refreshSlots = throttle(() => constructSlots(targetDay), 500);
+  const refreshSlots = (targetDay) => throttle(() => constructSlots(targetDay), 500)();
 
   const setWeek = function(direction) {
     if (targetDay && direction === 'forward') {
-      setTargetDay((prev) => {
-        return new Date(prev.setDate(prev.getDate() + 7));
-      });
-      refreshSlots(targetDay);
+      // This horrendous line is needed because date objects are mutable, so we need to clone targetDay before performing calculations on it, and then put the results in a new date object.
+      setTargetDayMinToday(new Date(new Date(targetDay.getTime()).setDate(targetDay.getDate() + 7))).then(res => refreshSlots(res));
     } else {
-      setTargetDay((prev) => {
-        return new Date(prev.setDate(prev.getDate() - 7));
-      });
-      refreshSlots(targetDay);
+      setTargetDayMinToday(new Date(new Date(targetDay.getTime()).setDate(targetDay.getDate() - 7))).then(res => refreshSlots(res));
     }
   };
+
+  const setTargetDayMinToday = function(targetDay) {
+    // Return promise because setState functions are asynchronous
+    return new Promise((resolve, reject) => {
+      // Borrow minDate state instead of calling moment() each time - no need to worry about stale state as it does not change
+      if (minDate.diff(targetDay, 'minutes') > 0) {
+        // Here I'm changing the mutable object directly and returning it instead of passing in a value to setTargetDay
+        setTargetDay(prev => {
+          prev.setTime(minDate.toDate().getTime());
+          resolve(prev);
+          return prev;
+        });
+      } else {
+        setTargetDay(prev => {
+          prev.setTime(targetDay.getTime())
+          resolve(prev);
+          return prev;
+        });
+      }
+   });
+  }
 
   // for displaying month names dynamically
   const months = ["January", "February", "March", "April", "May", "June",
@@ -133,12 +158,12 @@ export default function Calendar(props) {
             <ArrowForwardIosOutlinedIcon fontSize="large" />
           </IconButton>
           <IconButton key={2}>
-            <CalendarTodayOutlinedIcon fontSize="large"/>
+            <CalendarTodayOutlinedIcon fontSize="large" onClick={() => {setOpenDatePicker(!openDatePicker)}}/>
           </IconButton>
           <IconButton key={3} onClick={handleFilterOpen}>
             <FilterListOutlinedIcon fontSize="large" />
           </IconButton>
-          <IconButton key={4} onClick={() => {refreshSlots(targetDay)}}>
+          <IconButton key={4} onClick={() => refreshSlots(targetDay)}>
             <RefreshOutlinedIcon fontSize="large" />
           </IconButton>
         </div>
@@ -168,6 +193,28 @@ export default function Calendar(props) {
         refreshSlots={refreshSlots}
         targetDay={targetDay}  
       />
+      <Box display="none">
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+          <KeyboardDatePicker
+            margin="normal"
+            id="date-picker-invisible"
+            label="Please select a date"
+            format="YYYY-MM-DD"
+            minDate={minDate.format("YYYY-MM-DD")}
+            open={openDatePicker}
+            value={date}
+            inputValue={date}
+            onAccept={ date => {
+              setDate(date);
+              setTargetDayMinToday(new Date(date)).then(res => refreshSlots(res));
+            }}
+            onClose={() => setOpenDatePicker(!openDatePicker)}
+            onChange={(d) => setDate(moment(d).format("YYYY-MM-DD"))}
+            KeyboardButtonProps={{
+              'aria-label': 'change date',}}
+          />
+        </MuiPickersUtilsProvider>
+      </Box>
     </div>
   )
 }
