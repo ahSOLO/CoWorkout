@@ -59,7 +59,6 @@ export default function SideNav(props) {
         <Link to="/">Home</Link>
         <Link to="/dashboard">Dashboard</Link>
         <Link to="/login">Login</Link>
-        <Link to="/logout">Logout</Link>
         <Link to="/register">Register</Link>
         <Link to="/settings">Settings</Link>
         <Link to="/account">Account</Link>

@@ -3,7 +3,6 @@ import { Box } from '@material-ui/core';
 import Landing from './Landing';
 import Dashboard from './Dashboard';
 import Login from './Login';
-import Logout from './Logout';
 import Registration from './Registration';
 import Settings from './Settings';
 import Account from './Account';
@@ -20,7 +19,7 @@ const MainRouter = (props) => {
   return (
     <main>
       <Router>
-        <Header user={props.user} removeCookie={props.removeCookie} />
+        <Header user={props.user} setUser={props.setUser} removeCookie={props.removeCookie} />
         <Box display="flex" justifyContent="stretch" height={"calc(100% - 40px)"} width="100%" position="fixed" marginTop="40px">
           <SideNav user={props.user} />
           <div id="main-container">
@@ -29,11 +28,8 @@ const MainRouter = (props) => {
                 <Dashboard user={props.user} />
               </Route>  
               <Route path="/login" >
-                <Login cookies={props.cookies} setCookie={props.setCookie} />
+                <Login user={props.user} setUser={props.setUser} cookies={props.cookies} setCookie={props.setCookie} />
               </Route> 
-              <Route path="/logout">
-                <Logout/>
-              </Route>
               <Route path="/register" >
                 <Registration />
               </Route> 

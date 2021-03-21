@@ -63,7 +63,7 @@ export default function useApplicationData() {
     constructSlots();
   }, []);
 
-  const [ user, setUser ] = useState([]);
+  const [ user, setUser ] = useState({});
   const [ cookies, setCookie, removeCookie ] = useCookies(["user_id"]);
   const user_id = cookies.user_id;
 

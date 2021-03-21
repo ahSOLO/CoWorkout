@@ -54,7 +54,7 @@ export default function Profile(props) {
         <Grid item xs={6} className="profile__center">
           <Box className="profile__center__header">
             <div id="profile__avatar">
-              <img src={props.user.profile_image_url} />
+              <img src={props.user.user_profile_image_url} />
             </div>
             <IconButton id="profile__avatar__edit">
               <EditIcon />

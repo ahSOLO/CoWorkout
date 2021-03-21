@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Typography } from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -9,6 +10,7 @@ export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [page, setPage] = useState({ redirect: null });
+  const history = useHistory();
 
   const handleEmailChange = event => {
     setEmail(event.target.value);
@@ -29,9 +31,17 @@ export default function Login(props) {
       props.setCookie("user_id", res.data.user.id, {
         path: "/"
       });
-    });
+      return axios.get("http://143.198.226.226:8081/api/users", {
+        params: {
+          user_id: res.data.user.id
+        }
+      })
+    })
+    .then((data) => {
+      props.setUser(data.data.users[0]);
+      history.push("/dashboard");
+    })
 
-    // setPage({ redirect: "/dashboard" });
   }
 
   return (

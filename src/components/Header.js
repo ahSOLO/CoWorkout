@@ -16,11 +16,12 @@ export default function Header(props) {
         path: "/"
     });
 
-    // setPage({ redirect: "/dashboard" });
+    props.setUser({});
+    history.push("/");
   }
 
   const headerRight = function() {
-    if (props.user) {
+    if (props.user.user_id) {
       return (
         <>
           <Button color="primary">
@@ -36,10 +37,10 @@ export default function Header(props) {
     } else {
       return (
         <>
-        <Button onClick={() => history.push("/register")}>
+        <Button color="primary" onClick={() => history.push("/register")}>
           Register
         </Button>
-        <Button onClick={() => history.push("/login")}>
+        <Button color="primary" onClick={() => history.push("/login")}>
           Log In
         </Button>
         </>
