@@ -56,8 +56,8 @@ export class UserForm extends Component {
       country: this.state.country,
       region: this.state.region,
       timezone: this.state.timezone,
-      birth_date: this.state.birth_date,
-      gender: this.state.gender,
+      birth_date: this.state.birth_date || null,
+      gender: this.state.gender || null,
       interests: [
         { 
           interest_id: 1,
