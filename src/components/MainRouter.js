@@ -21,7 +21,7 @@ const MainRouter = (props) => {
     <main>
       <Router>
         <Header user={props.user} />
-        <Box display="flex" justifyContent="stretch" height={"calc(100% - 50px)"} width="100%" position="fixed" marginTop="50px">
+        <Box display="flex" justifyContent="stretch" height={"calc(100% - 40px)"} width="100%" position="fixed" marginTop="40px">
           <SideNav user={props.user} />
           <div id="main-container">
             <Switch>

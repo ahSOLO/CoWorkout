@@ -6,3 +6,17 @@
   min-width: 15%;
   padding: 40px 20px;
 }
+
+#app-mininav {
+  margin-left: -25px;
+  padding: 40px 0px;
+  width: 0%;
+  display: flex;
+  justify-content: row-reverse;
+}
+
+#menu-icon {
+  position: relative;
+  right: -55px;
+  z-index: 2;
+}

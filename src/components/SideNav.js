@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom';
 import {Typography, Box} from '@material-ui/core';
 import {useHistory} from 'react-router-dom';
 import {useState, useEffect} from 'react';
+import MenuOutlinedIcon from '@material-ui/icons/MenuOutlined';
 import "./SideNav.scss";
 
 const hidePaths = ["/", "/register", "/workout-call"];
@@ -9,8 +10,10 @@ const hidePaths = ["/", "/register", "/workout-call"];
 export default function SideNav(props) {
   const history = useHistory();
   const [hide, setHide] = useState(false);
+  const [minimized, setMinimized] = useState(true);
 
   useEffect(() => {
+    if (hidePaths.includes(history.location.pathname)) setHide(true);
     const unlisten = history.listen((location, action) => {
       if (hidePaths.includes(location.pathname)) {
         setHide(true);
@@ -23,14 +26,24 @@ export default function SideNav(props) {
     }
   }, [])
 
-
-  console.log(history);
+  const clickHandler = () => {
+    setMinimized(!minimized);
+  }
 
   if (hide) return null;
+
+  if (minimized) return (
+    <nav id="app-mininav">
+      <MenuOutlinedIcon className="clickable" id="menu-icon" onClick={clickHandler}/>
+    </nav>
+  )
 
   return (
     <nav id="app-sidenav">
       <Box display="flex" flexDirection="column" width="100%">
+        <Box display="flex" flexDirection="row-reverse" width="100%">
+          <MenuOutlinedIcon className="clickable" id="menu-icon" onClick={clickHandler}/>
+        </Box>
         <Typography variant="subtitle1" id="upcoming-sessions"><b><u>Upcoming Sessions</u></b></Typography>
         <br/>
         <Typography variant="body1">DayOfWeek, Month 10 at 8:15am with Firstname</Typography>
