@@ -117,6 +117,7 @@ export class SetPreferences extends Component {
               SKIP FOR NOW
             </Typography>
           </Link>
+          <br/><br/><br/><br/><br/>
         </section>
       </div>
     )

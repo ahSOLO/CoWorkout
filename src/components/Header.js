@@ -9,24 +9,38 @@ export default function Header(props) {
   const [style, setStyle] = useState("dark");
   const history = useHistory();
 
+  const handleLogOut = event => {
+    event.preventDefault();
+
+    props.removeCookie("user_id", {
+        path: "/"
+    });
+
+    props.setUser({});
+    history.push("/");
+  }
+
   const headerRight = function() {
-    if (props.user) {
+    if (props.user.user_id) {
       return (
         <>
           <Button color="primary">
             Demo Video Call
           </Button>
+          <Button color="primary" onClick={handleLogOut}>
+            Log Out
+          </Button>
           <Avatar className="header__avatar"/>
-          <Typography variant="subtitle1" className="header__name">Firstname H</Typography>
+          <Typography variant="subtitle1" className="header__name">{props.user.name}</Typography>
         </>
       )
     } else {
       return (
         <>
-        <Button onClick={() => history.push("/register")}>
+        <Button color="primary" onClick={() => history.push("/register")}>
           Register
         </Button>
-        <Button onClick={() => history.push("/login")}>
+        <Button color="primary" onClick={() => history.push("/login")}>
           Log In
         </Button>
         </>
