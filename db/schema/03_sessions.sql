@@ -7,7 +7,7 @@ CREATE TABLE sessions (
   session_uuid uuid DEFAULT uuid_generate_v4 (),
   scheduled_at TIMESTAMP NOT NULL,
   state VARCHAR(32) NOT NULL DEFAULT 'pending',
-  scheduled_duration DECIMAL,
+  scheduled_duration DECIMAL DEFAULT 30,
   actual_duration DECIMAL,
   workout_type_id INT REFERENCES workout_types(id) ON DELETE CASCADE,
   owner_id INT REFERENCES users(id) ON DELETE CASCADE

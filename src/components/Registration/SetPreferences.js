@@ -112,8 +112,10 @@ export class SetPreferences extends Component {
             finish
           </Button>
           <br/>
-          <Link onClick={this.continue}>
-            SKIP FOR NOW
+          <Link onClick={this.continue}>            
+            <Typography variant="subtitle1">
+              SKIP FOR NOW
+            </Typography>
           </Link>
         </section>
       </div>

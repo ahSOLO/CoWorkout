@@ -69,7 +69,7 @@ module.exports = (db) => {
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;
     `;
 
-    let queryStringInterests = 'INSERT INTO user_workout_interests (user_id, workout_interest_id) VALUES '
+    let queryStringInterests = 'INSERT INTO user_workout_types (user_id, workout_type_id) VALUES '
     let queryStringGoals = 'INSERT INTO user_workout_goals (user_id, workout_goal_id) VALUES '
 
     let user_id;
