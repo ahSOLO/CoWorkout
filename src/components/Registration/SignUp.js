@@ -85,6 +85,7 @@ export class SignUp extends Component {
           >
             create account
           </Button>
+          <br/><br/><br/><br/><br/>
         </section>
       </div>
     )

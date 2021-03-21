@@ -7,6 +7,8 @@ import "./styles.scss";
 
 export class UserForm extends Component {
 
+  BASE_URL = process.env.REACT_APP_BASE_URL;
+
   state = {
     step: 1,
     email: '',
@@ -48,7 +50,7 @@ export class UserForm extends Component {
 
   // Handle form submission
   handleSubmit = () => {
-    axios.post('http://143.198.226.226:8081/api/users', {
+    axios.post(this.BASE_URL + '/api/users', {
       email: this.state.email,
       password: this.state.password,
       first_name: this.state.first_name,

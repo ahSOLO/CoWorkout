@@ -10,10 +10,13 @@ module.exports = (db) => {
     const query_string = `
     SELECT users.id as user_id
          , users.first_name || ' ' || users.last_name as name
+         , users.first_name as user_first_name
+         , users.last_name as last_name
          , users.country
          , users.region
          , users.timezone
-         , users.profile_image_url
+         , users.profile_image_url as user_profile_image_url
+         , users.gender
          , STRING_AGG(DISTINCT wt.type, ', ') as fitness_interests
          , ARRAY_AGG(DISTINCT wt.type) as fitness_interests_array
          , STRING_AGG(DISTINCT wg.goal, ', ') as fitness_goals

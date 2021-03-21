@@ -217,6 +217,7 @@ export class CreateProfile extends Component {
           >
             continue
           </Button>
+          <br/><br/><br/><br/><br/>
         </section>
       </div>
     )

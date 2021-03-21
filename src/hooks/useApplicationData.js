@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 // import axios from 'fakeAxios';
 import axios from 'axios';
 import { allSlots, rebuildAppointmentObjs, formatTimeStamp } from "helpers/calendarHelpers";
@@ -64,18 +65,18 @@ export default function useApplicationData() {
     constructSlots();
   }, []);
 
-  const [ user, setUser ] = useState([]);
-  const user_id = 2;
+  const [ user, setUser ] = useState({});
+  const [ cookies, setCookie, removeCookie ] = useCookies(["user_id"]);
+  const user_id = cookies.user_id;
 
   useEffect(() => {
-    Promise.all([
-      axios.get(BASE_URL + "/api/users", {
-        params: {
-          user_id
-        }
-      })
-    ]).then((all) => {
-      setUser(all[0].data.users[0]);
+    axios.get(BASE_URL + '/api/users', {
+      params: {
+        user_id
+      }
+    })
+    .then((data) => {
+      setUser(data.data.users[0]);
     })
   }, [])
 
@@ -83,7 +84,9 @@ export default function useApplicationData() {
     slots,
     constructSlots,
     user,
-    setUser
+    setUser,
+    setCookie,
+    removeCookie
   }
 
 };
