@@ -8,10 +8,10 @@ import DialogueTemplate from "./DialogTemplate";
 import axios from "axios";
 import { countryTimezones } from "helpers/timezones";
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 const allCountries = require('country-region-data')
 const selectCountries = allCountries.filter(country => country.countryName === 'United States' || country.countryName === 'Canada')
-
-const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export default function BookDialogue(props) {
 
