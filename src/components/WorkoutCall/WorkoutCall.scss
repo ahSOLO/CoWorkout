@@ -10,3 +10,24 @@ video {
   text-align: center;
   padding-top: 2em;
 }
+
+.video-controls {
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+}
+
+.video-controls>div {
+  display: inline-block;
+}
+.video-controls>div>button {
+  margin: 0.5em;
+}
+
+.video-controls>div:first-child {
+  text-align: left;
+}
+
+.video-controls>div:last-child {
+  text-align: right;
+}

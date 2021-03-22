@@ -7,8 +7,7 @@ import './WorkoutCall.scss';
 
 import { Button, ButtonGroup, IconButton } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { makeStyles } from '@material-ui/core/styles';
-
+import SettingsIcon from '@material-ui/icons/Settings';
 
 // generate token here, no need for external route
 const AccessToken = require('twilio').jwt.AccessToken;
@@ -102,17 +101,38 @@ export default function WorkoutCall(props) {
           Getting ready to join a workout session with...
         </p>
         <Preview participant={fakeLocalParticipant}/>
-        <ButtonGroup>
-          <IconButton
-            color='primary'
-            variant='contained'
-            size='large'
-            aria-label="Helo"
-            onClick={(event) => {connectToRoom(event)}}
-          >
-            <ExitToAppIcon />
-          </IconButton>
-        </ButtonGroup>
+
+        <div className="video-controls">
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<SettingsIcon />}
+              size="large"
+            >
+              Settings
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<ExitToAppIcon />}
+              size="large"
+              onClick={(event) => {connectToRoom(event)}}
+            >
+              Ready
+            </Button>
+          </div>
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<ExitToAppIcon />}
+              size="large"
+            >
+              Leave
+            </Button>
+          </div>
+        </div>
       </div>
     );
   }
