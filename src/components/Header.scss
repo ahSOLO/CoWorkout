@@ -3,9 +3,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 2;
+  z-index: 3;
   height: 60px;
   width: 100%;
+  background-color: white;
 
   &.dark {
     background-color: #23262A;
@@ -24,4 +25,9 @@
 
 .header__name {
   margin: 10px;
+}
+
+.header__button {
+  margin-left: 5px !important;
+  margin-right: 5px !important;
 }

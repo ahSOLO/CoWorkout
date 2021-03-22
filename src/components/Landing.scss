@@ -1,0 +1,29 @@
+#landing-container {
+  margin-top: 60px;
+}
+
+#landing-img {
+  object-fit: cover;
+  width: auto;
+  height: auto;
+}
+
+#top-grid {
+  min-height: calc(100vh - 160px);
+  margin-bottom: 100px;
+}
+
+#mid-grid-1 {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+#mid-grid-2 {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+#bot-grid {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
