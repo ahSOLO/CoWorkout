@@ -3,9 +3,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 2;
+  z-index: 3;
   height: 60px;
   width: 100%;
+  background-color: white;
 
   &.dark {
     background-color: #23262A;

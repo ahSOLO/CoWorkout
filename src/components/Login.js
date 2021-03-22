@@ -88,7 +88,7 @@ export default function Login(props) {
           onClick={handleSubmit}
           className="button"
         >
-          log in
+          Log In
         </Button>
         {incorrect && 
           <div>

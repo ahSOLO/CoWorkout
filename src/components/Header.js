@@ -24,10 +24,10 @@ export default function Header(props) {
     if (props.user.user_id) {
       return (
         <>
-          <Button color="primary">
+          <Button color="primary" variant="outlined">
             Demo Video Call
           </Button>
-          <Button color="primary" onClick={handleLogOut}>
+          <Button color="primary" variant="outlined" onClick={handleLogOut}>
             Log Out
           </Button>
           <Avatar className="header__avatar"/>
@@ -37,12 +37,12 @@ export default function Header(props) {
     } else {
       return (
         <>
-        <Button color="primary" onClick={() => history.push("/register")}>
-          Register
-        </Button>
-        <Button color="primary" onClick={() => history.push("/login")}>
-          Log In
-        </Button>
+          <Button color="primary" variant="outlined" onClick={() => history.push("/register")}>
+            Register
+          </Button>
+          <Button color="primary" variant="outlined" onClick={() => history.push("/login")}>
+            Log In
+          </Button>
         </>
       )
     }
