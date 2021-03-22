@@ -1,11 +1,14 @@
 import { useHistory } from 'react-router-dom';
+import {useState} from 'react';
 import { Button, Box, Typography, Container, Grid, Divider } from '@material-ui/core';
 import landing_img from "media/landing_img.jpg";
 import landing_img2 from "media/landing_img2.jpg";
 import "./Landing.scss";
+import IntroVideoDialog from "components/Dialogs/IntroVideoDialog";
 
 export default function Landing(props) {
   const history = useHistory();
+  const [videoOpen, setVideoOpen] = useState(false);
 
   return (
     <Container id="landing-container">
@@ -21,8 +24,8 @@ export default function Landing(props) {
             </Typography>
             <br/>
             <Box display="flex" justifyContent="space-between" width="85%">
-              <Button color="primary" size="large" variant="outlined" onClick={() => history.push("/register")}><b>Try a CoWorkout</b></Button>
-              <Button color="primary" size="large" variant="outlined"><b>See a CoWorkout in Action</b></Button>
+              <Button color="primary" size="large" variant="outlined" onClick={() => history.push("/register")}><b>Try CoWorkout</b></Button>
+              <Button color="primary" size="large" variant="outlined" onClick={() => setVideoOpen(true)}><b>See CoWorkout in Action</b></Button>
             </Box>
           </Box>
         </Grid>
@@ -148,6 +151,8 @@ export default function Landing(props) {
         </Grid>
       </Grid>
       <br/>
+
+      <IntroVideoDialog open={videoOpen} handleClose={() => setVideoOpen(false)}/>
 
     </Container>
   )
