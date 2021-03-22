@@ -5,9 +5,14 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
 
     const user_id = req.query.user_id;
-    const filter = req.query.filter; 
+    const filter = JSON.parse(req.query.filter);
 
-    console.log('Getting sessions data:', filter);
+    console.log('Getting sessions data:', filter, user_id);
+    
+    let filterQueryAdditions = "";
+    if (filter.activityId) {
+      filterQueryAdditions += ` AND (sessions.workout_type_id = ${filter.activityId} OR sessions.workout_type_id IS NULL)`;
+    }
 
     let start_date;
     let end_date;
@@ -23,7 +28,7 @@ module.exports = (db) => {
 
     let query_string;
 
-    if (filter === 'transient') {
+    if (filter.type === 'transient') {
       query_string = `
       SELECT sessions.id AS session_id
             , ARRAY_AGG('{"user_id": ' || session_users.user_id || ', "user_first_name": "' || users.first_name || '", "user_profile_image_url": "' || users.profile_image_url || '"}' ORDER BY session_users.user_id) AS session_users            
@@ -40,10 +45,11 @@ module.exports = (db) => {
           AND sessions.scheduled_at >= '${start_date.toISOString()}'
           AND sessions.scheduled_at <= '${end_date.toISOString()}'
           AND sessions.owner_id != ${user_id}
+          ${filterQueryAdditions}
         GROUP BY 1, 3, 4
       HAVING COUNT(DISTINCT session_users.user_id) = 1;
       `
-    } else if (filter === 'persistent') {
+    } else if (filter.type === 'persistent') {
       query_string = `
       SELECT sessions.id AS session_id
             , ARRAY_AGG('{"user_id": ' || session_users.user_id || ', "user_first_name": "' || users.first_name || '", "user_profile_image_url": "' || users.profile_image_url || '"}' ORDER BY session_users.user_id) AS session_users
@@ -63,7 +69,7 @@ module.exports = (db) => {
         AND sessions.scheduled_at <= '${end_date.toISOString()}'
       GROUP BY 1, 3, 4;
       `
-    } else if (filter === 'upcoming') {
+    } else if (filter.type === 'upcoming') {
       query_string = `
       SELECT sessions.id AS session_id
            , ARRAY_AGG(session_users.user_id ORDER BY session_users.user_id) AS session_users
@@ -81,7 +87,7 @@ module.exports = (db) => {
        ORDER BY sessions.scheduled_at asc
        LIMIT 3;
       `
-    } else if (filter === 'all') {
+    } else if (filter.type === 'all') {
       query_string = `
       SELECT sessions.id AS session_id
            , sessions.state AS session_state

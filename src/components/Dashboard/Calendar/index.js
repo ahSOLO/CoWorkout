@@ -31,7 +31,7 @@ export default function Calendar(props) {
   const [minDate, setMinDate] = useState(moment().startOf('day'));
   const [openDatePicker, setOpenDatePicker] = useState(false);
 
-  const refreshSlots = (targetDay) => throttle(() => constructSlots(targetDay), 500)();
+  const refreshSlots = (targetDay, filterOptions = {}) => throttle(() => constructSlots(targetDay, filterOptions), 500)();
 
   const setWeek = function(direction) {
     if (targetDay && direction === 'forward') {

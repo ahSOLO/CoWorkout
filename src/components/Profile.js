@@ -70,10 +70,9 @@ export default function Profile(props) {
               <Box className="profile__section">
                 <Typography variant="h6" className="profile__heading">
                   <b>My Profile</b>
-                  <IconButton>
+                  <IconButton onClick={handleProfileEditClick}>
                     <EditIcon 
                       style={{ fontSize: 18 }}
-                      onClick={handleProfileEditClick}
                     />
                   </IconButton>
                   <EditProfileDialog

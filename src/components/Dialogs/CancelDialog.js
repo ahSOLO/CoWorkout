@@ -13,12 +13,12 @@ export default function CancelDialog(props) {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     // Everything needed for the axios delete request (delete a session_users row): user id, session id
-    console.log("USER ID", props.user.id);
+    console.log("USER ID", props.user.user_id);
     console.log("SESSION ID", props.data.id || props.newSessionId);
     props.setMode("LOADING");
     props.handleCancelClose();
     // Axios request will also change the session state to canceled if cancelling user is the only pending user of the session.
-    axios.put(BASE_URL + '/api/session_users/cancel', {user_id: props.user.id, session_id: props.data.id || props.newSessionId})
+    axios.put(BASE_URL + '/api/session_users/cancel', {user_id: props.user.user_id, session_id: props.data.id || props.newSessionId})
     .then( res => {
       if (res.status===201) {
         props.setMode("LOADING");

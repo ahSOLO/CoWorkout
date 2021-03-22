@@ -29,12 +29,12 @@ export default function Login(props) {
       password: password
     })
     .then(res => {
-      props.setCookie("user_id", res.data.user.id, {
+      props.setCookie("user_id", res.data.user.user_id, {
         path: "/"
       });
       return axios.get(BASE_URL + '/api/users', {
         params: {
-          user_id: res.data.user.id
+          user_id: res.data.user.user_id
         }
       })
     })

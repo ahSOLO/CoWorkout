@@ -38,12 +38,12 @@ export default function BookDialog(props) {
     const start_time_UTC = constructedLocalTime.tz("UTC").format();
     console.log(start_time_UTC);
     // Everything needed for the axios post request: user id, activity, start_time (in UTC)
-    console.log("CURRENT USER ID", props.user.id);
+    console.log("CURRENT USER ID", props.user.user_id);
     console.log("ACTIVITY:", activity);
     console.log("SESSION START TIME (UTC)", start_time_UTC);
     props.setMode("LOADING");
     props.handleBookClose();
-    axios.post(BASE_URL + '/api/sessions', {user_id: props.user.id, activity: activity, start_time: start_time_UTC})
+    axios.post(BASE_URL + '/api/sessions', {user_id: props.user.user_id, activity: activity, start_time: start_time_UTC})
     .then( res => {
         if (res.status===201) {
           props.setNewSessionId(res.data);
