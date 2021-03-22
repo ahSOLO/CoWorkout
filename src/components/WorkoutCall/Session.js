@@ -32,21 +32,21 @@ export default function Session(props) {
 
   return (
     <div className="room">
-      <h2>Room: {roomName}</h2>
-      <button onClick={endSession}>Leave Session</button>
-      <div className="local-participant">
-        {room ? (
-          <AV
-            key={room.localParticipant.sid}
-            participant={room.localParticipant}
-          />
-        ) : (
-          ""
-        )}
+      {/* <h2>Room: {roomName}</h2>
+      <button onClick={endSession}>Leave Session</button> */}
+      <div className="video-call-container">
+        <div className="local-participant main-video">
+          {room ? (
+            <AV
+              key={room.localParticipant.sid}
+              participant={room.localParticipant}
+            />
+          ) : (
+            ""
+          )}
+        </div>
+        <div className="remote-participants side-video">{remoteParticipants}</div>
       </div>
-
-      <h3>Remote Participants</h3>
-      <div className="remote-participants">{remoteParticipants}</div>
     </div>
   );
 };

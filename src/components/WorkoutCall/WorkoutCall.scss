@@ -5,10 +5,13 @@ video {
   display: block;
 }
 
+
+.room {
+  width: 100%;
+}
 .video-call-container {
   width: 100%;
   text-align: center;
-  padding-top: 2em;
 }
 
 .video-controls {
@@ -30,4 +33,32 @@ video {
 
 .video-controls>div:last-child {
   text-align: right;
+}
+
+
+.local-participant {
+}
+
+.remote-participants {
+  background-color: red;
+  min-height: 80px;
+}
+
+
+.main-video, .side-video {
+  position: absolute;
+}
+.main-video {
+  width: 100%;
+}
+.side-video {
+  top: 2em;
+  right: 1em;
+  width: 300px;
+  overflow: hidden !important;
+}
+.video-stream {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover;
 }

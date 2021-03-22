@@ -18,10 +18,12 @@ export default function WorkoutCall(props) {
   const REACT_APP_TWILIO_API_KEY_SID = process.env.REACT_APP_TWILIO_API_KEY;
   const REACT_APP_TWILIO_API_KEY_SECRET = process.env.REACT_APP_TWILIO_API_SECRET;
 
-  const [username, setUsername] = useState("testUser");
+  const [username, setUsername] = useState(Math.random().toString());
   const [roomName, setRoomName] = useState("testRoom");
   const [room, setRoom] = useState(null);
   const [connecting, setConnecting] = useState(false);
+
+  console.log(username);
 
   const connectToRoom = useCallback(
     async (event) => {
@@ -86,9 +88,7 @@ export default function WorkoutCall(props) {
 
   if (room) {
     return (
-      <div className="video-call-container">
-        <Session roomName={roomName} room={room} endSession={endSession} />
-      </div>  
+      <Session roomName={roomName} room={room} endSession={endSession} />
     );
   } else {
     const fakeLocalParticipant = {
