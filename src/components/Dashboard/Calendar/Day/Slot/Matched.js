@@ -59,7 +59,8 @@ export default function Matched(props){
       <ProfileDialog
         data={props.data}
         handleProfileClose={handleProfileClose}
-        profileOpen={profileOpen}  
+        profileOpen={profileOpen}
+        user={otherUserData}
       />
       <CancelDialog
         data={props.data}
