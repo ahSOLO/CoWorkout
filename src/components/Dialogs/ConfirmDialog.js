@@ -12,11 +12,11 @@ export default function ConfirmDialog(props) {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     // Everything needed for the axios post request (create a new session_users row): user id, session id
-    console.log("USER ID", props.user.id);
+    console.log("USER ID", props.user.user_id);
     console.log("SESSION ID", props.data.id);
     props.setMode("LOADING");
     props.handleConfirmClose();
-    axios.post(BASE_URL + '/api/session_users', {user_id: props.user.id, session_id: props.data.id})
+    axios.post(BASE_URL + '/api/session_users', {user_id: props.user.user_id, session_id: props.data.id})
       .then( res => {
         if (res.status===201) {
           props.setMode("MATCHED");

@@ -11,10 +11,14 @@ export default function useApplicationData() {
   const [ slots, setSlots ] = useState(allSlots);
   const [ appointments, setAppointments ] = useState([]);
 
+  const [ user, setUser ] = useState({});
+  const [ cookies, setCookie, removeCookie ] = useCookies(["user_id"]);
+  const user_id = cookies.user_id;
+
   const months = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"];
 
-  const constructSlots = function(startDateTime = new Date()) {
+  const constructSlots = function(startDateTime = new Date(), filterOptions = {}) {
 
     console.log("UAD-TD", startDateTime);
 
@@ -36,16 +40,16 @@ export default function useApplicationData() {
     Promise.all([
       axios.get(BASE_URL + '/api/sessions', {
         params: {
-          user_id: 1,
-          filter: "transient",
+          user_id: user_id,
+          filter: { type: "transient", activityId: filterOptions.activityId },
           start_date,
           end_date,
         }
       }),
       axios.get(BASE_URL + '/api/sessions', {
         params: {
-          user_id: 1,
-          filter: "persistent",
+          user_id: user_id,
+          filter: { type: "persistent" },
           start_date,
           end_date,
         }
@@ -55,7 +59,6 @@ export default function useApplicationData() {
       const [ allSessionsQuery, persistentSessionsQuery ] = all;
       let retrievedAppointments = allSessionsQuery.data.sessions;
       let persistentAppointments = persistentSessionsQuery.data.sessions;
-      console.log(retrievedAppointments);
       setAppointments(prev => retrievedAppointments);
       setSlots(rebuildAppointmentObjs(slots, persistentAppointments, retrievedAppointments, 'America/Vancouver')); // !! modify to use user's timezone dynamically
     })
@@ -64,10 +67,6 @@ export default function useApplicationData() {
   useEffect(() => {
     constructSlots();
   }, []);
-
-  const [ user, setUser ] = useState({});
-  const [ cookies, setCookie, removeCookie ] = useCookies(["user_id"]);
-  const user_id = cookies.user_id;
 
   useEffect(() => {
     axios.get(BASE_URL + '/api/users', {

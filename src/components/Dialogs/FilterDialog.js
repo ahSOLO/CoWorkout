@@ -8,7 +8,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 console.log(BASE_URL);
 
 export default function FilterDialog(props) {
-  const [activity, setActivity] = useState("0");
+  const [activity, setActivity] = useState(0);
   const [options, setOptions] = useState({
     sameGender: false,
     reputable: false
@@ -21,15 +21,12 @@ export default function FilterDialog(props) {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     // Everything needed for the axios get request: activity, sameGender, reputable
-    console.log("CURRENT USER ID", props.user.id);
+    console.log("CURRENT USER ID", props.user.user_id);
     console.log("ACTIVITY:", activity);
     console.log("SAME GENDER", options.sameGender);
     console.log("REPUTABLE", options.reputable);
-    axios.get(BASE_URL + '/api/sessions', { user_id: props.user.id, activity: activity, sameGender: options.sameGender, reputable: options.reputable })
-    .then( res => {
-        console.log("Request Complete");
-      }
-    )
+    props.handleFilterClose();
+    props.refreshSlots(props.targetDay, {activityId: activity, sameGender: options.sameGender, reputable: options.reputable })
   }
 
   return (
