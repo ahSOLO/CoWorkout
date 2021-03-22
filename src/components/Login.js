@@ -11,6 +11,7 @@ export default function Login(props) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [incorrect, setIncorrect] = useState(false);
   const history = useHistory();
 
   const handleEmailChange = event => {
@@ -29,19 +30,27 @@ export default function Login(props) {
       password: password
     })
     .then(res => {
-      props.setCookie("user_id", res.data.user.user_id, {
-        path: "/"
-      });
-      return axios.get(BASE_URL + '/api/users', {
-        params: {
-          user_id: res.data.user.user_id
-        }
-      })
+      if (!res.data.user) {
+        setIncorrect(true);
+        throw new Error('incorrect credentials');
+      } else {
+        props.setCookie("user_id", res.data.user.user_id, {
+          path: "/"
+        });
+        return axios.get(BASE_URL + '/api/users', {
+          params: {
+            user_id: res.data.user.user_id
+          }
+        })
+      }
     })
     .then((data) => {
       props.setUser(data.data.users[0]);
       history.push("/dashboard");
     })
+    .catch(err => {
+      console.log(err)
+    });
 
   }
 
@@ -81,6 +90,14 @@ export default function Login(props) {
         >
           log in
         </Button>
+        {incorrect && 
+          <div>
+            <br/>
+            <Typography variant="subtitle2" color="error" className="error_message">
+              Incorrect Email or Password
+            </Typography>
+          </div>
+        }
         <br/><br/><br/><br/><br/>
       </section>
     </div>

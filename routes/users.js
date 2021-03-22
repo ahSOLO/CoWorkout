@@ -22,7 +22,7 @@ module.exports = (db) => {
          , STRING_AGG(DISTINCT wg.goal, ', ') as fitness_goals
          , ARRAY_AGG(DISTINCT wg.goal) as fitness_goals_array
          , COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end) as completed_sessions
-         , COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end)::NUMERIC / COUNT(DISTINCT su.session_id) as completion_rate
+         , COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end)::NUMERIC / NULLIF(COUNT(DISTINCT su.session_id), 0) as completion_rate
          , AVG(sessions.actual_duration) as avg_session_length
          , CASE WHEN COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end) >= 1 then TRUE else FALSE end as one_completed_badge
          , CASE WHEN COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end) >= 10 then TRUE else FALSE end as ten_completed_badge
@@ -115,7 +115,9 @@ module.exports = (db) => {
         return db.query(queryStringGoals);
       })
       .then((data) => {
-        res.status(200)
+        res
+          .json({ user_id })
+          .status(200)
       })
       .catch(error => console.log(error));
   });
