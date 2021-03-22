@@ -19,10 +19,7 @@ export default function useApplicationData() {
   "July", "August", "September", "October", "November", "December"];
 
   const constructSlots = function(startDateTime = new Date(), filterOptions = {}) {
-
-    console.log("UAD-TD", startDateTime);
-
-    // Clone the start datetime so we don't change the targetDate state directly - needed to make sure we don't display past days when user scrolls back to current week.
+    // Clone the start datetime so we don't change the targetDate object directly (it's mutable) - needed to make sure we don't display past days when user scrolls back to current week.
     const dateClone = new Date(startDateTime.getTime());
     const today = new Date();
     // If target date is any day other than today, begin the start date on a Sunday - necessary for views outside of the current week.
@@ -60,7 +57,7 @@ export default function useApplicationData() {
       let retrievedAppointments = allSessionsQuery.data.sessions;
       let persistentAppointments = persistentSessionsQuery.data.sessions;
       setAppointments(prev => retrievedAppointments);
-      setSlots(rebuildAppointmentObjs(slots, persistentAppointments, retrievedAppointments, 'America/Vancouver')); // !! modify to use user's timezone dynamically
+      setSlots(rebuildAppointmentObjs(slots, persistentAppointments, retrievedAppointments, 'America/Vancouver')); // Modify to use user's timezone dynamically when we implement usage of stored timezones. Right now app only runs on local time.
     })
   };
 

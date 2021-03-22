@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import ContextContainer from 'contexts/ContextContainer';
+import { useState, useEffect, useContext } from 'react';
 import {Typography, Button } from '@material-ui/core';
 import DialogTemplate from "./DialogTemplate";
 import moment from 'moment';
@@ -6,8 +7,11 @@ import axios from 'axios';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
+
 export default function ConfirmDialog(props) {
   const [name, setName] = useState("")
+
+  const { appState, setAppState, renderUpcoming } = useContext(ContextContainer);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -20,6 +24,7 @@ export default function ConfirmDialog(props) {
       .then( res => {
         if (res.status===201) {
           props.setMode("MATCHED");
+          renderUpcoming();
         } else {
           props.setMode("ERROR");
         }

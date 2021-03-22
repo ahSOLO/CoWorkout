@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import ContextContainer from 'contexts/ContextContainer';
 import Day from "./Day";
 import "./styles.scss";
 import { getWeekDates, getWeekDateTimes, rebuildAppointmentObjs } from "helpers/calendarHelpers";
@@ -31,11 +32,17 @@ export default function Calendar(props) {
   const [minDate, setMinDate] = useState(moment().startOf('day'));
   const [openDatePicker, setOpenDatePicker] = useState(false);
 
-  const refreshSlots = (targetDay, filterOptions = {}) => throttle(() => constructSlots(targetDay, filterOptions), 500)();
+  const { appState, setAppState, renderUpcoming } = useContext(ContextContainer);
+
+  // Main refresh function - takes the target day and filtering options for the query. Throttled to prevent refresh spam.
+  const refreshSlots = (targetDay, filterOptions = {}) => {
+    throttle(() => constructSlots(targetDay, filterOptions), 500)();
+    renderUpcoming();
+  }
 
   const setWeek = function(direction) {
     if (targetDay && direction === 'forward') {
-      // This horrendous line is needed because date objects are mutable, so we need to clone targetDay before performing calculations on it, and then put the results in a new date object.
+      // This horrendous line is needed because date objects are mutable, so we need to clone targetDay before performing calculations on it, and then put the results in a new date object to be passed into setTargetDayMinToday.
       setTargetDayMinToday(new Date(new Date(targetDay.getTime()).setDate(targetDay.getDate() + 7))).then(res => refreshSlots(res));
     } else {
       setTargetDayMinToday(new Date(new Date(targetDay.getTime()).setDate(targetDay.getDate() - 7))).then(res => refreshSlots(res));
@@ -43,11 +50,12 @@ export default function Calendar(props) {
   };
 
   const setTargetDayMinToday = function(targetDay) {
-    // Return promise because setState functions are asynchronous
+    // Return promise because setState functions are asynchronous, we don't want to refresh before the new target day is set.
     return new Promise((resolve, reject) => {
       // Borrow minDate state instead of calling moment() each time - no need to worry about stale state as it does not change
       if (minDate.diff(targetDay, 'minutes') > 0) {
-        // Here I'm changing the mutable object directly and returning it instead of passing in a value to setTargetDay
+        // Change the mutable targetDay object directly and return it instead of passing in a value to setTargetDay. 
+        // Keeping targetDay pointed to a single mutable datetime object ensures that it will not go stale.
         setTargetDay(prev => {
           prev.setTime(minDate.toDate().getTime());
           resolve(prev);
@@ -141,7 +149,6 @@ export default function Calendar(props) {
     document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
   }, [])
   
-  // console.log(slots['WED']);
   return (
     <div className="cal__container">
       <section className="cal__top">

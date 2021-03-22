@@ -72,14 +72,16 @@ module.exports = (db) => {
     } else if (filter.type === 'upcoming') {
       query_string = `
       SELECT sessions.id AS session_id
-           , ARRAY_AGG(session_users.user_id ORDER BY session_users.user_id) AS session_users
-           , sessions.scheduled_at AS start_time
+           , ARRAY_AGG('{"user_id": ' || session_users.user_id || ', "user_first_name": "' || users.first_name || '"}' ORDER BY session_users.user_id) AS session_users
+           , sessions.scheduled_at AT TIME ZONE 'UTC' AS start_time
            , workout_types.type AS workout_type
         FROM sessions
-        JOIN (SELECT session_id FROM session_users WHERE user_id = 1 AND state = 'pending') us
+        JOIN (SELECT session_id FROM session_users WHERE user_id = ${user_id} AND state = 'pending') us
              ON sessions.id = us.session_id
         JOIN session_users
              ON sessions.id = session_users.session_id AND session_users.state = 'pending'
+        JOIN users 
+             ON session_users.user_id = users.id
         LEFT JOIN workout_types
              ON sessions.workout_type_id = workout_types.id
        WHERE sessions.state = 'pending'

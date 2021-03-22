@@ -45,6 +45,9 @@ export default function Profile(props) {
   };
   const open2 = Boolean(anchorEl2);
   
+  // Do not render if there is no logged in user
+  if (!props.user.user_id) return null;
+
   return (
     <Box display="flex" flexDirection="column" height="100%" width="100%">
       <Grid container className="profile__grid">
