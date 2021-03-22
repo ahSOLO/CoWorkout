@@ -6,7 +6,7 @@ import "./Header.scss";
 const lightPaths = ["/", "/register"];
 
 export default function Header(props) {
-  const [style, setStyle] = useState("dark");
+  const [style, setStyle] = useState("");
   const history = useHistory();
 
   const handleLogOut = event => {
@@ -49,7 +49,11 @@ export default function Header(props) {
   }
 
   useEffect(() => {
-    if (lightPaths.includes(history.location.pathname)) setStyle(true);
+    if (lightPaths.includes(history.location.pathname)) { 
+      setStyle("light");
+     } else {
+      setStyle("dark");
+     } ;
     const unlisten = history.listen((location, action) => {
       if (lightPaths.includes(location.pathname)) {
         setStyle("light");
@@ -65,7 +69,7 @@ export default function Header(props) {
   return (
     <header id="app-header" className={style}>
       <Box paddingLeft="25px">
-        <Typography variant="h4" className="clickable" onClick={() => props.user ? history.push("/dashboard") : history.push("/")}>CoWorkout</Typography>
+        <Typography variant="h4" className="clickable" onClick={() => props.user.user_id ? history.push("/dashboard") : history.push("/")}>CoWorkout</Typography>
       </Box>
       <Box paddingRight="50px" display="flex" alignItems="center" >
         {headerRight()}
