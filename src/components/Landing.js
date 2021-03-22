@@ -170,7 +170,6 @@ export default function Landing(props) {
         </Grid>
       </Grid>
       <br/>
-
     </Container>
   )
 }

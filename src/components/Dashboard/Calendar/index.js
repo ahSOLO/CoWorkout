@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import ContextContainer from 'contexts/ContextContainer';
 import Day from "./Day";
+import { withStyles } from "@material-ui/core/styles"
 import "./styles.scss";
 import { getWeekDates, getWeekDateTimes, rebuildAppointmentObjs } from "helpers/calendarHelpers";
 import useApplicationData from 'hooks/useApplicationData';
@@ -149,6 +150,13 @@ export default function Calendar(props) {
     document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
   }, [])
   
+  // Custom styled icon buttons
+  const CalendarIconButton = withStyles({
+    root: {
+      borderRadius: "0px",
+    },
+  })(IconButton);
+
   return (
     <div className="cal__container">
       <section className="cal__top">
@@ -158,21 +166,21 @@ export default function Calendar(props) {
           </Typography>
         </div>
         <div className="top__icons">
-          <IconButton key={0} variant="outlined" onClick={setWeek}>
-            <ArrowBackIosOutlinedIcon fontSize="large"/>
-          </IconButton>
-          <IconButton key={1} onClick={() => {setWeek('forward')}}>
-            <ArrowForwardIosOutlinedIcon fontSize="large" />
-          </IconButton>
-          <IconButton key={2}>
+          <CalendarIconButton key={0} onClick={setWeek}>
+            <ArrowBackIosOutlinedIcon style={{border:"2px solid grey"}} fontSize="large"/>
+          </CalendarIconButton>
+          <CalendarIconButton key={1} onClick={() => {setWeek('forward')}}>
+            <ArrowForwardIosOutlinedIcon style={{border:"2px solid grey"}} fontSize="large" />
+          </CalendarIconButton>
+          <CalendarIconButton key={2}>
             <CalendarTodayOutlinedIcon fontSize="large" onClick={() => {setOpenDatePicker(!openDatePicker)}}/>
-          </IconButton>
-          <IconButton key={3} onClick={handleFilterOpen}>
+          </CalendarIconButton>
+          <CalendarIconButton key={3} onClick={handleFilterOpen}>
             <FilterListOutlinedIcon fontSize="large" />
-          </IconButton>
-          <IconButton key={4} onClick={() => refreshSlots(targetDay)}>
+          </CalendarIconButton>
+          <CalendarIconButton key={4} onClick={() => refreshSlots(targetDay)}>
             <RefreshOutlinedIcon fontSize="large" />
-          </IconButton>
+          </CalendarIconButton>
         </div>
       </section>
       <section className="cal__main">
