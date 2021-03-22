@@ -67,7 +67,7 @@ const { participant } = props;
   }, [audioTracks]);
 
   return (
-    <div className="participant">
+    <div className="video-call-container">
       <h3>{participant.identity}</h3>
       <video ref={videoRef} autoPlay={true} />
       <audio ref={audioRef} autoPlay={true} muted={true} />

@@ -2,6 +2,13 @@ import { useState, useCallback, useEffect } from 'react';
 import Session from './Session';
 import Video from 'twilio-video';
 import Preview from './Preview';
+import './WorkoutCall.scss';
+
+
+import { Button, ButtonGroup, IconButton } from '@material-ui/core';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { makeStyles } from '@material-ui/core/styles';
+
 
 // generate token here, no need for external route
 const AccessToken = require('twilio').jwt.AccessToken;
@@ -78,21 +85,35 @@ export default function WorkoutCall(props) {
     }
   }, [room, endSession]);
 
-  let render;
   if (room) {
-    render = (
-      <Session roomName={roomName} room={room} endSession={endSession} />
+    return (
+      <div className="video-call-container">
+        <Session roomName={roomName} room={room} endSession={endSession} />
+      </div>  
     );
   } else {
     const fakeLocalParticipant = {
       'identity': 'Video Preview'
     }
-    render = (
-      <>
+    return (
+      <div className="video-call-container">
+        <h1>Joining Session</h1>
+        <p>
+          Getting ready to join a workout session with...
+        </p>
         <Preview participant={fakeLocalParticipant}/>
-        <button onClick={(event) => {connectToRoom(event)}}>I'm Ready!</button>
-      </>
+        <ButtonGroup>
+          <IconButton
+            color='primary'
+            variant='contained'
+            size='large'
+            aria-label="Helo"
+            onClick={(event) => {connectToRoom(event)}}
+          >
+            <ExitToAppIcon />
+          </IconButton>
+        </ButtonGroup>
+      </div>
     );
   }
-  return render;
 };
