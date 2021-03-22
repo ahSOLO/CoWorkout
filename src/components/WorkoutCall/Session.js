@@ -6,6 +6,10 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import VolumeMuteIcon from '@material-ui/icons/VolumeMute';
 import SettingsIcon from '@material-ui/icons/Settings';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 export default function Session(props) {
 
@@ -58,25 +62,72 @@ export default function Session(props) {
                 color="primary"
                 startIcon={<CameraAltIcon />}
                 size="large"
-              >Camera</Button>
+              >Camera
+              </Button>
               <Button
                 variant="contained"
                 color="primary"
                 startIcon={<VolumeMuteIcon />}
                 size="large"
-              >Mute</Button>
+              >Mute<
+                /Button>
               <Button
                 variant="contained"
                 color="primary"
                 startIcon={<SettingsIcon />}
                 size="large"
-              >Settings</Button>
+              >Settings
+              </Button>
             </div>
             <div>
               Time Remaining
             </div>
             <div>
-              Finish
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<ExitToAppIcon />}
+                size="large"
+              >Finish
+              </Button>
+            </div>
+          </div>
+          <div class="video-controls">
+            <div>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<ThumbUpIcon />}
+                size="large"
+              >
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<ThumbDownIcon />}
+                size="large"
+              >
+              </Button>
+            </div>
+            <div>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<CheckCircleOutlineIcon />}
+                size="large"
+              >
+                Partner's Goal Completed
+              </Button>
+            </div>
+            <div>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<AddCircleOutlineIcon />}
+                size="large"
+              >
+                Extend
+              </Button>
             </div>
           </div>
         </div>
