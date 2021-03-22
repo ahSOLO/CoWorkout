@@ -31,7 +31,7 @@ const MainRouter = (props) => {
                 <Login user={props.user} setUser={props.setUser} cookies={props.cookies} setCookie={props.setCookie} />
               </Route> 
               <Route path="/register" >
-                <Registration />
+                <Registration setUser={props.setUser} cookies={props.cookies} setCookie={props.setCookie} />
               </Route> 
               <Route path="/settings" >
                 <Settings />

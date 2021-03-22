@@ -116,7 +116,17 @@ export class UserForm extends Component {
       ]
     })
     .then(res => {
-      console.log(res.data);
+      this.props.setCookie("user_id", res.data.user_id, {
+        path: "/"
+      });
+      return axios.get(this.BASE_URL + '/api/users', {
+        params: {
+          user_id: res.data.user_id
+        }
+      })
+    })
+    .then((data) => {
+      this.props.setUser(data.data.users[0]);
     })
   }
 
@@ -144,6 +154,7 @@ export class UserForm extends Component {
             nextStep={this.nextStep}
             handleChange={this.handleChange}
             handleSubmit={this.handleSubmit}
+            setCookie={this.props.setCookie}
             values={this.state}
           />
         )
