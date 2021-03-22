@@ -1,7 +1,9 @@
 import {Button, InputLabel, Input, MenuItem, FormControl, Select, Box, Typography } from '@material-ui/core';
-import { useState, useEffect } from 'react';
+import ContextContainer from 'contexts/ContextContainer';
+import { useState, useEffect, useContext } from 'react';
 import DialogTemplate from "./DialogTemplate";
-import moment from 'moment-timezone';
+// import moment from 'moment-timezone' // use moment-timezone when we need to convert between more than just local and UTC time.
+import moment from 'moment';
 import axios from 'axios';
 import MomentUtils from '@date-io/moment';
 import {
@@ -20,6 +22,8 @@ export default function BookDialog(props) {
   const [minDate, setminDate] = useState(moment());
   const [message, setMessage] = useState("");
 
+  const { appState, setAppState, renderUpcoming } = useContext(ContextContainer);
+
   useEffect(() => {
     if (props.data){
       setActivity(props.data.activity_type || 0);
@@ -35,8 +39,7 @@ export default function BookDialog(props) {
     if (constructedLocalTime.isBefore(moment())) {
       return setMessage("Please select a time in the future.")
     }
-    const start_time_UTC = constructedLocalTime.tz("UTC").format();
-    console.log(start_time_UTC);
+    const start_time_UTC = constructedLocalTime.utc().format();
     // Everything needed for the axios post request: user id, activity, start_time (in UTC)
     console.log("CURRENT USER ID", props.user.user_id);
     console.log("ACTIVITY:", activity);
@@ -49,6 +52,7 @@ export default function BookDialog(props) {
           props.setNewSessionId(res.data);
           props.setActivity(activityMap[activity]);
           props.setMode("MATCHING");
+          renderUpcoming();
         } else {
           props.setMode("ERROR");
         }

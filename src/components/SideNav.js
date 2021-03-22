@@ -1,7 +1,9 @@
+import React, { useContext, useReducer } from 'react';
 import {Link} from 'react-router-dom';
 import {Typography, Box} from '@material-ui/core';
 import {useHistory} from 'react-router-dom';
 import {useState, useEffect} from 'react';
+import ContextContainer from 'contexts/ContextContainer';
 import MenuOutlinedIcon from '@material-ui/icons/MenuOutlined';
 import "./SideNav.scss";
 
@@ -12,7 +14,10 @@ export default function SideNav(props) {
   const [hide, setHide] = useState(false);
   const [minimized, setMinimized] = useState(true);
 
+  const { appState, setAppState, renderUpcoming } = useContext(ContextContainer);
+
   useEffect(() => {
+    // Hide the navbar if the current url matches one of the hide paths
     if (hidePaths.includes(history.location.pathname)) setHide(true);
     const unlisten = history.listen((location, action) => {
       if (hidePaths.includes(location.pathname)) {
@@ -26,11 +31,27 @@ export default function SideNav(props) {
     }
   }, [])
 
+  // render the upcoming sessions when user changes.
+  useEffect(() => {
+    console.log("render");
+    renderUpcoming();
+    // Update the upcoming sessions lists automatically every 2 minutes
+    const interval = setInterval(() => {
+      renderUpcoming();
+    }, 120000);
+    return (() => {
+    clearInterval(interval)
+    });
+  }, [props.user])
+
   const clickHandler = () => {
     setMinimized(!minimized);
   }
 
   if (hide) return null;
+
+  // Do not render if there is no logged in user
+  if (!props.user.user_id) return null;
 
   if (minimized) return (
     <nav id="app-mininav">
@@ -44,15 +65,10 @@ export default function SideNav(props) {
         <Box display="flex" flexDirection="row-reverse" width="100%">
           <MenuOutlinedIcon className="clickable" id="menu-icon" onClick={clickHandler}/>
         </Box>
-        <Typography variant="subtitle1" id="upcoming-sessions"><b><u>Upcoming Sessions</u></b></Typography>
-        <br/>
-        <Typography variant="body1">DayOfWeek, Month 10 at 8:15am with Firstname</Typography>
-        <br/>
-        <Typography variant="body1">DayOfWeek, Month 10 at 8:15am (Matching...)</Typography>
-        <br/>
-        <Typography variant="body1">DayOfWeek, Month 10 at 8:15am with Firstname</Typography>
-        <br/>
-        <Typography variant="subtitle1"><b>See All</b></Typography>
+          <Typography variant="subtitle1" id="upcoming-sessions"><b><u>Upcoming Sessions</u></b></Typography>
+          <br/>
+          {appState.upcoming}
+          <Typography variant="subtitle1"><b>See All</b></Typography>
       </Box>
       <Box display="flex" flexDirection="column" width="100%">
         <Typography><b>Debug Links (Will replace for production)</b></Typography>

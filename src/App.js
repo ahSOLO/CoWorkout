@@ -1,10 +1,14 @@
-import axios from './fakeAxios';
-// import axios from 'axios';
-import { useEffect, useState } from 'react';
+// import axios from './fakeAxios';
+import {Typography} from '@material-ui/core';
+import axios from 'axios';
+import moment from 'moment';
+import React, { useState, useEffect } from 'react';
 import MainRouter from './components/MainRouter';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import useApplicationData from 'hooks/useApplicationData';
+import ContextContainer from 'contexts/ContextContainer';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -12,7 +16,7 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: '#23262A'
-    }
+    },
   },
   typography: {
     fontFamily: "'Raleway', sans-serif",
@@ -45,11 +49,36 @@ const theme = createMuiTheme({
 })
 
 function App() {
-
+  const [appState, setAppState] = useState({
+    upcoming: <br/>,
+  })
+  
   const { user, setUser, cookies, setCookie, removeCookie } = useApplicationData();
+
+  const renderUpcoming = function() {
+    if (!user) return;
+    axios.get(BASE_URL + '/api/sessions', {params: {user_id: user.user_id, filter: {type: "upcoming"}}})
+      .then( res => {
+        setAppState({...appState, upcoming:
+          res.data.sessions.map( session => {
+            const users = session.session_users.map( user => JSON.parse(user));
+            console.log(users);
+            const otherUser = users.find( user_ => user_.user_id !== user.user_id)
+            console.log("otherUser", otherUser);
+            return (
+              <>
+                <Typography variant="body1">{moment(session.start_time).format("dddd, MMM Do [at] h:mm a")} {otherUser && "with " + otherUser.user_first_name}</Typography>
+                <br/>
+              </>
+            )
+          })
+        })
+      })
+  };
 
   return (
     <ThemeProvider theme={theme}>
+      <ContextContainer.Provider value={{appState, setAppState, renderUpcoming}}>
         <MainRouter 
           user={user} 
           setUser={setUser}
@@ -57,6 +86,7 @@ function App() {
           setCookie={setCookie}
           removeCookie={removeCookie}
         />
+      </ContextContainer.Provider>
     </ThemeProvider>
   );
 }
