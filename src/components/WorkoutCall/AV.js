@@ -67,10 +67,12 @@ const { participant } = props;
   }, [audioTracks]);
 
   return (
-    <div className="video-call-container">
-      {/* <h3>{participant.identity}</h3> */}
-      <video className="video-stream" ref={videoRef} autoPlay={true} />
-      <audio ref={audioRef} autoPlay={true} muted={true} />
-    </div>
+    <>
+      <div className="video-call-container">
+        {/* <h3>{participant.identity}</h3> */}
+        <video className="video-stream" ref={videoRef} autoPlay={true} />
+        <audio ref={audioRef} autoPlay={true} muted={true} />
+      </div>
+    </>
   );
 };
