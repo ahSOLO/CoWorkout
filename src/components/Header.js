@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import "./Header.scss";
 
-const lightPaths = ["/", "/register"];
+const lightPaths = ["/", "/register", "/login"];
 
 export default function Header(props) {
   const [style, setStyle] = useState("");

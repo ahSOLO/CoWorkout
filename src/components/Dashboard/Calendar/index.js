@@ -167,10 +167,10 @@ export default function Calendar(props) {
         </div>
         <div className="top__icons">
           <CalendarIconButton key={0} onClick={setWeek}>
-            <ArrowBackIosOutlinedIcon style={{border:"2px solid grey"}} fontSize="large"/>
+            <ArrowBackIosOutlinedIcon fontSize="large"/>
           </CalendarIconButton>
           <CalendarIconButton key={1} onClick={() => {setWeek('forward')}}>
-            <ArrowForwardIosOutlinedIcon style={{border:"2px solid grey"}} fontSize="large" />
+            <ArrowForwardIosOutlinedIcon fontSize="large" />
           </CalendarIconButton>
           <CalendarIconButton key={2}>
             <CalendarTodayOutlinedIcon fontSize="large" onClick={() => {setOpenDatePicker(!openDatePicker)}}/>

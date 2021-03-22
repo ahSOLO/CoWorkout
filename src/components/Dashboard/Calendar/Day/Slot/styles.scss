@@ -6,6 +6,7 @@
   align-items: center;
 
   &:hover {
+    background-color: #fff9f0;
     border-left: 2px solid #FBB03B;
     border-right: 2px solid #FBB03B;
     border-bottom: 2px solid transparent !important;
@@ -13,6 +14,7 @@
   }
 
   &:hover + .slot {
+    background-color: #fff9f0;
     color: transparent;
     border-left: 2px solid #FBB03B;
     border-right: 2px solid #FBB03B;
