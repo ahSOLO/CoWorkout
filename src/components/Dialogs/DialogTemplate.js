@@ -1,7 +1,5 @@
-import { useState } from "react";
-import { Box, Avatar, Typography, Dialog, DialogTitle, DialogContent, Button } from '@material-ui/core';
+import { Box, Typography, Dialog, DialogContent } from '@material-ui/core';
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
-import moment from 'moment';
 
 /* Requires the following props: 
   - handleClose (function)
