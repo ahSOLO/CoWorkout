@@ -25,10 +25,10 @@ export default function Header(props) {
       return (
         <>
           <Button className="header__button" color="primary" variant="outlined">
-            Demo Video Call
+            <b>Demo Video Call</b>
           </Button>
           <Button className="header__button" color="primary" variant="outlined" onClick={handleLogOut}>
-            Log Out
+            <b>Log Out</b>
           </Button>
           <Avatar className="header__avatar"/>
           <Typography variant="subtitle1" className="header__name">{props.user.name}</Typography>
@@ -38,10 +38,10 @@ export default function Header(props) {
       return (
         <>
           <Button className="header__button" color="primary" variant="outlined" onClick={() => history.push("/register")}>
-            Register
+            <b>Register</b>
           </Button>
           <Button className="header__button" color="primary" variant="outlined" onClick={() => history.push("/login")}>
-            Log In
+            <b>Log In</b>
           </Button>
         </>
       )
