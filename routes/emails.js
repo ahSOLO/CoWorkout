@@ -47,7 +47,7 @@ module.exports = (db) => {
       const htmlToSend = template(replacements);
       const mailOptions = {
           from: 'coworkout.online@gmail.com',
-          to: 'rkang626@gmail.com',
+          to: email,
           subject: "Your Workout is Confirmed!",
           html: htmlToSend
        };
