@@ -60,8 +60,23 @@ export default function Session(props) {
     }
   };
 
-  const toggleAudio = function() {
+  const toggleAudio = function(room) {
+    if (sessionSettings.audio) {
+      room.localParticipant.audioTracks.forEach(publication => {
+        publication.track.disable();
+      });
+      setSessionSettings((prev) => {return {...prev, audio: false}});
+      console.log(sessionSettings);
+      console.log(room);
+    } else {
+      room.localParticipant.audioTracks.forEach(publication => {
+        publication.track.enable();
+      });
+      setSessionSettings((prev) => {return {...prev, audio: true}});
+      console.log(sessionSettings);
+      console.log(room);
 
+    }
   };
 
   const remoteParticipants = participants.map((participant) => (
@@ -96,6 +111,7 @@ export default function Session(props) {
                 variant="contained"
                 color="primary"
                 size="large"
+                onClick={() => {toggleAudio(room)}}
               ><VolumeMuteIcon />
               </IconButton>
               <IconButton

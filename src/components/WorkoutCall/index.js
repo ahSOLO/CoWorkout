@@ -32,6 +32,7 @@ export default function WorkoutCall(props) {
       const JWT = createJwt(username, roomName);
       Video.connect(JWT, {
         name: roomName,
+        video: { width: 300 }
       })
         .then((room) => {
           setConnecting(false);
