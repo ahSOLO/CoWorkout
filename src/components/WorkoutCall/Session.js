@@ -19,6 +19,9 @@ import { set } from "lodash";
 
 export default function Session(props) {
 
+  const DEFAULT_SESSION_DURATION = 1800000;
+  const DEFAULT_GRACE_DURATION = 60000;
+
   const { roomName, room, endSession } = props;
   const [ participants, setParticipants] = useState([]);
 
@@ -101,8 +104,8 @@ export default function Session(props) {
     return (currentTime.getTime() + distance);
   };
   
-  const [ countDownTime, setCountDownTime ] = useState(30000);
-  const [ countDownEndPoint, setCountDownEndpoint ] = useState(getCountDownEndpoint(30000));
+  const [ countDownTime, setCountDownTime ] = useState(DEFAULT_SESSION_DURATION);
+  const [ countDownEndPoint, setCountDownEndpoint ] = useState(getCountDownEndpoint(DEFAULT_SESSION_DURATION));
   const [ workoutEnded, setWorkoutEnded ] = useState(false);
   
   const calcRemainingTime = function() {
@@ -116,6 +119,12 @@ export default function Session(props) {
     setCountDownEndpoint(Date());
   };
 
+  const extendSession = function() {
+    setWorkoutEnded(false);
+    setCountDownTime(prev => DEFAULT_SESSION_DURATION);
+    setCountDownTime(prev => getCountDownEndpoint(DEFAULT_SESSION_DURATION));
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setCountDownTime(calcRemainingTime());
@@ -127,8 +136,8 @@ export default function Session(props) {
         props.endSession()
       } else {
         // workout just ended, give grace period
-        setCountDownTime(10000);
-        setCountDownEndpoint(getCountDownEndpoint(10000));
+        setCountDownTime(DEFAULT_GRACE_DURATION);
+        setCountDownEndpoint(getCountDownEndpoint(DEFAULT_GRACE_DURATION));
         setWorkoutEnded(true);
       }
     }
@@ -175,7 +184,7 @@ export default function Session(props) {
               </IconButton>
             </div>
             <div>
-              Time Remaining: {formatToMinutes(countDownTime)}
+              { workoutEnded && "Session Ending in " || "Workout Time Remaining" }: {formatToMinutes(countDownTime)}
             </div>
             <div>
               <Button
@@ -222,6 +231,7 @@ export default function Session(props) {
                 color="primary"
                 startIcon={<AddCircleOutlineIcon />}
                 size="large"
+                onClick={extendSession}
               >
                 Extend
               </Button>
