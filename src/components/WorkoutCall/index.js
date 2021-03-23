@@ -3,6 +3,7 @@ import Session from './Session';
 import Video from 'twilio-video';
 import Preview from './Preview';
 import './WorkoutCall.scss';
+import { Link } from 'react-router-dom'
 
 
 import { Button, ButtonGroup, IconButton } from '@material-ui/core';
@@ -126,6 +127,8 @@ export default function WorkoutCall(props) {
           </div>
           <div>
             <Button
+              component={Link}
+              to="/dashboard"
               variant="contained"
               color="primary"
               startIcon={<ExitToAppIcon />}

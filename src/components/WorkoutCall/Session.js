@@ -3,8 +3,6 @@ import AV from './AV';
 
 import { Button, ButtonGroup, IconButton } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import CameraAltIcon from '@material-ui/icons/CameraAlt';
-import VolumeMuteIcon from '@material-ui/icons/VolumeMute';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
@@ -15,6 +13,8 @@ import VideocamIcon from '@material-ui/icons/Videocam';
 import VideocamOffIcon from '@material-ui/icons/VideocamOff';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
+
+import {Redirect} from 'react-router-dom';
 import { set } from "lodash";
 
 export default function Session(props) {
@@ -134,6 +134,7 @@ export default function Session(props) {
       if (workoutEnded) {
         // workout has ended, and grace period has also ended. End session
         props.endSession()
+        return (<Redirect to="/dashboard" />)
       } else {
         // workout just ended, give grace period
         setCountDownTime(DEFAULT_GRACE_DURATION);
