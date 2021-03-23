@@ -4,12 +4,15 @@ import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 import { hoverHandler } from "helpers/utility";
 import ProfileDialog from "components/Dialogs/ProfileDialog";
 import CancelDialog from "components/Dialogs/CancelDialog";
+import moment from "moment";
+import { fifteenMinutesInMs } from "helpers/constants";
 
 export default function Matched(props){
   const [leftHover, setLeftHover] = useState(false);
   const [otherUserData, setOtherUserData] = useState({});
   const [profileOpen, setProfileOpen] = useState(false);
   const [cancelOpen, setCancelOpen] = useState(false);
+  const [withinFifteenMin, setWithinFifteenMin] = useState(false);
 
   const handleAvatarClick = () => {
     setProfileOpen(true);
@@ -31,6 +34,7 @@ export default function Matched(props){
     if (props.user){
       setOtherUserData(props.data.session_users.find(userObj => userObj.user_id !== props.user.user_id));
     }
+    console.log(moment().diff(props.data.start_time));
   }, [props.data, props.user])
 
   return(
