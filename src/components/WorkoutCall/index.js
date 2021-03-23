@@ -4,6 +4,7 @@ import Video from 'twilio-video';
 import Preview from './Preview';
 import './WorkoutCall.scss';
 import { Link } from 'react-router-dom'
+import axios from 'axios';
 
 
 import { Button, ButtonGroup, IconButton } from '@material-ui/core';
@@ -23,8 +24,6 @@ export default function WorkoutCall(props) {
   const [roomName, setRoomName] = useState("testRoom2");
   const [room, setRoom] = useState(null);
   const [connecting, setConnecting] = useState(false);
-
-  console.log(username);
 
   const connectToRoom = useCallback(
     async (event) => {
@@ -48,7 +47,18 @@ export default function WorkoutCall(props) {
     []
   );
 
-  const endSession = useCallback(() => {
+  const endSession = useCallback((sessionFeedback) => {
+    if (!sessionFeedback) {
+      sessionFeedback = {
+        partnerRating: 1,
+        partnerCompletion: 1
+      };
+    }
+    axios.post('http://localhost:8081/test', {
+      params: {
+        feedback: JSON.stringify(sessionFeedback)
+      }
+    });
     setRoom((prevRoom) => {
       if (prevRoom) {
         prevRoom.localParticipant.tracks.forEach((trackPub) => {

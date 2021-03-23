@@ -27,7 +27,7 @@ export default function Session(props) {
 
   const [ sessionFeedback, setSessionFeedback ] = useState({
     partnerRating: 1,
-    partnerCompletion: null
+    partnerCompletion: 1 // partner's completion is set to 1, so they don't get penalized for having the other person disconnect
   });
 
   const [ sessionSettings, setSessionSettings ] = useState({
@@ -138,7 +138,7 @@ export default function Session(props) {
     if (countDownTime <= 0) {
       if (workoutEnded) {
         // workout has ended, and grace period has also ended. End session
-        props.endSession()
+        props.endSession(sessionFeedback);
         return (<Redirect to="/dashboard" />)
       } else {
         // workout just ended, give grace period
