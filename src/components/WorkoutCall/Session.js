@@ -19,7 +19,8 @@ import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 export default function Session(props) {
 
   const { roomName, room, endSession } = props;
-  const [participants, setParticipants] = useState([]);
+  const [ participants, setParticipants] = useState([]);
+  const [ countDownTime, setCountDownTime ] = useState(1800000);
 
   const [ sessionSettings, setSessionSettings ] = useState({
     'audio': true,
@@ -88,6 +89,20 @@ export default function Session(props) {
     <AV key={participant.sid} participant={participant} />
   ));
 
+  const formatToMinutes = function(miliseconds) {
+    const minutes = Math.floor(miliseconds / 1000 / 60);
+    const seconds = Math.floor(miliseconds / 1000) - (minutes * 60);
+    // return { minutes, seconds };
+    return `${minutes} m ${seconds} s`;
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCountDownTime(prev => prev - 1000);
+    }, 1000);
+    return () => clearTimeout(timer);
+  });
+
   return (
     <div className="room">
       {/* <h2>Room: {roomName}</h2>
@@ -129,7 +144,7 @@ export default function Session(props) {
               </IconButton>
             </div>
             <div>
-              Time Remaining
+              Time Remaining: {formatToMinutes(countDownTime)}
             </div>
             <div>
               <Button
