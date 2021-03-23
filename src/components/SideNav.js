@@ -64,9 +64,10 @@ export default function SideNav(props) {
         <Box display="flex" flexDirection="row-reverse" width="100%">
           <MenuOutlinedIcon className="clickable" id="menu-icon" onClick={clickHandler}/>
         </Box>
-          <Typography variant="subtitle1" id="upcoming-sessions"><b><u>Upcoming Sessions</u></b></Typography>
-          <br/>
-          {appState.upcoming}
+          <Typography variant="subtitle1" id="upcoming-sessions">
+            <b><u>Upcoming Sessions</u></b></Typography>
+            <br/>
+            {appState.upcoming}
           <Typography variant="subtitle1"><b>See All</b></Typography>
       </Box>
       <Box display="flex" flexDirection="column" width="100%">
