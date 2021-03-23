@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 const JoinButton = withStyles({
   root: {
-    backgroundColor: "grey",
+    backgroundColor: "#444444",
     color: "#FFFFFF",
     '&:hover': {
       backgroundColor: "#23262A",
