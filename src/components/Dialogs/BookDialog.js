@@ -16,7 +16,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const activityMap = {0: "Any Exercise", 1:"Cardio", 2:"Weight Training", 3:"Yoga", 4:"Circuit", 5:"HIIT", 6:"Stretching"};
 
 export default function BookDialog(props) {
-  const [activity, setActivity] = useState("0");
+  const [activity, setActivity] = useState(0);
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
   const [time, setTime] = useState(moment().add(1, 'hour').startOf('hour'));
   const [minDate, setminDate] = useState(moment());
@@ -44,22 +44,23 @@ export default function BookDialog(props) {
     console.log("CURRENT USER ID", props.user.user_id);
     console.log("ACTIVITY:", activity);
     console.log("SESSION START TIME (UTC)", start_time_UTC);
-    props.setMode("LOADING");
+    props.setMode && props.setMode("LOADING");
     props.handleBookClose();
     axios.post(BASE_URL + '/api/sessions', {user_id: props.user.user_id, activity: activity, start_time: start_time_UTC})
     .then( res => {
         if (res.status===201) {
-          props.setNewSessionId(res.data);
-          props.setActivity(activityMap[activity]);
-          props.setMode("MATCHING");
+          props.setNewSessionId && props.setNewSessionId(res.data);
+          props.setActivity && props.setActivity(activityMap[activity]);
+          props.setMode && props.setMode("MATCHING");
+          props.fromBookNew && props.refreshSlots(props.targetDay);
           renderUpcoming();
         } else {
-          props.setMode("ERROR");
+          props.setMode && props.setMode("ERROR");
         }
       }
     )
     .catch( err => {
-      props.setMode("ERROR");
+      props.setMode && props.setMode("ERROR");
     })
   }
 

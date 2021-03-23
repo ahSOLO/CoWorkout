@@ -40,7 +40,7 @@ const MainRouter = (props) => {
                 <Account />
               </Route> 
               <Route path="/leaderboard">
-                <Leaderboard />  
+                <Leaderboard user={props.user} setUser={props.setUser} />  
               </Route>
               <Route path="/rewards">
                 <Rewards />  

@@ -24,6 +24,9 @@ export default function BookNew(props) {
         handleBookClose={handleBookClose}
         bookOpen={bookOpen}
         user={props.user}
+        fromBookNew={true}
+        refreshSlots={props.refreshSlots}
+        targetDay={props.targetDay}
       />
     </>
   )

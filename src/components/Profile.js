@@ -19,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Profile(props) {
 
+  const classes = useStyles();
+  
   const [profileEditOpen, setProfileEditOpen] = useState(false);
   const handleProfileEditClick = () => {
     setProfileEditOpen(true);
@@ -27,7 +29,6 @@ export default function Profile(props) {
     setProfileEditOpen(false);
   }
 
-  const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);

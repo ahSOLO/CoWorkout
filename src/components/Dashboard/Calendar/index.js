@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import ContextContainer from 'contexts/ContextContainer';
 import Day from "./Day";
+import { withStyles } from "@material-ui/core/styles"
 import "./styles.scss";
 import { getWeekDates, getWeekDateTimes, rebuildAppointmentObjs } from "helpers/calendarHelpers";
 import useApplicationData from 'hooks/useApplicationData';
@@ -138,8 +139,9 @@ export default function Calendar(props) {
     setFilterOpen(false);
   }
 
-  // Get scrollbar width and compensate width of calendar header accordingly
+  // On initial render...
   useEffect(() => {
+    // Get scrollbar width and compensate width of calendar header accordingly
     const outerWidth = document.querySelector("div.cal__days").offsetWidth;
     let innerWidth = document.querySelector("div.cal__ticks").offsetWidth; 
     document.querySelectorAll("div.container__slots").forEach( ele => {
@@ -147,32 +149,49 @@ export default function Calendar(props) {
     });
     const scrollBarWidth = outerWidth - innerWidth;
     document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
+
+    // Scroll into view of current time
+    const calDays = document.getElementsByClassName("cal__days")[0];
+    const calDaysHeight = calDays.scrollHeight;
+    const currentHour = moment().format("HH");
+    const yPos = (currentHour) * calDaysHeight / 24;
+    document.getElementsByClassName("cal__days")[0].scroll(0, yPos < calDaysHeight ? yPos - 10: (calDaysHeight - calDays.offsetHeight) );
+
+    // Remove loading screen
+    props.setLoading(false)
   }, [])
   
+  // Custom styled icon buttons
+  const CalendarIconButton = withStyles({
+    root: {
+      borderRadius: "0px",
+    },
+  })(IconButton);
+
   return (
     <div className="cal__container">
       <section className="cal__top">
         <div className="top__text">
-          <Typography variant='h4'>
+          <Typography variant='h4' onClick={() => document.getElementsByClassName("cal__days")[0].scrollTop = 1500}>
             {displayCurrentMonthDay(weekDates, months, targetDay)}
           </Typography>
         </div>
         <div className="top__icons">
-          <IconButton key={0} variant="outlined" onClick={setWeek}>
+          <CalendarIconButton key={0} onClick={setWeek}>
             <ArrowBackIosOutlinedIcon fontSize="large"/>
-          </IconButton>
-          <IconButton key={1} onClick={() => {setWeek('forward')}}>
+          </CalendarIconButton>
+          <CalendarIconButton key={1} onClick={() => {setWeek('forward')}}>
             <ArrowForwardIosOutlinedIcon fontSize="large" />
-          </IconButton>
-          <IconButton key={2}>
+          </CalendarIconButton>
+          <CalendarIconButton key={2}>
             <CalendarTodayOutlinedIcon fontSize="large" onClick={() => {setOpenDatePicker(!openDatePicker)}}/>
-          </IconButton>
-          <IconButton key={3} onClick={handleFilterOpen}>
+          </CalendarIconButton>
+          <CalendarIconButton key={3} onClick={handleFilterOpen}>
             <FilterListOutlinedIcon fontSize="large" />
-          </IconButton>
-          <IconButton key={4} onClick={() => refreshSlots(targetDay)}>
+          </CalendarIconButton>
+          <CalendarIconButton key={4} onClick={() => refreshSlots(targetDay)}>
             <RefreshOutlinedIcon fontSize="large" />
-          </IconButton>
+          </CalendarIconButton>
         </div>
       </section>
       <section className="cal__main">
@@ -192,7 +211,7 @@ export default function Calendar(props) {
           <Day key={6} user={props.user} slots={slots['SAT']} date={weekDateTimes[6]} refreshSlots={refreshSlots} targetDay={targetDay}/>
         </div>
       </section>
-      <BookNew user={props.user} />
+      <BookNew user={props.user} refreshSlots={refreshSlots} targetDay={targetDay}/>
       <FilterDialog 
         filterOpen={filterOpen}
         handleFilterClose={handleFilterClose}

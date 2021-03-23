@@ -20,7 +20,9 @@ export default function useApplicationData() {
 
   const constructSlots = function(startDateTime = new Date(), filterOptions = {}) {
     // Clone the start datetime so we don't change the targetDate object directly (it's mutable) - needed to make sure we don't display past days when user scrolls back to current week.
-    const dateClone = new Date(startDateTime.getTime());
+    // Move dateClone back 15 minutes in case user needs to join a session a few minutes late
+    const dateClone = new Date(startDateTime.getTime() - (15 * 60 * 1000));
+
     const today = new Date();
     // If target date is any day other than today, begin the start date on a Sunday - necessary for views outside of the current week.
     if (dateClone.getDate() !== today.getDate() || dateClone.getMonth() !== today.getMonth()) {
@@ -31,15 +33,16 @@ export default function useApplicationData() {
     const start_date = new Date(`${start_date_exact.getDate()} ${months[start_date_exact.getMonth()]}, ${start_date_exact.getFullYear()}`);
     // console.log(start_date);
     const start_date_days_from_sunday = 7 - start_date.getDay();
-    const end_date = new Date(start_date.getTime() + start_date_days_from_sunday * 24 * 60 * 59 * 1000); // 1 minute before midnight because we don't want to grab next week's sessions
+    const end_date = new Date(start_date.getTime() + start_date_days_from_sunday * 24 * 60 * 59 * 1000); // 1 second before midnight because we don't want to grab next week's sessions
 
-    console.log('START:', start_date, '\n', 'END:', end_date);
+    // Use the exact start date (which is current time - 15 minutes - see above) so we don't grab old appointments from today
+    console.log('START:', start_date_exact, '\n', 'END:', end_date);
     Promise.all([
       axios.get(BASE_URL + '/api/sessions', {
         params: {
           user_id: user_id,
           filter: { type: "transient", activityId: filterOptions.activityId },
-          start_date,
+          start_date_exact,
           end_date,
         }
       }),
@@ -47,7 +50,7 @@ export default function useApplicationData() {
         params: {
           user_id: user_id,
           filter: { type: "persistent" },
-          start_date,
+          start_date_exact,
           end_date,
         }
       })
