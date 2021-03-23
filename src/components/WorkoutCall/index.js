@@ -17,6 +17,9 @@ const AccessToken = require('twilio').jwt.AccessToken;
 const VideoGrant = AccessToken.VideoGrant;
 
 export default function WorkoutCall(props) {
+
+  // console.log('props', props.user.user_id);
+
   const REACT_APP_TWILIO_ACCOUNT_SID = process.env.REACT_APP_TWILIO_ACCOUNT_SID;
   const REACT_APP_TWILIO_API_KEY_SID = process.env.REACT_APP_TWILIO_API_KEY;
   const REACT_APP_TWILIO_API_KEY_SECRET = process.env.REACT_APP_TWILIO_API_SECRET;
@@ -30,7 +33,28 @@ export default function WorkoutCall(props) {
   useEffect(() => {
     axios.get("http://localhost:8081/api/sessions/" + SESSION_UUID)
       .then((result) => {
-        console.log('results:', result);
+        // console.log('results:', result.data[0]);
+        const retrievedData = result.data[0];
+
+        const sessionInfo = {
+          uuid: retrievedData.session_uuid,
+          time: retrievedData.scheduled_at,
+          type: retrievedData.type,
+          participants: retrievedData.participants.map((participantString) => {
+            console.log(participantString);
+            const participantInfo = participantString.split(' ');
+            return {
+              id: participantInfo[0],
+              uuid: participantInfo[1],
+              firstName: participantInfo[2],
+              lastName: participantInfo[3],
+              profileImage: participantInfo[4]
+            }
+          })
+        }
+        console.log(sessionInfo);
+        setRoomName(retrievedData.uuid);
+        // setUsername(retrievedData)
       })
   }, [])
 
