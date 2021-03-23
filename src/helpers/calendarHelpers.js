@@ -157,7 +157,8 @@ const adaptSessionObj = function(sessionObj, userTZ) {
     'start_time': startTimeUserTZ,
     'start_time_ref': startTimeString,
     'activity_type': sessionObj.workout_type,
-    'session_users': sessionObj.session_users.map( userJSONObj => JSON.parse(userJSONObj))
+    'session_users': sessionObj.session_users.map( userJSONObj => JSON.parse(userJSONObj)),
+    'session_uuid' : sessionObj.session_uuid,
   }
 }
 
