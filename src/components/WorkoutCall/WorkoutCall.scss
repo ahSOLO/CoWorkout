@@ -1,0 +1,79 @@
+video {
+  max-height: 80vh;
+  // We can't use min-width here because it would apply to the video in picture as well.
+  display: block;
+  overflow: hidden;
+}
+
+.room {
+  // Add margin for header
+  margin-top: 20px;
+  width: 100%;  
+}
+
+.video-call-container {
+  // Changed this to a flex column to center the preview screen
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  max-height: 80vh;
+}
+
+.video-controls {
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+}
+
+.video-controls>div {
+  display: inline-block;
+}
+.video-controls>div>button {
+  margin: 0.5em;
+}
+
+.video-controls>div:first-child {
+  text-align: left;
+}
+
+.video-controls>div:last-child {
+  text-align: right;
+}
+
+
+.local-participant {
+}
+
+.remote-participants {
+  background-color: red;
+  min-height: 80px;
+}
+
+
+.main-video, .side-video {
+  position: absolute;
+}
+
+.main-video {
+  width: 100%;
+}
+
+// combine with "div" selector to give these greater specificity
+// We start 40px down and top margin is 60px, so add 20px, 
+.side-video {
+  top: calc(20px + 2em);
+  right: 1em;
+  width: 300px;
+}
+
+.video-stream {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover;
+}
+
+.hidden {
+  display: none;
+}
