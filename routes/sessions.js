@@ -163,5 +163,10 @@ module.exports = (db) => {
     });
   });
 
+  router.get('/:sessionUUID', (req, res) => {
+    console.log('session UUID:', req.params.sessionUUID);
+    res.end('hello');
+  });
+
   return router;
 };
