@@ -139,8 +139,9 @@ export default function Calendar(props) {
     setFilterOpen(false);
   }
 
-  // Get scrollbar width and compensate width of calendar header accordingly
+  // On initial render...
   useEffect(() => {
+    // Get scrollbar width and compensate width of calendar header accordingly
     const outerWidth = document.querySelector("div.cal__days").offsetWidth;
     let innerWidth = document.querySelector("div.cal__ticks").offsetWidth; 
     document.querySelectorAll("div.container__slots").forEach( ele => {
@@ -148,6 +149,13 @@ export default function Calendar(props) {
     });
     const scrollBarWidth = outerWidth - innerWidth;
     document.querySelector("div.cal__headers").style.width = `calc(90% - ${scrollBarWidth}px)`;
+
+    // Scroll into view of current time
+    const calDays = document.getElementsByClassName("cal__days")[0];
+    const calDaysHeight = calDays.scrollHeight;
+    const currentHour = moment().format("HH");
+    const yPos = (currentHour) * calDaysHeight / 24;
+    document.getElementsByClassName("cal__days")[0].scroll(0, yPos < calDaysHeight ? yPos : (calDaysHeight - calDays.offsetHeight) );
   }, [])
   
   // Custom styled icon buttons
@@ -161,7 +169,7 @@ export default function Calendar(props) {
     <div className="cal__container">
       <section className="cal__top">
         <div className="top__text">
-          <Typography variant='h4'>
+          <Typography variant='h4' onClick={() => document.getElementsByClassName("cal__days")[0].scrollTop = 1500}>
             {displayCurrentMonthDay(weekDates, months, targetDay)}
           </Typography>
         </div>
