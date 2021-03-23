@@ -211,7 +211,7 @@ export default function Calendar(props) {
           <Day key={6} user={props.user} slots={slots['SAT']} date={weekDateTimes[6]} refreshSlots={refreshSlots} targetDay={targetDay}/>
         </div>
       </section>
-      <BookNew user={props.user} />
+      <BookNew user={props.user} refreshSlots={refreshSlots} targetDay={targetDay}/>
       <FilterDialog 
         filterOpen={filterOpen}
         handleFilterClose={handleFilterClose}

@@ -52,6 +52,7 @@ export default function BookDialog(props) {
           props.setNewSessionId && props.setNewSessionId(res.data);
           props.setActivity && props.setActivity(activityMap[activity]);
           props.setMode && props.setMode("MATCHING");
+          props.fromBookNew && props.refreshSlots(props.targetDay);
           renderUpcoming();
         } else {
           props.setMode && props.setMode("ERROR");
