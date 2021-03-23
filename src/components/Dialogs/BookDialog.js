@@ -46,7 +46,7 @@ export default function BookDialog(props) {
     console.log("SESSION START TIME (UTC)", start_time_UTC);
     props.setMode("LOADING");
     props.handleBookClose();
-    axios.post(BASE_URL + '/api/sessions', {user_id: props.user.user_id, activity: activity, start_time: start_time_UTC})
+    axios.post(BASE_URL + '/api/sessions', { user_id: props.user.user_id, activity: activity, start_time: start_time_UTC })
     .then( res => {
         if (res.status===201) {
           props.setNewSessionId(res.data);
@@ -56,6 +56,16 @@ export default function BookDialog(props) {
         } else {
           props.setMode("ERROR");
         }
+        axios.post(BASE_URL + '/emails', { 
+          user_id: props.user.user_id,
+          activity: activity,
+          start_time: start_time_UTC,
+          email: props.user.email,
+          first_name: props.user.user_first_name,
+          last_name: props.user.last_name,
+          profile_image_url: props.user.user_profile_image_url,
+          timezone: props.user.timezone
+        })
       }
     )
     .catch( err => {
