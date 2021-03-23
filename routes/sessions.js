@@ -85,6 +85,7 @@ module.exports = (db) => {
         LEFT JOIN workout_types
              ON sessions.workout_type_id = workout_types.id
        WHERE sessions.state = 'pending'
+       AND sessions.scheduled_at > ( NOW() AT TIME ZONE 'UTC' - INTERVAL '15 minutes' )
        GROUP BY 1, 3, 4
        ORDER BY sessions.scheduled_at asc
        LIMIT 3;
@@ -128,7 +129,7 @@ module.exports = (db) => {
 
     let { user_id, activity, start_time } = req.body;
 
-    console.log(start_time);
+    console.log(user_id, activity, start_time);
 
     // set workout type id to null if user chose "any" activity. Conversion has to happen here instead of in front end to prevent visual display bug with matUI dropdowns.
     if (activity === 0) activity = null;
@@ -157,7 +158,7 @@ module.exports = (db) => {
         });
       })
       .catch(err => {
-        console.log("Error inserting sessions record");
+        console.log("Error inserting sessions record:", err);
         res.status(500).send("Failure");
     });
   });

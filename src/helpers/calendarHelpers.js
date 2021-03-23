@@ -167,7 +167,7 @@ const rebuildAppointmentObjs = function(emptyAppointments, persistentAppointment
 
   // reconstruct emptyAppointments
   let reconstructedAppointments = autoGenerateEmptyAppointments();
-  console.log(reconstructedAppointments);
+  // console.log(reconstructedAppointments);
 
   // contains appointments that are on the same timeslot
   let sameSlotAppointments = {
