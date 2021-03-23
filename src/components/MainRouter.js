@@ -18,7 +18,6 @@ import "./MainRouter.scss";
 const MainRouter = (props) => {
   return (
     <main>
-      <Router>
         <Header user={props.user} setUser={props.setUser} removeCookie={props.removeCookie} />
         <Box display="flex" justifyContent="stretch" height={"calc(100% - 40px)"} width="100%" position="fixed" marginTop="40px">
           <SideNav user={props.user} />
@@ -60,7 +59,6 @@ const MainRouter = (props) => {
             </Switch>
           </div>
         </Box>
-      </Router>
     </main>
   )
 };

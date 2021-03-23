@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router} from 'react-router-dom';
 import { CookiesProvider } from "react-cookie";
 import './index.scss';
 import './styles/cursor.scss'
@@ -8,9 +9,11 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <CookiesProvider>
-      <App />
-    </CookiesProvider>
+    <Router>
+      <CookiesProvider>
+        <App />
+      </CookiesProvider>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
