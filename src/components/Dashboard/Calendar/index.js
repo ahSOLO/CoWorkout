@@ -155,7 +155,7 @@ export default function Calendar(props) {
     const calDaysHeight = calDays.scrollHeight;
     const currentHour = moment().format("HH");
     const yPos = (currentHour) * calDaysHeight / 24;
-    document.getElementsByClassName("cal__days")[0].scroll(0, yPos < calDaysHeight ? yPos : (calDaysHeight - calDays.offsetHeight) );
+    document.getElementsByClassName("cal__days")[0].scroll(0, yPos < calDaysHeight ? yPos - 10: (calDaysHeight - calDays.offsetHeight) );
   }, [])
   
   // Custom styled icon buttons
