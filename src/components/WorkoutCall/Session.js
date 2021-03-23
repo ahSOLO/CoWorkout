@@ -20,7 +20,6 @@ export default function Session(props) {
 
   const { roomName, room, endSession } = props;
   const [ participants, setParticipants] = useState([]);
-  const [ countDownTime, setCountDownTime ] = useState(1800000);
 
   const [ sessionSettings, setSessionSettings ] = useState({
     'audio': true,
@@ -96,9 +95,23 @@ export default function Session(props) {
     return `${minutes} m ${seconds} s`;
   };
 
+  const getCountDownEndpoint = function() {
+    const currentTime = new Date();
+    return (currentTime.getTime() + 1800000);
+  };
+
+  
+  const [ countDownTime, setCountDownTime ] = useState(1800000);
+  const [ countDownEndPoint, setCountDownEndpoint ] = useState(getCountDownEndpoint());
+  
+  const calcRemainingTime = function() {
+    const currentTime = new Date();
+    return (countDownEndPoint - currentTime.getTime());
+  }
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      setCountDownTime(prev => prev - 1000);
+      setCountDownTime(calcRemainingTime());
     }, 1000);
     return () => clearTimeout(timer);
   });
