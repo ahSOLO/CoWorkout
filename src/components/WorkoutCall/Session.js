@@ -100,7 +100,6 @@ export default function Session(props) {
     const currentTime = new Date();
     return (currentTime.getTime() + distance);
   };
-
   
   const [ countDownTime, setCountDownTime ] = useState(30000);
   const [ countDownEndPoint, setCountDownEndpoint ] = useState(getCountDownEndpoint(30000));
@@ -110,6 +109,12 @@ export default function Session(props) {
     const currentTime = new Date();
     return (countDownEndPoint - currentTime.getTime());
   }
+
+  const fastForwardCountDown = function() {
+    // ends workout if grace period has not started, ends grace period if workout has already ended
+    setCountDownTime(0);
+    setCountDownEndpoint(Date());
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -178,8 +183,9 @@ export default function Session(props) {
                 color="primary"
                 startIcon={<ExitToAppIcon />}
                 size="large"
-                onClick={props.endSession}
-              >Finish
+                onClick={fastForwardCountDown}
+              >
+              { workoutEnded && "Exit" || "End Workout" }
               </Button>
             </div>
           </div>
