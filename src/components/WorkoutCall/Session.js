@@ -137,6 +137,7 @@ export default function Session(props) {
                 color="primary"
                 startIcon={<ExitToAppIcon />}
                 size="large"
+                onClick={props.endSession}
               >Finish
               </Button>
             </div>
