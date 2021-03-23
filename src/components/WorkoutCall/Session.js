@@ -16,6 +16,11 @@ export default function Session(props) {
   const { roomName, room, endSession } = props;
   const [participants, setParticipants] = useState([]);
 
+  const [ sessionSettings, setSessionSettings ] = useState({
+    'audio': true,
+    'video': true
+  });
+
   useEffect(() => {
     const participantConnected = (participant) => {
       setParticipants((prevParticipants) => [...prevParticipants, participant]);
@@ -35,6 +40,29 @@ export default function Session(props) {
       room.off("participantDisconnected", participantDisconnected);
     };
   }, [room]);
+
+  const toggleVideo = function(room) {
+    if (sessionSettings.video) {
+      room.localParticipant.videoTracks.forEach(publication => {
+        publication.track.disable();
+      });
+      setSessionSettings((prev) => {return {...prev, video: false}});
+      console.log(sessionSettings);
+      console.log(room);
+    } else {
+      room.localParticipant.videoTracks.forEach(publication => {
+        publication.track.enable();
+      });
+      setSessionSettings((prev) => {return {...prev, video: true}});
+      console.log(sessionSettings);
+      console.log(room);
+
+    }
+  };
+
+  const toggleAudio = function() {
+
+  };
 
   const remoteParticipants = participants.map((participant) => (
     <AV key={participant.sid} participant={participant} />
@@ -61,6 +89,7 @@ export default function Session(props) {
                 variant="contained"
                 color="primary"
                 size="large"
+                onClick={() => {toggleVideo(room)}}
               ><CameraAltIcon />
               </IconButton>
               <IconButton
