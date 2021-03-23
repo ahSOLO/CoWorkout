@@ -16,6 +16,11 @@ export default function Session(props) {
   const { roomName, room, endSession } = props;
   const [participants, setParticipants] = useState([]);
 
+  const [ sessionSettings, setSessionSettings ] = useState({
+    'audio': true,
+    'video': true
+  });
+
   useEffect(() => {
     const participantConnected = (participant) => {
       setParticipants((prevParticipants) => [...prevParticipants, participant]);
@@ -35,6 +40,44 @@ export default function Session(props) {
       room.off("participantDisconnected", participantDisconnected);
     };
   }, [room]);
+
+  const toggleVideo = function(room) {
+    if (sessionSettings.video) {
+      room.localParticipant.videoTracks.forEach(publication => {
+        publication.track.disable();
+      });
+      setSessionSettings((prev) => {return {...prev, video: false}});
+      console.log(sessionSettings);
+      console.log(room);
+    } else {
+      room.localParticipant.videoTracks.forEach(publication => {
+        publication.track.enable();
+      });
+      setSessionSettings((prev) => {return {...prev, video: true}});
+      console.log(sessionSettings);
+      console.log(room);
+
+    }
+  };
+
+  const toggleAudio = function(room) {
+    if (sessionSettings.audio) {
+      room.localParticipant.audioTracks.forEach(publication => {
+        publication.track.disable();
+      });
+      setSessionSettings((prev) => {return {...prev, audio: false}});
+      console.log(sessionSettings);
+      console.log(room);
+    } else {
+      room.localParticipant.audioTracks.forEach(publication => {
+        publication.track.enable();
+      });
+      setSessionSettings((prev) => {return {...prev, audio: true}});
+      console.log(sessionSettings);
+      console.log(room);
+
+    }
+  };
 
   const remoteParticipants = participants.map((participant) => (
     <AV key={participant.sid} participant={participant} />
@@ -57,27 +100,26 @@ export default function Session(props) {
           )}
           <div class="video-controls">
             <div>
-              <Button
+              <IconButton
                 variant="contained"
                 color="primary"
-                startIcon={<CameraAltIcon />}
                 size="large"
-              >Camera
-              </Button>
-              <Button
+                onClick={() => {toggleVideo(room)}}
+              ><CameraAltIcon />
+              </IconButton>
+              <IconButton
                 variant="contained"
                 color="primary"
-                startIcon={<VolumeMuteIcon />}
                 size="large"
-              >Mute<
-                /Button>
-              <Button
+                onClick={() => {toggleAudio(room)}}
+              ><VolumeMuteIcon />
+              </IconButton>
+              <IconButton
                 variant="contained"
                 color="primary"
-                startIcon={<SettingsIcon />}
                 size="large"
-              >Settings
-              </Button>
+              ><SettingsIcon />
+              </IconButton>
             </div>
             <div>
               Time Remaining
