@@ -43,7 +43,7 @@ export default function useApplicationData() {
         params: {
           user_id: user_id,
           filter: { type: "transient", activityId: filterOptions.activityId },
-          start_date_exact,
+          start_date: start_date_exact,
           end_date,
         }
       }),
@@ -51,7 +51,7 @@ export default function useApplicationData() {
         params: {
           user_id: user_id,
           filter: { type: "persistent" },
-          start_date_exact,
+          start_date: start_date_exact,
           end_date,
         }
       })
