@@ -85,6 +85,7 @@ module.exports = (db) => {
         LEFT JOIN workout_types
              ON sessions.workout_type_id = workout_types.id
        WHERE sessions.state = 'pending'
+       AND sessions.scheduled_at > ( NOW() AT TIME ZONE 'UTC' - INTERVAL '15 minutes' )
        GROUP BY 1, 3, 4
        ORDER BY sessions.scheduled_at asc
        LIMIT 3;

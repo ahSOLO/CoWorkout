@@ -33,7 +33,6 @@ export default function SideNav(props) {
 
   // render the upcoming sessions when user changes.
   useEffect(() => {
-    console.log("render");
     renderUpcoming();
     // Update the upcoming sessions lists automatically every 2 minutes
     const interval = setInterval(() => {

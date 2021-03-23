@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom';
-import {useState} from 'react';
-import { Button, Box, Typography, Container, Grid, Divider } from '@material-ui/core';
+import {useState, useEffect} from 'react';
+import { Button, Box, Typography, Container, Grid, Fade, Slide } from '@material-ui/core';
 import landing_img from "media/landing_img.jpg";
 import landing_img2 from "media/landing_img2.jpg";
 import "./Landing.scss";
@@ -9,28 +9,47 @@ import IntroVideoDialog from "components/Dialogs/IntroVideoDialog";
 export default function Landing(props) {
   const history = useHistory();
   const [videoOpen, setVideoOpen] = useState(false);
+  const [fade, setFade] = useState(0);
+
+  useEffect(() => {
+    const fadeTimer = setInterval(() => {
+      setFade(prev => prev + 1);
+    }, 1000);
+    return () => {
+      clearInterval(fadeTimer);
+    }
+  }, [])
 
   return (
     <Container id="landing-container">
+      <IntroVideoDialog open={videoOpen} handleClose={() => setVideoOpen(false)}/>
       <Grid id="top-grid" container direction="row" justify="space-around" alignItems="center" spacing={5}>
         <Grid item sm={12} md={6}>
           <Box display="flex" flexDirection="column" justifyContent="space-around">
-            <Typography variant="h2">
-              Add motivation and accountability to your workouts
-            </Typography>
+            <Fade in={(fade > 0)} timeout={1000}>
+              <Typography variant="h2">
+                Add motivation and accountability to your workouts
+              </Typography>
+            </Fade>
             <br/>
-            <Typography variant="h6">
-              CoWorkout is an online community that helps you stick to your fitness goals and keep you motivated through peer-to-peer video matchmaking.
-            </Typography>
+            <Fade in={(fade > 1)} timeout={1000}>  
+              <Typography variant="h6">
+                CoWorkout is an online community that helps you stick to your fitness goals and keep you motivated through peer-to-peer video matchmaking.
+              </Typography>
+            </Fade>
             <br/>
-            <Box display="flex" justifyContent="space-between" width="85%">
-              <Button color="primary" size="large" variant="outlined" onClick={() => history.push("/register")}><b>Try CoWorkout</b></Button>
-              <Button color="primary" size="large" variant="outlined" onClick={() => setVideoOpen(true)}><b>See CoWorkout in Action</b></Button>
-            </Box>
+            <Fade in={(fade > 2)} timeout={1000}>
+              <Box display="flex" justifyContent="space-between" width="85%">
+                <Button color="primary" size="large" variant="outlined" onClick={() => history.push("/register")}><b>Try CoWorkout</b></Button>
+                <Button color="primary" size="large" variant="outlined" onClick={() => setVideoOpen(true)}><b>See CoWorkout in Action</b></Button>
+              </Box>
+            </Fade>
           </Box>
         </Grid>
         <Grid container sm={12} md={6} direction="column" justify="center" alignItems="center">
-          <img id="landing-img" src={landing_img2}></img>
+          <Slide in={true} direction={"left"} timeout={800}>
+            <img id="landing-img" src={landing_img2}></img>
+          </Slide>
         </Grid>
       </Grid>
 
@@ -151,9 +170,6 @@ export default function Landing(props) {
         </Grid>
       </Grid>
       <br/>
-
-      <IntroVideoDialog open={videoOpen} handleClose={() => setVideoOpen(false)}/>
-
     </Container>
   )
 }
