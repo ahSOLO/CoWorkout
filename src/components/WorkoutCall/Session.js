@@ -11,6 +11,11 @@ import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
+import VideocamIcon from '@material-ui/icons/Videocam';
+import VideocamOffIcon from '@material-ui/icons/VideocamOff';
+import VolumeUpIcon from '@material-ui/icons/VolumeUp';
+import VolumeOffIcon from '@material-ui/icons/VolumeOff';
+
 export default function Session(props) {
 
   const { roomName, room, endSession } = props;
@@ -105,14 +110,16 @@ export default function Session(props) {
                 color="primary"
                 size="large"
                 onClick={() => {toggleVideo(room)}}
-              ><CameraAltIcon />
+              >
+              { sessionSettings.video && <VideocamIcon /> || <VideocamOffIcon /> }
               </IconButton>
               <IconButton
                 variant="contained"
                 color="primary"
                 size="large"
                 onClick={() => {toggleAudio(room)}}
-              ><VolumeMuteIcon />
+              >
+              { sessionSettings.audio && <VolumeUpIcon /> || <VolumeOffIcon /> }
               </IconButton>
               <IconButton
                 variant="contained"

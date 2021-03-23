@@ -19,7 +19,7 @@ export default function WorkoutCall(props) {
   const REACT_APP_TWILIO_API_KEY_SECRET = process.env.REACT_APP_TWILIO_API_SECRET;
 
   const [username, setUsername] = useState(Math.random().toString());
-  const [roomName, setRoomName] = useState("testRoom");
+  const [roomName, setRoomName] = useState("testRoom2");
   const [room, setRoom] = useState(null);
   const [connecting, setConnecting] = useState(false);
 
