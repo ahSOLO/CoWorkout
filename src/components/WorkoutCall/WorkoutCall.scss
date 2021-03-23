@@ -30,7 +30,7 @@ video {
 .video-controls>div {
   display: inline-block;
 }
-.video-controls>div>button {
+.video-controls>div>button, .video-controls>div>a {
   margin: 0.5em;
 }
 

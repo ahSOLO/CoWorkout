@@ -3,7 +3,10 @@ import Session from './Session';
 import Video from 'twilio-video';
 import Preview from './Preview';
 import './WorkoutCall.scss';
+import { Link } from 'react-router-dom'
+import axios from 'axios';
 
+import { useLocation } from 'react-router-dom';
 
 import { Button, ButtonGroup, IconButton } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -17,13 +20,19 @@ export default function WorkoutCall(props) {
   const REACT_APP_TWILIO_ACCOUNT_SID = process.env.REACT_APP_TWILIO_ACCOUNT_SID;
   const REACT_APP_TWILIO_API_KEY_SID = process.env.REACT_APP_TWILIO_API_KEY;
   const REACT_APP_TWILIO_API_KEY_SECRET = process.env.REACT_APP_TWILIO_API_SECRET;
+  const SESSION_UUID = useLocation().pathname.split('/')[2];
 
   const [username, setUsername] = useState(Math.random().toString());
-  const [roomName, setRoomName] = useState("testRoom");
+  const [roomName, setRoomName] = useState("testRoom2");
   const [room, setRoom] = useState(null);
   const [connecting, setConnecting] = useState(false);
 
-  console.log(username);
+  useEffect(() => {
+    axios.get("http://localhost:8081/api/sessions/" + SESSION_UUID)
+      .then((result) => {
+        console.log('results:', result);
+      })
+  }, [])
 
   const connectToRoom = useCallback(
     async (event) => {
@@ -47,7 +56,18 @@ export default function WorkoutCall(props) {
     []
   );
 
-  const endSession = useCallback(() => {
+  const endSession = useCallback((sessionFeedback) => {
+    if (!sessionFeedback) {
+      sessionFeedback = {
+        partnerRating: 1,
+        partnerCompletion: 1
+      };
+    }
+    axios.post('http://localhost:8081/test', {
+      params: {
+        feedback: JSON.stringify(sessionFeedback)
+      }
+    });
     setRoom((prevRoom) => {
       if (prevRoom) {
         prevRoom.localParticipant.tracks.forEach((trackPub) => {
@@ -126,6 +146,8 @@ export default function WorkoutCall(props) {
           </div>
           <div>
             <Button
+              component={Link}
+              to="/dashboard"
               variant="contained"
               color="primary"
               startIcon={<ExitToAppIcon />}

@@ -71,7 +71,7 @@ const { participant } = props;
       <div className="video-call-container">
         {/* <h3>{participant.identity}</h3> */}
         <video width="300" className="video-stream" ref={videoRef} autoPlay={true} />
-        <audio ref={audioRef} autoPlay={true} muted={true} />
+        <audio ref={audioRef} autoPlay={true} muted={false} />
       </div>
     </>
   );

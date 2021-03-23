@@ -2,37 +2,23 @@
 require('dotenv').config();
 
 // Web server config
-const PORT = 8081;
+const PORT = process.env.LOCAL_PORT || 8081;
 const express = require("express");
 const app = express();
 const cors = require('cors')
+const path = require('path');
+
 app.use(cors())
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
-// Twilio config
-const path = require('path');
-const AccessToken = require('twilio').jwt.AccessToken;
-const VideoGrant = AccessToken.VideoGrant;
-
-const MAX_ALLOWED_SESSION_DURATION = 14400;
-const twilioAccountSid = process.env.TWILIO_ACCOUNT_SID;
-const twilioApiKeySID = process.env.TWILIO_API_KEY_SID;
-const twilioApiKeySecret = process.env.TWILIO_API_KEY_SECRET;
-
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('/token', (req, res) => {
-  const { identity, roomName } = req.query;
-  const token = new AccessToken(twilioAccountSid, twilioApiKeySID, twilioApiKeySecret, {
-    ttl: MAX_ALLOWED_SESSION_DURATION,
-  });
-  token.identity = identity;
-  const videoGrant = new VideoGrant({ room: roomName });
-  token.addGrant(videoGrant);
-  res.send(token.toJwt());
-  console.log(`issued token for ${identity} in room ${roomName}`);
+app.post('/test', (req, res) => {
+  const feedback = req.body.feedback;
+  console.log(req.body);
+  res.end('Connection Ended..')
 });
 
 // PG database client/connection setup
@@ -51,6 +37,7 @@ const user_workout_goals = require("./routes/user_workout_goals");
 const session_users = require("./routes/session_users");
 const ratings = require("./routes/ratings");
 const login = require("./routes/login");
+const emails = require("./routes/emails");
 
 app.use("/api/users", users(db));
 app.use("/api/sessions", sessions(db));
@@ -61,6 +48,7 @@ app.use("/api/user_workout_goals", user_workout_goals(db));
 app.use("/api/session_users", session_users(db));
 app.use("/api/ratings", ratings(db));
 app.use("/login", login(db));
+app.use("/emails", emails(db));
 
 app.get('*', (_, res) => res.sendFile(path.join(__dirname, 'build/index.html')));
 

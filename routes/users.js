@@ -9,6 +9,7 @@ module.exports = (db) => {
 
     const query_string = `
     SELECT users.id as user_id
+         , users.email
          , users.first_name || ' ' || users.last_name as name
          , users.first_name as user_first_name
          , users.last_name as last_name
@@ -40,7 +41,7 @@ module.exports = (db) => {
       LEFT JOIN sessions
            ON su.session_id = sessions.id
      WHERE users.id = ${user_id}
-     GROUP BY 1, 2, 3, 4, 5, 6;
+     GROUP BY 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
     `
 
     db.query(query_string)
