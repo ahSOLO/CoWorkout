@@ -18,14 +18,14 @@ const VideoGrant = AccessToken.VideoGrant;
 
 export default function WorkoutCall(props) {
 
-  // console.log('props', props.user.user_id);
+  const currentUserID = props.user.user_id;
 
   const REACT_APP_TWILIO_ACCOUNT_SID = process.env.REACT_APP_TWILIO_ACCOUNT_SID;
   const REACT_APP_TWILIO_API_KEY_SID = process.env.REACT_APP_TWILIO_API_KEY;
   const REACT_APP_TWILIO_API_KEY_SECRET = process.env.REACT_APP_TWILIO_API_SECRET;
   const SESSION_UUID = useLocation().pathname.split('/')[2];
 
-  const [username, setUsername] = useState(Math.random().toString());
+  const [username, setUsername] = useState('user');
   const [roomName, setRoomName] = useState("testRoom2");
   const [room, setRoom] = useState(null);
   const [connecting, setConnecting] = useState(false);
@@ -60,16 +60,20 @@ export default function WorkoutCall(props) {
           }
         }
         console.log(sessionInfo);
-        if (!sessionInfo.participants[props.user.user_id]) {
-          // user is not part of this session
-        } else {
-          setRoomName(retrievedData.uuid);
-          setUsername(retrievedData.participants[props.user.user_id].uuid);
+        console.log('\n\n current user:', sessionInfo.participants[props.user.user_id]);
+        // console.log('props::', props.user.user_id);
+        if (sessionInfo.participants[props.user.user_id]) {
+          console.log('\n\n current user UUID:', sessionInfo.participants[props.user.user_id].uuid);
+          setRoomName(sessionInfo.uuid);
+          setUsername(sessionInfo.participants[props.user.user_id].uuid);
           console.log('states:', roomName, username);
+        } else {
+          // user is not part of this session
+          console.log('THE CURRENT USER IS NOT PART OF THIS SESSION.');
         }
 
       })
-  }, [])
+  }, [props.user.user_id])
 
   const connectToRoom = useCallback(
     async (event) => {
