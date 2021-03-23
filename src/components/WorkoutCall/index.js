@@ -33,28 +33,41 @@ export default function WorkoutCall(props) {
   useEffect(() => {
     axios.get("http://localhost:8081/api/sessions/" + SESSION_UUID)
       .then((result) => {
-        // console.log('results:', result.data[0]);
         const retrievedData = result.data[0];
-
         const sessionInfo = {
           uuid: retrievedData.session_uuid,
           time: retrievedData.scheduled_at,
           type: retrievedData.type,
-          participants: retrievedData.participants.map((participantString) => {
-            console.log(participantString);
-            const participantInfo = participantString.split(' ');
-            return {
-              id: participantInfo[0],
-              uuid: participantInfo[1],
-              firstName: participantInfo[2],
-              lastName: participantInfo[3],
-              profileImage: participantInfo[4]
-            }
-          })
+          participants: {}
+        }
+
+        for (const participantString of retrievedData.participants) {
+          // participant info starts as a string, convert it into an array
+          const participant = participantString.split(' ');
+          /*
+            sample participantString -> 1 0ea9b155-daba-4fda-8539-3f4976d50c5b Martguerita Streetfield https://i.pravatar.cc/300?img=1
+            participant[0] -> ID
+            participant[1] -> UUID
+            participant[2] -> first name
+            participant[3] -> last name
+            participant[4] -> profile image URL
+          */
+          sessionInfo.participants[participant[0]] = {
+            uuid: participant[1],
+            firstName: participant[2],
+            lastName: participant[3],
+            profileImage: participant[4]
+          }
         }
         console.log(sessionInfo);
-        setRoomName(retrievedData.uuid);
-        // setUsername(retrievedData)
+        if (!sessionInfo.participants[props.user.user_id]) {
+          // user is not part of this session
+        } else {
+          setRoomName(retrievedData.uuid);
+          setUsername(retrievedData.participants[props.user.user_id].uuid);
+          console.log('states:', roomName, username);
+        }
+
       })
   }, [])
 
