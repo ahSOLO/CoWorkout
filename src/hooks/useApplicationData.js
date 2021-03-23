@@ -3,6 +3,7 @@ import { useCookies } from "react-cookie";
 // import axios from 'fakeAxios';
 import axios from 'axios';
 import { allSlots, rebuildAppointmentObjs, formatTimeStamp } from "helpers/calendarHelpers";
+import { fifteenMinutesInMs } from "helpers/constants";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -21,7 +22,7 @@ export default function useApplicationData() {
   const constructSlots = function(startDateTime = new Date(), filterOptions = {}) {
     // Clone the start datetime so we don't change the targetDate object directly (it's mutable) - needed to make sure we don't display past days when user scrolls back to current week.
     // Move dateClone back 15 minutes in case user needs to join a session a few minutes late
-    const dateClone = new Date(startDateTime.getTime() - (15 * 60 * 1000));
+    const dateClone = new Date(startDateTime.getTime() - (fifteenMinutesInMs));
 
     const today = new Date();
     // If target date is any day other than today, begin the start date on a Sunday - necessary for views outside of the current week.
@@ -42,7 +43,7 @@ export default function useApplicationData() {
         params: {
           user_id: user_id,
           filter: { type: "transient", activityId: filterOptions.activityId },
-          start_date_exact,
+          start_date: start_date_exact,
           end_date,
         }
       }),
@@ -50,7 +51,7 @@ export default function useApplicationData() {
         params: {
           user_id: user_id,
           filter: { type: "persistent" },
-          start_date_exact,
+          start_date: start_date_exact,
           end_date,
         }
       })

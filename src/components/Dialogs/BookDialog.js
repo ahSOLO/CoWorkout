@@ -54,19 +54,15 @@ export default function BookDialog(props) {
           props.setMode && props.setMode("MATCHING");
           props.fromBookNew && props.refreshSlots(props.targetDay);
           renderUpcoming();
+          axios.post(BASE_URL + '/emails', { 
+            user_id: props.user.user_id,
+            start_time: constructedLocalTime,
+            email: props.user.email,
+            first_name: props.user.user_first_name
+          })
         } else {
           props.setMode && props.setMode("ERROR");
         }
-        axios.post(BASE_URL + '/emails', { 
-          user_id: props.user.user_id,
-          activity: activity,
-          start_time: start_time_UTC,
-          email: props.user.email,
-          first_name: props.user.user_first_name,
-          last_name: props.user.last_name,
-          profile_image_url: props.user.user_profile_image_url,
-          timezone: props.user.timezone
-        })
       }
     )
     .catch( err => {

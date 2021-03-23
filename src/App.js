@@ -1,14 +1,18 @@
 // import axios from './fakeAxios';
-import {Typography} from '@material-ui/core';
+import {Typography, Box} from '@material-ui/core';
 import axios from 'axios';
 import moment from 'moment';
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import MainRouter from './components/MainRouter';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import useApplicationData from 'hooks/useApplicationData';
 import ContextContainer from 'contexts/ContextContainer';
+import { fifteenMinutesInMs } from "helpers/constants";
+import JoinButton from "components/Buttons/JoinButton";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -52,10 +56,10 @@ function App() {
   const [appState, setAppState] = useState({
     upcoming: <br/>,
   })
-  
   const { user, setUser, cookies, setCookie, removeCookie } = useApplicationData();
+  const history = useHistory();
 
-  // Renders the upcoming sessions displayed in the sidenav
+  // Renders the upcoming sessions displayed in the sidenav - need to put in App.js so we can include it in the global object and have it be called from calendar actions
   const renderUpcoming = function() {
     if (!user) return;
     axios.get(BASE_URL + '/api/sessions', {params: {user_id: user.user_id, filter: {type: "upcoming"}}})
@@ -63,17 +67,22 @@ function App() {
         setAppState({...appState, upcoming:
           res.data.sessions.map( session => {
             const users = session.session_users.map( user => JSON.parse(user));
-            const otherUser = users.find( user_ => user_.user_id !== user.user_id)
+            const otherUser = users.find( user_ => user_.user_id !== user.user_id);
+            const startTimeObj = moment(session.start_time);
+            const msToStart = Math.abs(moment().diff(startTimeObj));
             return (
               <>
-                <Typography variant="body1">{moment(session.start_time).format("dddd, MMM Do [at] h:mm a")} {otherUser && "with " + otherUser.user_first_name}</Typography>
+                <Box display="flex" justifyContent="space-between">
+                  <Typography variant="body1">{startTimeObj.format("dddd, MMM Do [at] h:mma")} {otherUser && "with " + otherUser.user_first_name}</Typography>
+                  {(msToStart < fifteenMinutesInMs) && <JoinButton size="small" onClick={() => history.push(`/workout-call/${session.session_uuid}`)}><b>JOIN</b></JoinButton>}
+                </Box>
                 <br/>
               </>
             )
           })
         })
       })
-  };
+  }
 
   return (
     <ThemeProvider theme={theme}>

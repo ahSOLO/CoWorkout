@@ -43,8 +43,8 @@ export default function CancelDialog(props) {
             Please confirm you would like to cancel this session:
           </Typography>
           <Typography variant="body1">
-            { props.data.start_time ? moment(props.data.start_time).format("dddd, MMM Do [at] h:mm a") 
-            : moment(props.date).set({ "hour": props.data.hour, "minute": props.data.minute }).format("dddd, MMM Do [at] h:mm")} {otherUserString}
+            { props.data.start_time ? moment(props.data.start_time).format("dddd, MMM Do [at] h:mma") 
+            : moment(props.date).set({ "hour": props.data.hour, "minute": props.data.minute }).format("dddd, MMM Do [at] h:mma")} {otherUserString}
           </Typography>
         </>
       }
