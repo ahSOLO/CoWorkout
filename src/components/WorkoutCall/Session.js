@@ -183,7 +183,7 @@ export default function Session(props) {
               </Button>
             </div>
           </div>
-          <div class="video-controls">
+          <div className={"video-controls" + (!workoutEnded && " hidden" || "")}>
             <div>
               <Button
                 variant="contained"
