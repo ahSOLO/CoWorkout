@@ -62,9 +62,7 @@ function App() {
         setAppState({...appState, upcoming:
           res.data.sessions.map( session => {
             const users = session.session_users.map( user => JSON.parse(user));
-            console.log(users);
             const otherUser = users.find( user_ => user_.user_id !== user.user_id)
-            console.log("otherUser", otherUser);
             return (
               <>
                 <Typography variant="body1">{moment(session.start_time).format("dddd, MMM Do [at] h:mm a")} {otherUser && "with " + otherUser.user_first_name}</Typography>

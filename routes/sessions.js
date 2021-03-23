@@ -89,6 +89,8 @@ module.exports = (db) => {
        ORDER BY sessions.scheduled_at asc
        LIMIT 3;
       `
+
+      // Note to Ryan: make sure you add AT TIME ZONE 'UTC' to the query (see the upcoming query), and then on the react front end, import moment and use { moment(session.start_time).format("dddd, MMM Do [at] h:mm a") } to convert the retrieved start time to local time.
     } else if (filter.type === 'all') {
       query_string = `
       SELECT sessions.id AS session_id

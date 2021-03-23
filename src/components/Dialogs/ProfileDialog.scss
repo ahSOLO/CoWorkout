@@ -1,0 +1,31 @@
+#popup__main__box {
+  display: flex;
+  flex-direction: column;
+}
+
+.popup__profile__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.popup__profile__avatar {
+  position: fixed;
+  left: 50%;
+}
+
+.popup__profile__emojis {
+  display: flex;
+  margin-top: 10px;
+}
+
+.popup__emoji {
+  font-size: 30px;
+  padding: 5px;
+  margin-right: 1rem;
+}
+
+.popup__acheivement_badge {
+  padding: 10px;
+  background-color: #FBB03B;
+}
