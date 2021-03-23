@@ -120,9 +120,9 @@ export default function Session(props) {
   };
 
   const extendSession = function() {
+    setCountDownTime(DEFAULT_SESSION_DURATION);
+    setCountDownEndpoint(getCountDownEndpoint(DEFAULT_SESSION_DURATION));
     setWorkoutEnded(false);
-    setCountDownTime(prev => DEFAULT_SESSION_DURATION);
-    setCountDownTime(prev => getCountDownEndpoint(DEFAULT_SESSION_DURATION));
   };
 
   useEffect(() => {
