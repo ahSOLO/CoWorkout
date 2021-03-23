@@ -15,6 +15,7 @@ import VideocamIcon from '@material-ui/icons/Videocam';
 import VideocamOffIcon from '@material-ui/icons/VideocamOff';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
+import { set } from "lodash";
 
 export default function Session(props) {
 
@@ -95,14 +96,15 @@ export default function Session(props) {
     return `${minutes} m ${seconds} s`;
   };
 
-  const getCountDownEndpoint = function() {
+  const getCountDownEndpoint = function(distance) {
     const currentTime = new Date();
-    return (currentTime.getTime() + 1800000);
+    return (currentTime.getTime() + distance);
   };
 
   
-  const [ countDownTime, setCountDownTime ] = useState(1800000);
-  const [ countDownEndPoint, setCountDownEndpoint ] = useState(getCountDownEndpoint());
+  const [ countDownTime, setCountDownTime ] = useState(30000);
+  const [ countDownEndPoint, setCountDownEndpoint ] = useState(getCountDownEndpoint(30000));
+  const [ workoutEnded, setWorkoutEnded ] = useState(false);
   
   const calcRemainingTime = function() {
     const currentTime = new Date();
@@ -113,13 +115,24 @@ export default function Session(props) {
     const timer = setTimeout(() => {
       setCountDownTime(calcRemainingTime());
     }, 1000);
+
+    if (countDownTime <= 0) {
+      if (workoutEnded) {
+        // workout has ended, and grace period has also ended. End session
+        props.endSession()
+      } else {
+        // workout just ended, give grace period
+        setCountDownTime(10000);
+        setCountDownEndpoint(getCountDownEndpoint(10000));
+        setWorkoutEnded(true);
+      }
+    }
+
     return () => clearTimeout(timer);
   });
 
   return (
     <div className="room">
-      {/* <h2>Room: {roomName}</h2>
-      <button onClick={endSession}>Leave Session</button> */}
       <div className="video-call-container">
         <div className="local-participant main-video">
           {room ? (
