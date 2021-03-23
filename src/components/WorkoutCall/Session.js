@@ -57,27 +57,24 @@ export default function Session(props) {
           )}
           <div class="video-controls">
             <div>
-              <Button
+              <IconButton
                 variant="contained"
                 color="primary"
-                startIcon={<CameraAltIcon />}
                 size="large"
-              >Camera
-              </Button>
-              <Button
+              ><CameraAltIcon />
+              </IconButton>
+              <IconButton
                 variant="contained"
                 color="primary"
-                startIcon={<VolumeMuteIcon />}
                 size="large"
-              >Mute<
-                /Button>
-              <Button
+              ><VolumeMuteIcon />
+              </IconButton>
+              <IconButton
                 variant="contained"
                 color="primary"
-                startIcon={<SettingsIcon />}
                 size="large"
-              >Settings
-              </Button>
+              ><SettingsIcon />
+              </IconButton>
             </div>
             <div>
               Time Remaining
