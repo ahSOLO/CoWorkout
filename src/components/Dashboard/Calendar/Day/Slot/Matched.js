@@ -1,15 +1,21 @@
 import { useState, useEffect } from "react";
+import { useHistory } from 'react-router-dom';
 import { Box, Avatar, Typography } from "@material-ui/core";
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 import { hoverHandler } from "helpers/utility";
 import ProfileDialog from "components/Dialogs/ProfileDialog";
 import CancelDialog from "components/Dialogs/CancelDialog";
+import moment from "moment";
+import { fifteenMinutesInMs } from "helpers/constants";
+import JoinButton from "components/Buttons/JoinButton";
 
 export default function Matched(props){
   const [leftHover, setLeftHover] = useState(false);
   const [otherUserData, setOtherUserData] = useState({});
   const [profileOpen, setProfileOpen] = useState(false);
   const [cancelOpen, setCancelOpen] = useState(false);
+  const [withinFifteenMin, setWithinFifteenMin] = useState(false);
+  const history = useHistory();
 
   const handleAvatarClick = () => {
     setProfileOpen(true);
@@ -31,7 +37,25 @@ export default function Matched(props){
     if (props.user){
       setOtherUserData(props.data.session_users.find(userObj => userObj.user_id !== props.user.user_id));
     }
+    if (fifteenMinutesInMs > Math.abs(moment().diff(props.data.start_time))) {
+      setWithinFifteenMin(true);
+    } else {
+      setWithinFifteenMin(false);
+    }
   }, [props.data, props.user])
+
+  if (withinFifteenMin) {
+    return (
+      <Box display="flex" flexDirection="column" width="100%" justifyContent="center" alignItems="center">
+        <JoinButton size="small" onClick={() => history.push(`/workout-call/${props.data.session_uuid}`)}><b>JOIN SESSION</b></JoinButton>
+        {props.hover && <div className="slot__float">
+          <Typography variant="body2">
+            {props.activity}
+          </Typography>
+        </div>}
+      </Box>
+    )
+  }
 
   return(
   <Box display="flex" flexDirection="column" width="100%" alignItems="center">
