@@ -8,10 +8,9 @@ module.exports = (db) => {
 
   router.post("/", (req, res) => {
 
-    const start_time = req.body.start_time;
-    const start = new Date(start_time);
-    const start_formatted_date = start.getMonth() + '-' + start.getDate() + '-' + start.getFullYear();
-    const state_formatted_time = start.toLocaleTimeString('en-US', {timeZone: "America/Los_Angeles"});
+    const start_time = new Date(req.body.start_time);
+    const start_formatted_date = start_time.getMonth() + '-' + start_time.getDate() + '-' + start_time.getFullYear();
+    const start_formatted_time = start_time.toLocaleTimeString('en-US');
     const email = req.body.email;
     const first_name = req.body.first_name;
 
@@ -42,7 +41,7 @@ module.exports = (db) => {
            email,
            first_name,
            start_formatted_date,
-           state_formatted_time
+           start_formatted_time
       };
       const htmlToSend = template(replacements);
       const mailOptions = {
