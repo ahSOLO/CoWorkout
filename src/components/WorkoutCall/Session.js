@@ -25,6 +25,11 @@ export default function Session(props) {
   const { roomName, room, endSession } = props;
   const [ participants, setParticipants] = useState([]);
 
+  const [ sessionFeedback, setSessionFeedback ] = useState({
+    partnerRating: 1,
+    partnerCompletion: null
+  });
+
   const [ sessionSettings, setSessionSettings ] = useState({
     'audio': true,
     'video': true
@@ -203,27 +208,36 @@ export default function Session(props) {
             <div>
               <Button
                 variant="contained"
-                color="primary"
+                color={ sessionFeedback.partnerRating && "secondary" || "primary"}
                 startIcon={<ThumbUpIcon />}
                 size="large"
+                onClick={() => {setSessionFeedback((prev) => { return {...prev, partnerRating: 1} })}}
               >
               </Button>
               <Button
                 variant="contained"
-                color="primary"
+                color={ sessionFeedback.partnerRating && "primary" || "secondary"}
                 startIcon={<ThumbDownIcon />}
                 size="large"
+                onClick={() => (setSessionFeedback((prev) => { return {...prev, partnerRating: 0} }))}
               >
               </Button>
             </div>
             <div>
               <Button
                 variant="contained"
-                color="primary"
+                color={ sessionFeedback.partnerCompletion && "primary" || "secondary" }
                 startIcon={<CheckCircleOutlineIcon />}
                 size="large"
+                onClick={() => {setSessionFeedback((prev) => { 
+                  if (prev.partnerCompletion) {
+                    return {...prev, partnerCompletion: 0}
+                  } else {
+                    return {...prev, partnerCompletion: 1}
+                  }
+                })}}
               >
-                Partner's Goal Completed
+                { sessionFeedback.partnerCompletion && "Partner's Goal Complete" || "Partner's Goal Incomplete" }
               </Button>
             </div>
             <div>
