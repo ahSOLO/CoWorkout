@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Typography } from "@material-ui/core";
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import { Typography, TextField, Button } from "@material-ui/core";
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -64,7 +62,6 @@ export default function Login(props) {
         <br/><br/>
         <TextField 
           required
-          // error={this.state.emailIsInvalid}
           variant="outlined"
           type="email"
           label="email address"
@@ -74,7 +71,6 @@ export default function Login(props) {
         <br/>
         <TextField 
           required
-          // error={this.state.passwordIsInvalid}
           variant="outlined"
           type="password"
           label="password"
