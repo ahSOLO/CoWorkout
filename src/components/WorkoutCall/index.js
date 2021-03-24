@@ -39,7 +39,8 @@ export default function WorkoutCall(props) {
       Video.connect(JWT, {
         name: roomName,
         audio: true,
-        video: { width: 300 }
+        // Remove width here to ensure quality of video is good
+        video: { }
       })
         .then((room) => {
           setConnecting(false);

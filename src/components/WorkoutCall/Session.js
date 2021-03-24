@@ -15,7 +15,7 @@ import VideocamOffIcon from '@material-ui/icons/VideocamOff';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 
-import {Redirect} from 'react-router-dom';
+import {Redirect, useHistory} from 'react-router-dom';
 import { set } from "lodash";
 import { PersonPinCircleSharp } from "@material-ui/icons";
 
@@ -42,6 +42,8 @@ export default function Session(props) {
     'audio': true,
     'video': true
   });
+
+  const history = useHistory();
 
   useEffect(() => {
     const participantConnected = (participant) => {
@@ -162,7 +164,136 @@ export default function Session(props) {
   return (
     <div className="room">
       <div className="video-call-container">
-        <div className="local-participant main-video">
+        <div className="remote-participants main-video">
+          {remoteParticipants}
+          <div className="video-controls-container">
+              <div className="video-controls">
+                <Box minWidth="250px" justifyContent="flex-start">
+                  <IconButton
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    onClick={() => {toggleVideo(room)}}
+                  >
+                  { sessionSettings.video && <VideocamIcon /> || <VideocamOffIcon /> }
+                  </IconButton>
+                  <IconButton
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    onClick={() => {toggleAudio(room)}}
+                  >
+                  { sessionSettings.audio && <VolumeUpIcon /> || <VolumeOffIcon /> }
+                  </IconButton>
+                  <IconButton
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                  ><SettingsIcon />
+                  </IconButton>
+                </Box>
+                <Box display="flex" justifyContent="center" alignItems="center">
+                  <Typography variant="h6">
+                    { workoutEnded && "Session Ending in " || "Workout Time Remaining" }: {formatToMinutes(countDownTime)}
+                  </Typography>
+                </Box>
+                <Box display="flex" minWidth="250px" justifyContent="flex-end" alignItems="center">
+                  { workoutEnded && <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<ExitToAppIcon />}
+                    size="large"
+                    onClick={() => {
+                      fastForwardCountDown()
+                      history.push("/dashboard")
+                    }}
+                  >
+                  Exit
+                  </Button>
+                  ||
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<ExitToAppIcon />}
+                    size="large"
+                    onClick={fastForwardCountDown}
+                  >
+                  Complete Workout
+                  </Button> 
+                  }
+                </Box>
+              </div>
+              <div className={"video-controls" + (!workoutEnded && " hidden" || "")}>
+                <Box minWidth="250px" display="flex" justifyContent="flex-start" alignItems="flex-end">
+                  <Box display="flex" flexDirection="column" justifyContent="flex-end" alignItems="center">
+                    <Typography variant="body1">
+                      Rate your Partner
+                    </Typography>
+                  <Box display="flex" flexDirection="row" justifyContent="flex-end">
+                    <Button
+                      variant="contained"
+                      disableElevation={!sessionFeedback.partnerRating}
+                      color={ sessionFeedback.partnerRating && "secondary" || "primary"}
+                      startIcon={<ThumbDownIcon />}
+                      size="large"
+                      onClick={() => (setSessionFeedback((prev) => { return {...prev, partnerRating: 0} }))}
+                    >
+                    </Button>
+                    <Button
+                      variant="contained"
+                      disableElevation={sessionFeedback.partnerRating}
+                      color={ sessionFeedback.partnerRating && "primary" || "secondary"}
+                      startIcon={<ThumbUpIcon />}
+                      size="large"
+                      onClick={() => {setSessionFeedback((prev) => { return {...prev, partnerRating: 1} })}}
+                    >
+                    </Button>
+                  </Box>
+                  </Box>
+                </Box>
+                <Box minWidth="250px" display="flex" justifyContent="center" alignItems="flex-end">
+                  { sessionFeedback.partnerCompletion && 
+                    <GreenButton
+                      variant="contained"
+                      disableElevation={true}
+                      startIcon={<CheckCircleOutlineIcon />}
+                      size="large"
+                      onClick={() => {setSessionFeedback((prev) => { 
+                          return {...prev, partnerCompletion: 0}
+                      })}}
+                    >
+                      Partner's Goal Completed
+                    </GreenButton>
+                  ||
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="large"
+                      onClick={() => {setSessionFeedback((prev) => { 
+                          return {...prev, partnerCompletion: 1}
+                      })}}
+                    >
+                      Partner's Goal Complete?
+                    </Button>
+                  }
+
+
+                </Box>
+                <Box minWidth="250px" display="flex" justifyContent="flex-end" alignItems="flex-end">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<AddCircleOutlineIcon />}
+                    size="large"
+                    onClick={extendSession}
+                  >
+                    Extend
+                  </Button>
+                </Box>
+              </div>
+            </div>
+        </div>
+        <div className="local-participant side-video">
           {room ? (
             <AV
               key={room.localParticipant.sid}
@@ -172,120 +303,7 @@ export default function Session(props) {
           ) : (
             ""
           )}
-          <div className="video-controls-container">
-            <div className="video-controls">
-              <Box minWidth="250px" justifyContent="flex-start">
-                <IconButton
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  onClick={() => {toggleVideo(room)}}
-                >
-                { sessionSettings.video && <VideocamIcon /> || <VideocamOffIcon /> }
-                </IconButton>
-                <IconButton
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  onClick={() => {toggleAudio(room)}}
-                >
-                { sessionSettings.audio && <VolumeUpIcon /> || <VolumeOffIcon /> }
-                </IconButton>
-                <IconButton
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                ><SettingsIcon />
-                </IconButton>
-              </Box>
-              <Box display="flex" justifyContent="center" alignItems="center">
-                <Typography variant="h6">
-                  { workoutEnded && "Session Ending in " || "Workout Time Remaining" }: {formatToMinutes(countDownTime)}
-                </Typography>
-              </Box>
-              <Box display="flex" minWidth="250px" justifyContent="flex-end" alignItems="center">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<ExitToAppIcon />}
-                  size="large"
-                  onClick={fastForwardCountDown}
-                >
-                { workoutEnded && "Exit" || "Complete Workout" }
-                </Button>
-              </Box>
-            </div>
-            <div className={"video-controls" + (!workoutEnded && " hidden" || "")}>
-              <Box minWidth="250px" display="flex" justifyContent="flex-start" alignItems="flex-end">
-                <Box display="flex" flexDirection="column" justifyContent="flex-end" alignItems="center">
-                  <Typography variant="body1">
-                    Rate your Partner
-                  </Typography>
-                <Box display="flex" flexDirection="row" justifyContent="flex-end">
-                  <Button
-                    variant="contained"
-                    disableElevation={!sessionFeedback.partnerRating}
-                    color={ sessionFeedback.partnerRating && "secondary" || "primary"}
-                    startIcon={<ThumbDownIcon />}
-                    size="large"
-                    onClick={() => (setSessionFeedback((prev) => { return {...prev, partnerRating: 0} }))}
-                  >
-                  </Button>
-                  <Button
-                    variant="contained"
-                    disableElevation={sessionFeedback.partnerRating}
-                    color={ sessionFeedback.partnerRating && "primary" || "secondary"}
-                    startIcon={<ThumbUpIcon />}
-                    size="large"
-                    onClick={() => {setSessionFeedback((prev) => { return {...prev, partnerRating: 1} })}}
-                  >
-                  </Button>
-                </Box>
-                </Box>
-              </Box>
-              <Box minWidth="250px" display="flex" justifyContent="center" alignItems="flex-end">
-                { sessionFeedback.partnerCompletion && 
-                  <GreenButton
-                    variant="contained"
-                    disableElevation={true}
-                    startIcon={<CheckCircleOutlineIcon />}
-                    size="large"
-                    onClick={() => {setSessionFeedback((prev) => { 
-                        return {...prev, partnerCompletion: 0}
-                    })}}
-                  >
-                    Partner's Goal Completed
-                  </GreenButton>
-                ||
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    onClick={() => {setSessionFeedback((prev) => { 
-                        return {...prev, partnerCompletion: 1}
-                    })}}
-                  >
-                    Partner's Goal Complete?
-                  </Button>
-                }
-
-
-              </Box>
-              <Box minWidth="250px" display="flex" justifyContent="flex-end" alignItems="flex-end">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<AddCircleOutlineIcon />}
-                  size="large"
-                  onClick={extendSession}
-                >
-                  Extend
-                </Button>
-              </Box>
-            </div>
-          </div>
         </div>
-        <div className="remote-participants side-video">{remoteParticipants}</div>
       </div>
     </div>
   );
