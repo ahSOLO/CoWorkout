@@ -57,6 +57,53 @@ module.exports = (db) => {
 
   });
 
+  router.get("/leaderboard", (req, res) => {
+
+    const rank_by = req.query.rank_by;
+    const date_range = req.query.date_range;
+
+    const query_string = `
+    SELECT users.id as user_id
+         , users.first_name || ' ' || users.last_name as name
+         , users.country
+         , users.region
+         , users.profile_image_url
+         , COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end) as completed_sessions
+         , COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end)::NUMERIC / COUNT(DISTINCT su.session_id) as completion_rate
+         , AVG(sessions.actual_duration) as avg_session_length
+      FROM users
+      LEFT JOIN user_workout_types uwt
+           ON users.id = uwt.user_id
+      LEFT JOIN workout_types wt
+           ON uwt.workout_type_id = wt.id 
+      LEFT JOIN user_workout_goals uwg
+           ON users.id = uwg.user_id
+      LEFT JOIN workout_goals wg
+           ON uwg.workout_goal_id = wg.id
+      JOIN session_users su
+           ON users.id = su.user_id and su.state != 'pending'
+      LEFT JOIN sessions
+           ON su.session_id = sessions.id
+     WHERE sessions.scheduled_at >= CURRENT_DATE - INTERVAL '${date_range} days'
+     GROUP BY 1, 2, 3, 4, 5
+    HAVING COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end) > 0
+     ORDER BY ${rank_by} DESC, completed_sessions DESC, completion_rate DESC, avg_session_length DESC NULLS LAST
+     LIMIT 10;
+    `
+
+    db.query(query_string)
+      .then(data => {
+        const users = data.rows;
+        res.json({ users });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+
+  });
+
   router.post("/", (req, res) => {
 
     const first_name = req.body.first_name;
