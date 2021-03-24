@@ -34,6 +34,7 @@ module.exports = (db) => {
             , ARRAY_AGG('{"user_id": ' || session_users.user_id || ', "user_first_name": "' || users.first_name || '", "user_profile_image_url": "' || users.profile_image_url || '"}' ORDER BY session_users.user_id) AS session_users            
             , sessions.scheduled_at AS start_time
             , workout_types.type AS workout_type
+            , sessions.session_uuid as session_uuid
         FROM sessions 
         JOIN session_users
              ON sessions.id = session_users.session_id AND session_users.state = 'pending'
@@ -55,6 +56,7 @@ module.exports = (db) => {
             , ARRAY_AGG('{"user_id": ' || session_users.user_id || ', "user_first_name": "' || users.first_name || '", "user_profile_image_url": "' || users.profile_image_url || '"}' ORDER BY session_users.user_id) AS session_users
             , sessions.scheduled_at AS start_time
             , workout_types.type AS workout_type
+            , sessions.session_uuid as session_uuid
         FROM sessions
         JOIN (SELECT session_id FROM session_users WHERE user_id = ${user_id} AND state = 'pending') us
              ON sessions.id = us.session_id
@@ -75,6 +77,7 @@ module.exports = (db) => {
            , ARRAY_AGG('{"user_id": ' || session_users.user_id || ', "user_first_name": "' || users.first_name || '"}' ORDER BY session_users.user_id) AS session_users
            , sessions.scheduled_at AT TIME ZONE 'UTC' AS start_time
            , workout_types.type AS workout_type
+           , sessions.session_uuid as session_uuid
         FROM sessions
         JOIN (SELECT session_id FROM session_users WHERE user_id = ${user_id} AND state = 'pending') us
              ON sessions.id = us.session_id
@@ -91,7 +94,7 @@ module.exports = (db) => {
        LIMIT 3;
       `
 
-      // Note to Ryan: make sure you add AT TIME ZONE 'UTC' to the query (see the upcoming query), and then on the react front end, import moment and use { moment(session.start_time).format("dddd, MMM Do [at] h:mm a") } to convert the retrieved start time to local time.
+      // Note to implementor: make sure you add AT TIME ZONE 'UTC' to the query (see the upcoming query), and then on the react front end, import moment and use { moment(session.start_time).format("dddd, MMM Do [at] h:mm a") } to convert the retrieved start time to local time.
     } else if (filter.type === 'all') {
       query_string = `
       SELECT sessions.id AS session_id
@@ -99,6 +102,7 @@ module.exports = (db) => {
            , ARRAY_AGG(session_users.user_id ORDER BY session_users.user_id) AS session_users
            , sessions.scheduled_at AS start_time
            , workout_types.type AS workout_type
+           , sessions.session_uuid as session_uuid
         FROM sessions
         JOIN (SELECT session_id FROM session_users WHERE user_id = 1) us
              ON sessions.id = us.session_id
