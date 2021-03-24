@@ -198,5 +198,11 @@ module.exports = (db) => {
       })
   });
 
+  router.post('/rate', (req, res) => {
+    const feedbackString = req.body.params.feedback;
+    const feedback = JSON.parse(feedbackString);
+    console.log(feedback)
+  });
+
   return router;
 };

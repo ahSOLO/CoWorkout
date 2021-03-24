@@ -19,8 +19,6 @@ const VideoGrant = AccessToken.VideoGrant;
 
 export default function WorkoutCall(props) {
 
-  const currentUserID = props.user.user_id;
-
   const REACT_APP_TWILIO_ACCOUNT_SID = process.env.REACT_APP_TWILIO_ACCOUNT_SID;
   const REACT_APP_TWILIO_API_KEY_SID = process.env.REACT_APP_TWILIO_API_KEY;
   const REACT_APP_TWILIO_API_KEY_SECRET = process.env.REACT_APP_TWILIO_API_SECRET;
@@ -82,7 +80,8 @@ export default function WorkoutCall(props) {
               uuid: participant[1],
               firstName: participant[2],
               lastName: participant[3],
-              profileImage: participant[4]
+              profileImage: participant[4],
+              id: participant[0]
             }
           }
           
@@ -103,18 +102,19 @@ export default function WorkoutCall(props) {
     // } else {
     //   console.log('nothing');
     // }
-  }, [props.user.user_id])
-
+  }, [props.user.user_id]);
   
 
   const endSession = useCallback((sessionFeedback) => {
     if (!sessionFeedback) {
       sessionFeedback = {
         partnerRating: 1,
-        partnerCompletion: 1
+        partnerCompletion: 0,
+        raterID: props.user.user_id,
+        ratedID: Number(partnerInfo.id)
       };
     }
-    axios.post('http://localhost:8081/test', {
+    axios.post('http://localhost:8081/api/sessions/rate', {
       params: {
         feedback: JSON.stringify(sessionFeedback)
       }
@@ -169,7 +169,7 @@ export default function WorkoutCall(props) {
 
   if (room) {
     return (
-      <Session roomName={roomName} room={room} endSession={endSession} />
+      <Session roomName={roomName} room={room} endSession={endSession} sessionInfo={currentSessionInfo} currentUserID={(props.user.user_id)} partnerID={Number(partnerInfo.id)} />
     );
   } else {
     const fakeLocalParticipant = {
