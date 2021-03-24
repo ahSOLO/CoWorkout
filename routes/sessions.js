@@ -172,6 +172,7 @@ module.exports = (db) => {
 
     const query = `
     SELECT
+      sessions.id,
       sessions.session_uuid,
       sessions.scheduled_at,
       workout_types.type,
@@ -203,6 +204,11 @@ module.exports = (db) => {
     const feedback = JSON.parse(feedbackString);
     console.log(feedback)
   });
+
+  const query1 = `
+    UPDATE 
+  `;
+  const query2 = ``;
 
   return router;
 };

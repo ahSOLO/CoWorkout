@@ -34,7 +34,8 @@ export default function Session(props) {
     partnerRating: 1,
     partnerCompletion: 0,
     raterID: props.currentUserID,
-    ratedID: props.partnerID
+    ratedID: props.partnerID,
+    sessionID: props.sessionInfo.id
   });
 
   const [ sessionSettings, setSessionSettings ] = useState({

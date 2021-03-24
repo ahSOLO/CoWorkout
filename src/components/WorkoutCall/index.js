@@ -60,6 +60,7 @@ export default function WorkoutCall(props) {
         .then((result) => {
           const retrievedData = result.data[0];
           const sessionInfo = {
+            id: retrievedData.id,
             uuid: retrievedData.session_uuid,
             time: retrievedData.scheduled_at,
             type: retrievedData.type,
@@ -105,13 +106,14 @@ export default function WorkoutCall(props) {
   }, [props.user.user_id]);
   
 
-  const endSession = useCallback((sessionFeedback) => {
+  const endSession = useCallback((sessionFeedback, raterID, ratedID, sessionID) => {
     if (!sessionFeedback) {
       sessionFeedback = {
         partnerRating: 1,
         partnerCompletion: 0,
-        raterID: props.user.user_id,
-        ratedID: Number(partnerInfo.id)
+        raterID: raterID || props.user.user_id,
+        ratedID: ratedID || Number(partnerInfo.id),
+        sessionID: sessionID || currentSessionInfo.id
       };
     }
     axios.post('http://localhost:8081/api/sessions/rate', {
@@ -147,7 +149,7 @@ export default function WorkoutCall(props) {
           return;
         }
         if (room) {
-          endSession();
+          endSession(null, Number(props.user.user_id), Number(partnerInfo.id), currentSessionInfo.id);
         }
       };
       window.addEventListener("pagehide", tidyUp);
