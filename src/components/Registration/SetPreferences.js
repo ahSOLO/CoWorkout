@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from "react-router-dom";
-import { Typography } from "@material-ui/core";
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
+import { Typography, FormGroup, FormLabel, FormControl, FormControlLabel, Checkbox, Button, Link } from "@material-ui/core";
 
 export class SetPreferences extends Component {
 

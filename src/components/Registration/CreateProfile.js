@@ -1,77 +1,40 @@
 import React, { Component } from 'react';
-import { Typography } from "@material-ui/core";
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Button from '@material-ui/core/Button';
+import { Typography, TextField, MenuItem, Radio, RadioGroup, FormControlLabel, Button } from "@material-ui/core";
 import { countryTimezones } from "helpers/timezones";
 
 const allCountries = require('country-region-data')
 const selectCountries = allCountries.filter(country => country.countryName === 'United States' || country.countryName === 'Canada')
 
-
 export class CreateProfile extends Component {
 
   state = {
-    firstNameIsInvalid: false,
-    lastNameIsInvalid: false,
-    countryIsInvalid: false,
-    regionIsInvalid: false,
-    timezoneisInvalid: false
+    first_name: false,
+    last_name: false,
+    country: false,
+    region: false,
+    timezone: false
+  }
+
+  checkValidity = form => {
+    if (this.props.values[form] === "") {
+      this.setState({
+        [form]: true
+      })
+    } else {
+      this.setState({
+        [form]: false
+      })
+    }
   }
 
   continue = e => {
     e.preventDefault();
-    if (this.props.values.first_name === "") {
-      this.setState({
-        firstNameIsInvalid: true
-      });
-    } else {
-      this.setState({
-        firstNameIsInvalid: false
-      });
-    }
-    if (this.props.values.last_name === "") {
-      this.setState({
-        lastNameIsInvalid: true
-      });
-    } else {
-      this.setState({
-        lastNameIsInvalid: false
-      });
-    }
-    if (this.props.values.country === "") {
-      this.setState({
-        countryIsInvalid: true
-      });
-    } else {
-      this.setState({
-        countryIsInvalid: false
-      });
-    }
-    if (this.props.values.region === "") {
-      this.setState({
-        regionIsInvalid: true
-      });
-    } else {
-      this.setState({
-        regionIsInvalid: false
-      });
-    }
-    if (this.props.values.timezone === "") {
-      this.setState({
-        timezoneIsInvalid: true
-      });
-    } else {
-      this.setState({
-        timezoneIsInvalid: false
-      });
-    }
-    if (this.props.values.first_name !== "" && this.props.values.last_name !== "" && this.props.values.country !== "" && this.props.values.region !== "" && this.props.values.timezone !== "") {
-      this.props.nextStep();
-    }
+    this.checkValidity("first_name");
+    this.checkValidity("last_name");
+    this.checkValidity("country");
+    this.checkValidity("region");
+    this.checkValidity("timezone");
+    if (Object.keys(this.state).every(form => this.props.values[form] !== "")) this.props.nextStep();
   }
 
   render() {
@@ -99,7 +62,7 @@ export class CreateProfile extends Component {
           <section className="profile--name">
             <TextField 
               required
-              error={this.state.firstNameIsInvalid}
+              error={this.state.first_name}
               variant="outlined"
               type="text"
               label="first name"
@@ -110,7 +73,7 @@ export class CreateProfile extends Component {
             <TextField 
               required
               variant="outlined"
-              error={this.state.lastNameIsInvalid}
+              error={this.state.last_name}
               type="text"
               label="last name"
               onChange={handleChange('last_name')}
@@ -125,7 +88,7 @@ export class CreateProfile extends Component {
           <section className="profile--location">
             <TextField 
               required
-              error={this.state.countryIsInvalid}
+              error={this.state.country}
               variant="outlined"
               select
               label="country"
@@ -141,7 +104,7 @@ export class CreateProfile extends Component {
             <br/>
             <TextField 
               required
-              error={this.state.regionIsInvalid}
+              error={this.state.region}
               variant="outlined"
               select
               label="region"
@@ -162,7 +125,7 @@ export class CreateProfile extends Component {
             <br/>
             <TextField 
               required
-              error={this.state.timezoneIsInvalid}
+              error={this.state.timezone}
               variant="outlined"
               select
               label="timezone"

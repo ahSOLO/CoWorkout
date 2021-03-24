@@ -20,12 +20,14 @@ export class UserForm extends Component {
     timezone: '',
     birth_date: '',
     gender: '',
+    // Workout Types
     cardio: false,
     weight_training: false,
     yoga: false,
     circuit: false,
     hiit: false,
     stretching: false,
+    // Workout Goals
     get_stronger: false,
     build_muscle: false,
     lose_weight: false,
@@ -60,56 +62,56 @@ export class UserForm extends Component {
       timezone: this.state.timezone,
       birth_date: this.state.birth_date || null,
       gender: this.state.gender || null,
-      interests: [
+      workout_types: [
         { 
-          interest_id: 1,
+          workout_type_id: 1,
           name: 'cardio',
           value: this.state.cardio 
         },
         { 
-          interest_id: 2,
+          workout_type_id: 2,
           name: 'weight_training',
           value: this.state.weight_training 
         },
         { 
-          interest_id: 3,
+          workout_type_id: 3,
           name: 'yoga',
           value: this.state.yoga 
         },
         { 
-          interest_id: 4,
+          workout_type_id: 4,
           name: 'circuit',
           value: this.state.circuit 
         },
         { 
-          interest_id: 5,
+          workout_type_id: 5,
           name: 'hiit',
           value: this.state.hiit 
         },
         { 
-          interest_id: 6,
+          workout_type_id: 6,
           name: 'stretching',
           value: this.state.stretching 
         },
       ],
-      goals: [
-        { goal_id: 1,
+      workout_goals: [
+        { workout_goal_id: 1,
           name: 'get_stronger',
           value: this.state.get_stronger 
         },
-        { goal_id: 2,
+        { workout_goal_id: 2,
           name: 'build_muscle',
           value: this.state.build_muscle 
         },
-        { goal_id: 3,
+        { workout_goal_id: 3,
           name: 'lose_weight',
           value: this.state.lose_weight 
         },
-        { goal_id: 4,
+        { workout_goal_id: 4,
           name: 'be_active',
           value: this.state.be_active 
         },
-        { goal_id: 5,
+        { workout_goal_id: 5,
           name: 'get_toned',
           value: this.state.get_toned 
         }
