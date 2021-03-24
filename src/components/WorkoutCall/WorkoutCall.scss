@@ -69,6 +69,7 @@ video {
 
 .main-video {
   width: 100%;
+  min-height: 85vh;
 }
 
 // We start 40px down and top margin is 60px, so add 20px, 
@@ -79,6 +80,7 @@ video {
   border-radius: 5px;
   width: 300px;
   height: 169px;
+  z-index: 2;
 }
 
 .video-stream {
