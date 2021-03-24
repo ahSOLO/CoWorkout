@@ -118,6 +118,26 @@ export default function Profile(props) {
               <br/><br/>
               <Box className="profile__section">
                 <Typography variant="h6" className="profile__heading">
+                  <b>Notifications</b>
+                  <IconButton>
+                    <EditIcon 
+                      style={{ fontSize: 18 }}
+                    />
+                  </IconButton>
+                </Typography>
+                <br/>
+                <Typography variant="subtitle1">
+                  Email: when session booked, when matched
+                </Typography>
+                <br/>
+                <Typography variant="subtitle1">
+                  SMS: none
+                </Typography>
+                <br/>
+              </Box>
+              <br/><br/>
+              <Box className="profile__section">
+                <Typography variant="h6" className="profile__heading">
                   <b>Achievements</b>
                 </Typography>
                 <br/>

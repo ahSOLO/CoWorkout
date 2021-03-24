@@ -53,7 +53,7 @@
 
 .profile__center_content {
   position: absolute;
-  top: 8vw;
+  top: Min(100px, 8vw);
 }
 
 #profile__name {
