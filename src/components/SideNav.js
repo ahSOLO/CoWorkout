@@ -75,6 +75,8 @@ export default function SideNav(props) {
         <br/>
         <Typography className="clickable" onClick={() => history.push('/dashboard')}><b>Our Guidelines</b></Typography>
         <br/>
+        <Typography className="clickable" onClick={() => history.push('/leaderboard')}><b>Leaderboard</b></Typography>
+        <br/>
         <Typography className="clickable" onClick={() => history.push('/profile')}><b>My Profile &amp; Preferences</b></Typography>
         <br/>
         <Typography className="clickable" onClick={handleLogOut}><b>Sign Out</b></Typography>
