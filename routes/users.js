@@ -126,6 +126,7 @@ module.exports = (db) => {
   });
 
   router.put("/", (req, res) => {
+
     const user_id = req.body.user_id;
     const country = req.body.country;
     const region = req.body.region;
@@ -198,6 +199,7 @@ module.exports = (db) => {
         res.status(201).send("Success");
       })
       .catch(error => console.log(error));
+      
   });
 
   return router;
