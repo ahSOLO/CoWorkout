@@ -21,10 +21,14 @@
 
 .header__avatar {
   margin: 10px;
+  border: 1px solid #FBB03B;
+  cursor: pointer;
 }
 
 .header__name {
   margin: 10px;
+  color: #FBB03B;
+  cursor: pointer;
 }
 
 .header__button {
