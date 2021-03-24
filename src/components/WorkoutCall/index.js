@@ -19,6 +19,7 @@ const VideoGrant = AccessToken.VideoGrant;
 export default function WorkoutCall(props) {
 
   const currentUserID = props.user.user_id;
+  console.log('\n\n\n PROPS', props.user);
 
   const REACT_APP_TWILIO_ACCOUNT_SID = process.env.REACT_APP_TWILIO_ACCOUNT_SID;
   const REACT_APP_TWILIO_API_KEY_SID = process.env.REACT_APP_TWILIO_API_KEY;
@@ -29,6 +30,28 @@ export default function WorkoutCall(props) {
   const [roomName, setRoomName] = useState("testRoom2");
   const [room, setRoom] = useState(null);
   const [connecting, setConnecting] = useState(false);
+
+  const connectToRoom = useCallback(
+    async (event, username, roomName) => {
+      event.preventDefault();
+      setConnecting(true);
+      const JWT = createJwt(username, roomName);
+      Video.connect(JWT, {
+        name: roomName,
+        audio: true,
+        video: { width: 300 }
+      })
+        .then((room) => {
+          setConnecting(false);
+          setRoom(room);
+        })
+        .catch((err) => {
+          console.error(err);
+          setConnecting(false);
+        });
+    },
+    []
+  );
 
   useEffect(() => {
     axios.get("http://localhost:8081/api/sessions/" + SESSION_UUID)
@@ -66,6 +89,8 @@ export default function WorkoutCall(props) {
           console.log('\n\n current user UUID:', sessionInfo.participants[props.user.user_id].uuid);
           setRoomName(sessionInfo.uuid);
           setUsername(sessionInfo.participants[props.user.user_id].uuid);
+          console.log('debug roomname:', sessionInfo.uuid)
+          console.log('username:', sessionInfo.participants[props.user.user_id].uuid);
           console.log('states:', roomName, username);
         } else {
           // user is not part of this session
@@ -73,29 +98,9 @@ export default function WorkoutCall(props) {
         }
 
       })
-  }, [props.user.user_id])
+  }, [props.user.user_id, connectToRoom])
 
-  const connectToRoom = useCallback(
-    async (event) => {
-      event.preventDefault();
-      setConnecting(true);
-      const JWT = createJwt(username, roomName);
-      Video.connect(JWT, {
-        name: roomName,
-        audio: true,
-        video: { width: 300 }
-      })
-        .then((room) => {
-          setConnecting(false);
-          setRoom(room);
-        })
-        .catch((err) => {
-          console.error(err);
-          setConnecting(false);
-        });
-    },
-    []
-  );
+  
 
   const endSession = useCallback((sessionFeedback) => {
     if (!sessionFeedback) {
@@ -161,7 +166,7 @@ export default function WorkoutCall(props) {
       <div className="video-call-container">
         <h1>Joining Session</h1>
         <p>
-          Getting ready to join a workout session with...
+          Getting ready to join a workout session with... 
         </p>
         <Preview participant={fakeLocalParticipant}/>
 
@@ -180,7 +185,7 @@ export default function WorkoutCall(props) {
               color="primary"
               startIcon={<ExitToAppIcon />}
               size="large"
-              onClick={(event) => {connectToRoom(event)}}
+              onClick={(event) => {connectToRoom(event, username, roomName)}}
             >
               Ready
             </Button>
