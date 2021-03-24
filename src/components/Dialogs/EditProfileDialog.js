@@ -1,11 +1,7 @@
-import {Button, InputLabel, Input, MenuItem, FormControl, Select, Box } from '@material-ui/core';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import {Button, InputLabel, Input, MenuItem, FormGroup, FormControl, FormControlLabel, FormLabel, Checkbox, Select, Box } from '@material-ui/core';
 import { useState, useEffect } from 'react';
-import DialogueTemplate from "./DialogTemplate";
 import axios from "axios";
+import DialogueTemplate from "./DialogTemplate";
 import { countryTimezones } from "helpers/timezones";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
