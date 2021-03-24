@@ -1,38 +1,30 @@
 import React, { Component } from 'react';
-import { Typography } from "@material-ui/core";
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import { Typography, TextField, Button } from "@material-ui/core";
 
 export class SignUp extends Component {
 
   state = {
-    emailIsInvalid: false,
-    passwordIsInvalid: false
+    email: false,
+    password: false
+  }
+
+  checkValidity = form => {
+    if (this.props.values[form] === "") {
+      this.setState({
+        [form]: true
+      })
+    } else {
+      this.setState({
+        [form]: false
+      })
+    }
   }
 
   continue = e => {
     e.preventDefault();
-    if (this.props.values.email === "") {
-      this.setState({
-        emailIsInvalid: true
-      });
-    } else {
-      this.setState({
-        emailIsInvalid: false
-      });
-    }
-    if (this.props.values.password === "") {
-      this.setState({
-        passwordIsInvalid: true
-      });
-    } else {
-      this.setState({
-        passwordIsInvalid: false
-      });
-    }
-    if (this.props.values.email !== "" && this.props.values.password !== "") {
-      this.props.nextStep();
-    }
+    this.checkValidity("email");
+    this.checkValidity("password");
+    if (Object.keys(this.state).every(form => this.props.values[form] !== "")) this.props.nextStep();
   }
 
   render() {
@@ -59,7 +51,7 @@ export class SignUp extends Component {
           <br/><br/>
           <TextField 
             required
-            error={this.state.emailIsInvalid}
+            error={this.state.email}
             variant="outlined"
             type="email"
             label="email address"
@@ -69,7 +61,7 @@ export class SignUp extends Component {
           <br/>
           <TextField 
             required
-            error={this.state.passwordIsInvalid}
+            error={this.state.password}
             variant="outlined"
             type="password"
             label="password"
