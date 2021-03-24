@@ -24,7 +24,7 @@ export default function Header(props) {
     if (props.user.user_id) {
       return (
         <>
-          <Button className="header__button" color="primary" variant="outlined">
+          <Button className="header__button" color="primary" variant="outlined" onClick={() => history.push("/workout-call")}>
             <b>Demo Video Call</b>
           </Button>
           <Button className="header__button" color="primary" variant="outlined" onClick={handleLogOut}>

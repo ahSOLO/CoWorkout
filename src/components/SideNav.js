@@ -71,18 +71,13 @@ export default function SideNav(props) {
           <Typography variant="subtitle1"><b>See All</b></Typography>
       </Box>
       <Box display="flex" flexDirection="column" width="100%">
-        <Typography><b>Debug Links (Will replace for production)</b></Typography>
-        <Link to="/">Home</Link>
-        <Link to="/dashboard">Dashboard</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/register">Register</Link>
-        <Link to="/settings">Settings</Link>
-        <Link to="/account">Account</Link>
-        <Link to="/leaderboard">Leaderboard</Link>
-        <Link to="/rewards">Rewards</Link>
-        <Link to="/friends">Friends</Link>
-        <Link to="/profile">Profile</Link>
-        <Link to="/workout-call">Workout Session</Link>
+        <Typography className="clickable" onClick={() => history.push('/dashboard')}><b>Home</b></Typography>
+        <br/>
+        <Typography className="clickable" onClick={() => history.push('/dashboard')}><b>Our Guidelines</b></Typography>
+        <br/>
+        <Typography className="clickable" onClick={() => history.push('/dashboard')}><b>My Profile &amp; Preferences</b></Typography>
+        <br/>
+        <Typography className="clickable" onClick={() => history.push('/logout')}><b>Sign Out</b></Typography>
       </Box>
       <Box display="flex" flexDirection="column" width="100%">
         <Typography variant="body2">About</Typography>
