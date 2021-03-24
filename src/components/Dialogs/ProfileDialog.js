@@ -23,22 +23,39 @@ export default function ProfileDialog(props) {
   const classes = useStyles();
   const [user, setUser] = useState({});
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const handlePopoverOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+  const [popoverState, setPopoverState] = useState({
+    anchorEl: null,
+    openedPopoverId: null
+  })
+  const handlePopoverOpen = (event, popoverId) => {
+    setPopoverState({
+      anchorEl: event.currentTarget,
+      openedPopoverId: popoverId
+    });
   };
   const handlePopoverClose = () => {
-    setAnchorEl(null);
+    setPopoverState({
+      anchorEl: null,
+      openedPopoverId: null
+    });
   };
-  const open = Boolean(anchorEl);
-  const [anchorEl2, setAnchorEl2] = useState(null);
-  const handlePopoverOpen2 = (event) => {
-    setAnchorEl2(event.currentTarget);
-  };
-  const handlePopoverClose2 = () => {
-    setAnchorEl2(null);
-  };
-  const open2 = Boolean(anchorEl2);
+
+  const { anchorEl, openedPopoverId } = popoverState;
+  
+  const achievement_badges = [
+    {
+      id: 0,
+      badge_name: 'one_completed_badge',
+      emoji: '127895',
+      hover_text: 'Completed first workout!'
+    },
+    {
+      id: 1,
+      badge_name: 'ten_completed_badge',
+      emoji: '127941',
+      hover_text: 'Completed 10 workouts!'
+    }
+  ]
 
   useEffect(() => {
     if (props.user) {
@@ -88,66 +105,35 @@ export default function ProfileDialog(props) {
               <b>Achievements:</b>
             </Typography>
             <Box className="popup__profile__emojis">
-              {user.one_completed_badge && (
-                <div>
-                  <Paper 
-                    elevation={4}
-                    aria-owns={open ? "mouse-over-popover" : undefined}
-                    aria-haspopup="true"
-                    onMouseEnter={handlePopoverOpen} 
-                    onMouseLeave={handlePopoverClose} 
-                    className="popup__emoji"
-                  >
-                    &#127895;
-                  </Paper>
-                  <Popover
-                    className={classes.popover}
-                    open={open}
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'left',
-                    }}
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'left',
-                    }}
-                    onClose={handlePopoverClose}
-                  >
-                    <Typography variant="subtitle1" className="popup__acheivement_badge">Completed first workout!</Typography>
-                  </Popover>
-                </div>
-              )}
-              {user.ten_completed_badge && (
-                <div>
-                  <Paper 
-                    elevation={4}
-                    aria-owns={open ? "mouse-over-popover" : undefined}
-                    aria-haspopup="true"
-                    onMouseEnter={handlePopoverOpen} 
-                    onMouseLeave={handlePopoverClose} 
-                    className="popup__emoji"
-                  >
-                    &#127941;
-                  </Paper>
-                  <Popover
-                    className={classes.popover}
-                    open={open}
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'left',
-                    }}
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'left',
-                    }}
-                    onClose={handlePopoverClose}
-                  >
-                    <Typography variant="subtitle1" className="popup__acheivement_badge">Completed 10 workouts!</Typography>
-                  </Popover>
-                </div>
-              )}
+              {achievement_badges.map(badge => (
+                user[badge.badge_name] && (
+                  <div>
+                    <Paper 
+                      elevation={4}
+                      onMouseEnter={(e) => handlePopoverOpen(e, badge.id)} 
+                      onMouseLeave={handlePopoverClose} 
+                      className="popup__emoji"
+                    >
+                      {String.fromCodePoint(parseInt (badge.emoji, 10))}
+                    </Paper>
+                    <Popover
+                      className={classes.popover}
+                      open={openedPopoverId === badge.id}
+                      anchorEl={anchorEl}
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                      }}
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                      }}
+                    >
+                      <Typography variant="subtitle1" className="popup__acheivement_badge">{badge.hover_text}</Typography>
+                    </Popover>
+                  </div>
+                )
+              ))}
             </Box>
             <br/>
             <Typography variant="subtitle1">
