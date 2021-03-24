@@ -17,10 +17,11 @@ export default function SideNav(props) {
   const { appState, setAppState, renderUpcoming, handleLogOut } = useContext(ContextContainer);
 
   useEffect(() => {
-    // Hide the navbar if the current url matches one of the hide paths
-    if (hidePaths.includes(history.location.pathname)) setHide(true);
+    // Hide the navbar if the current url matches one of the hide paths - slice 0 to 13 to avoid getting workout call uuid
+    console.log(history.location.pathname.slice(0, 13));
+    if (hidePaths.includes(history.location.pathname.slice(0, 13))) setHide(true);
     const unlisten = history.listen((location, action) => {
-      if (hidePaths.includes(location.pathname)) {
+      if (hidePaths.includes(location.pathname.slice(0, 13))) {
         setHide(true);
       } else {
         setHide(false);
