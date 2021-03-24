@@ -17,8 +17,12 @@ import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 
 import {Redirect} from 'react-router-dom';
 import { set } from "lodash";
+import { PersonPinCircleSharp } from "@material-ui/icons";
 
 export default function Session(props) {
+  useEffect(() => {
+    console.log(props)
+  }, []);
 
   const DEFAULT_SESSION_DURATION = 1800000;
   const DEFAULT_GRACE_DURATION = 90000;
@@ -28,7 +32,10 @@ export default function Session(props) {
 
   const [ sessionFeedback, setSessionFeedback ] = useState({
     partnerRating: 1,
-    partnerCompletion: 0
+    partnerCompletion: 0,
+    raterID: props.currentUserID,
+    ratedID: props.partnerID,
+    sessionID: props.sessionInfo.id
   });
 
   const [ sessionSettings, setSessionSettings ] = useState({
@@ -165,8 +172,8 @@ export default function Session(props) {
           ) : (
             ""
           )}
-          <div class="video-controls-container">
-            <div class="video-controls">
+          <div className="video-controls-container">
+            <div className="video-controls">
               <Box minWidth="250px" justifyContent="flex-start">
                 <IconButton
                   variant="contained"

@@ -11,15 +11,13 @@ import { useLocation } from 'react-router-dom';
 import { Button, ButtonGroup, IconButton, Box, Typography } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { Avatar } from '@material-ui/core';
 
 // generate token here, no need for external route
 const AccessToken = require('twilio').jwt.AccessToken;
 const VideoGrant = AccessToken.VideoGrant;
 
 export default function WorkoutCall(props) {
-
-  const currentUserID = props.user.user_id;
-  console.log('\n\n\n PROPS', props.user);
 
   const REACT_APP_TWILIO_ACCOUNT_SID = process.env.REACT_APP_TWILIO_ACCOUNT_SID;
   const REACT_APP_TWILIO_API_KEY_SID = process.env.REACT_APP_TWILIO_API_KEY;
@@ -30,6 +28,8 @@ export default function WorkoutCall(props) {
   const [roomName, setRoomName] = useState("testRoom2");
   const [room, setRoom] = useState(null);
   const [connecting, setConnecting] = useState(false);
+  const [currentSessionInfo, setCurrentSessionInfo] = useState({});
+  const [partnerInfo, setPartnerInfo] = useState({});
 
   const connectToRoom = useCallback(
     async (event, username, roomName) => {
@@ -54,62 +54,69 @@ export default function WorkoutCall(props) {
   );
 
   useEffect(() => {
-    axios.get("http://localhost:8081/api/sessions/" + SESSION_UUID)
-      .then((result) => {
-        const retrievedData = result.data[0];
-        const sessionInfo = {
-          uuid: retrievedData.session_uuid,
-          time: retrievedData.scheduled_at,
-          type: retrievedData.type,
-          participants: {}
-        }
-
-        for (const participantString of retrievedData.participants) {
-          // participant info starts as a string, convert it into an array
-          const participant = participantString.split(' ');
-          /*
-            sample participantString -> 1 0ea9b155-daba-4fda-8539-3f4976d50c5b Martguerita Streetfield https://i.pravatar.cc/300?img=1
-            participant[0] -> ID
-            participant[1] -> UUID
-            participant[2] -> first name
-            participant[3] -> last name
-            participant[4] -> profile image URL
-          */
-          sessionInfo.participants[participant[0]] = {
-            uuid: participant[1],
-            firstName: participant[2],
-            lastName: participant[3],
-            profileImage: participant[4]
+    // if (Object.keys(currentSessionInfo).length === 0) {
+      console.log('useEffect axios ran');
+      axios.get("http://localhost:8081/api/sessions/" + SESSION_UUID)
+        .then((result) => {
+          const retrievedData = result.data[0];
+          const sessionInfo = {
+            id: retrievedData.id,
+            uuid: retrievedData.session_uuid,
+            time: retrievedData.scheduled_at,
+            type: retrievedData.type,
+            participants: {}
           }
-        }
-        console.log(sessionInfo);
-        console.log('\n\n current user:', sessionInfo.participants[props.user.user_id]);
-        // console.log('props::', props.user.user_id);
-        if (sessionInfo.participants[props.user.user_id]) {
-          console.log('\n\n current user UUID:', sessionInfo.participants[props.user.user_id].uuid);
-          setRoomName(sessionInfo.uuid);
-          setUsername(sessionInfo.participants[props.user.user_id].uuid);
-          console.log('debug roomname:', sessionInfo.uuid)
-          console.log('username:', sessionInfo.participants[props.user.user_id].uuid);
-          console.log('states:', roomName, username);
-        } else {
-          // user is not part of this session
-          console.log('THE CURRENT USER IS NOT PART OF THIS SESSION.');
-        }
+          for (const participantString of retrievedData.participants) {
+            // participant info starts as a string, convert it into an array
+            const participant = participantString.split(' ');
+            /*
+              sample participantString -> 1 0ea9b155-daba-4fda-8539-3f4976d50c5b Martguerita Streetfield https://i.pravatar.cc/300?img=1
+              participant[0] -> ID
+              participant[1] -> UUID
+              participant[2] -> first name
+              participant[3] -> last name
+              participant[4] -> profile image URL
+            */
+            sessionInfo.participants[participant[0]] = {
+              uuid: participant[1],
+              firstName: participant[2],
+              lastName: participant[3],
+              profileImage: participant[4],
+              id: participant[0]
+            }
+          }
+          
+          console.log(sessionInfo);
+          if (sessionInfo.participants[props.user.user_id]) {
+            setRoomName(sessionInfo.uuid);
+            setUsername(sessionInfo.participants[props.user.user_id].uuid);
+            const partnerID = Object.keys(sessionInfo.participants).filter(id => id !== props.user.user_id.toString());
+            setPartnerInfo(sessionInfo.participants[partnerID]);
 
-      })
-  }, [props.user.user_id, connectToRoom])
+          } else {
+            // user is not part of this session
+            console.log('THE CURRENT USER IS NOT PART OF THIS SESSION.');
+          }
 
+          setCurrentSessionInfo(sessionInfo);
+        })
+    // } else {
+    //   console.log('nothing');
+    // }
+  }, [props.user.user_id]);
   
 
-  const endSession = useCallback((sessionFeedback) => {
+  const endSession = useCallback((sessionFeedback, raterID, ratedID, sessionID) => {
     if (!sessionFeedback) {
       sessionFeedback = {
         partnerRating: 1,
-        partnerCompletion: 1
+        partnerCompletion: 0,
+        raterID: raterID || props.user.user_id,
+        ratedID: ratedID || Number(partnerInfo.id),
+        sessionID: sessionID || currentSessionInfo.id
       };
     }
-    axios.post('http://localhost:8081/test', {
+    axios.post('http://localhost:8081/api/sessions/rate', {
       params: {
         feedback: JSON.stringify(sessionFeedback)
       }
@@ -126,23 +133,23 @@ export default function WorkoutCall(props) {
   }, []);
 
   // create access token for user
-  const createJwt = function(identity = 'testuser', roomName = 'testroom') {
+  const createJwt = function(identity = username, roomName = roomName) {
     const token = new AccessToken(REACT_APP_TWILIO_ACCOUNT_SID, REACT_APP_TWILIO_API_KEY_SID, REACT_APP_TWILIO_API_KEY_SECRET, { ttl: 14400 });
     token.identity = identity;
     const videoGrant = new VideoGrant({ room: roomName });
     token.addGrant(videoGrant);
-    console.log(`Generated token for ${identity} to join ${roomName}`);
     return token.toJwt();
   };
 
   useEffect(() => {
+    console.log('useEffect ran');
     if (room) {
       const tidyUp = (event) => {
         if (event.persisted) {
           return;
         }
         if (room) {
-          endSession();
+          endSession(null, Number(props.user.user_id), Number(partnerInfo.id), currentSessionInfo.id);
         }
       };
       window.addEventListener("pagehide", tidyUp);
@@ -154,9 +161,17 @@ export default function WorkoutCall(props) {
     }
   }, [room, endSession]);
 
+
+
+
+
+
+
+
+
   if (room) {
     return (
-      <Session roomName={roomName} room={room} endSession={endSession} />
+      <Session roomName={roomName} room={room} endSession={endSession} sessionInfo={currentSessionInfo} currentUserID={(props.user.user_id)} partnerID={Number(partnerInfo.id)} />
     );
   } else {
     const fakeLocalParticipant = {
@@ -166,7 +181,7 @@ export default function WorkoutCall(props) {
       <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" >
         <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" width="100%">
           <Typography variant="h4">Joining Session</Typography>
-          <Typography variant="subtitle1">Getting ready to join a workout session with...</Typography>
+          <Typography variant="subtitle1">Getting ready to join a <b>{ currentSessionInfo.type }</b> session with <b>{ partnerInfo.firstName }</b></Typography>
         </Box>
         <Preview participant={fakeLocalParticipant}/>
 
