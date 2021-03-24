@@ -849,4 +849,12 @@ VALUES (1, 1, 'complete'),
 (577, 25, 'complete'),
 (578, 1, 'complete'),
 (579, 2, 'complete'),
-(580, 3, 'complete');
+(580, 3, 'complete'),
+
+-- FOR DEMO
+(581, 2, 'pending'),
+(581, 5, 'pending'),
+(582, 2, 'pending'),
+(582, 5, 'pending'),
+(583, 2, 'pending'),
+(583, 5, 'pending');
