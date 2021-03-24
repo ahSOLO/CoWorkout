@@ -1,5 +1,5 @@
 video {
-  max-height: 80vh;
+  max-height: 85vh;
   // We can't use min-width here because it would apply to the video in picture as well.
   display: block;
   overflow: hidden;
@@ -7,8 +7,10 @@ video {
 
 .room {
   // Add margin for header
+  background-color: #23262A;
   margin-top: 20px;
   width: 100%;  
+  overflow: auto;
 }
 
 .video-call-container {
@@ -18,39 +20,48 @@ video {
   align-items: center;
   height: 100%;
   width: 100%;
-  max-height: 80vh;
+  max-height: 85vh;
+}
+
+.video-controls-container {
+  z-index: 2;
+  position: fixed;
+  bottom: 0px;
+  height: 250px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .video-controls {
-  text-align: left;
+  background-color: #23262A;
+  color: white;
   display: flex;
   justify-content: space-between;
 }
 
-.video-controls>div {
-  display: inline-block;
+.video-controls + .video-controls {
+  padding-top: 0em;
+  padding-bottom: 0.5em;
+  background-color: #23262A;
 }
-.video-controls>div>button {
+
+.video-controls>div button, .video-controls>div a {
   margin: 0.5em;
 }
 
-.video-controls>div:first-child {
-  text-align: left;
+.button-spacing>button, .button-spacing>a {
+  margin: 0.5em;
 }
-
-.video-controls>div:last-child {
-  text-align: right;
-}
-
 
 .local-participant {
 }
 
 .remote-participants {
-  background-color: red;
+  background-color: black;
   min-height: 80px;
 }
-
 
 .main-video, .side-video {
   position: absolute;
@@ -60,18 +71,20 @@ video {
   width: 100%;
 }
 
-// combine with "div" selector to give these greater specificity
 // We start 40px down and top margin is 60px, so add 20px, 
 .side-video {
-  top: calc(20px + 2em);
-  right: 1em;
+  top: calc(20px + 3em);
+  right: 3em;
+  border: 3px solid #FBB03B;
+  border-radius: 5px;
   width: 300px;
+  height: 169px;
 }
 
 .video-stream {
   width: 100% !important;
-  height: auto !important;
-  object-fit: cover;
+  object-fit: contain;
+  background-color: black;
 }
 
 .hidden {
