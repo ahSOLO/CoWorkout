@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import Video from 'twilio-video';
+import { Typography } from '@material-ui/core';
 
 
 export default function Preview(props) {
@@ -45,7 +46,7 @@ export default function Preview(props) {
 
   return (
     <div className="participant">
-      <h3>{participant.identity}</h3>
+      <Typography variant="h5">{participant.identity}</Typography>
       <video ref={videoRef} autoPlay={true} />
       <audio ref={audioRef} autoPlay={true} muted={true} />
     </div>

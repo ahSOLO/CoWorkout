@@ -8,7 +8,7 @@ import axios from 'axios';
 
 import { useLocation } from 'react-router-dom';
 
-import { Button, ButtonGroup, IconButton } from '@material-ui/core';
+import { Button, ButtonGroup, IconButton, Box, Typography } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SettingsIcon from '@material-ui/icons/Settings';
 
@@ -163,15 +163,15 @@ export default function WorkoutCall(props) {
       'identity': 'Video Preview'
     }
     return (
-      <div className="video-call-container">
-        <h1>Joining Session</h1>
-        <p>
-          Getting ready to join a workout session with... 
-        </p>
+      <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" >
+        <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" width="100%">
+          <Typography variant="h4">Joining Session</Typography>
+          <Typography variant="subtitle1">Getting ready to join a workout session with...</Typography>
+        </Box>
         <Preview participant={fakeLocalParticipant}/>
 
-        <div className="video-controls">
-          <div>
+        <Box display="flex" justifyContent="space-between" width="100%">
+          <div className="button-spacing">
             <Button
               variant="contained"
               color="primary"
@@ -190,7 +190,7 @@ export default function WorkoutCall(props) {
               Ready
             </Button>
           </div>
-          <div>
+          <div className="button-spacing">
             <Button
               component={Link}
               to="/dashboard"
@@ -202,8 +202,8 @@ export default function WorkoutCall(props) {
               Leave
             </Button>
           </div>
-        </div>
-      </div>
+        </Box>
+      </Box>
     );
   }
 };
