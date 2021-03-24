@@ -165,8 +165,8 @@ export default function Session(props) {
           ) : (
             ""
           )}
-          <div class="video-controls-container">
-            <div class="video-controls">
+          <div className="video-controls-container">
+            <div className="video-controls">
               <Box minWidth="250px" justifyContent="flex-start">
                 <IconButton
                   variant="contained"
