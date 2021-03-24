@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import EditProfileDialog from 'components/Dialogs/EditProfileDialog';
 import EditNotificationDialog from 'components/Dialogs/EditNotificationDialog';
 import "./Profile.scss";
+import { achievement_badges } from "helpers/achievement_badges";
 
 const useStyles = makeStyles((theme) => ({
   popover: {
@@ -53,21 +54,6 @@ export default function Profile(props) {
   if (!props.user.user_id) return null;
 
   const { anchorEl, openedPopoverId } = popoverState;
-  
-  const achievement_badges = [
-    {
-      id: 0,
-      badge_name: 'one_completed_badge',
-      emoji: '127895',
-      hover_text: 'Completed first workout!'
-    },
-    {
-      id: 1,
-      badge_name: 'ten_completed_badge',
-      emoji: '127941',
-      hover_text: 'Completed 10 workouts!'
-    }
-  ]
 
   return (
     <Box display="flex" flexDirection="column" height="100%" width="100%">
@@ -164,7 +150,7 @@ export default function Profile(props) {
                           onMouseLeave={handlePopoverClose} 
                           className="emoji"
                         >
-                          {String.fromCodePoint(parseInt (badge.emoji, 10))}
+                          <img src={badge.emoji} className="emoji__image"/>
                         </Paper>
                         <Popover
                           className={classes.popover}
