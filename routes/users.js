@@ -54,9 +54,11 @@ module.exports = (db) => {
           .status(500)
           .json({ error: err.message });
       });
+
   });
 
   router.post("/", (req, res) => {
+
     const first_name = req.body.first_name;
     const last_name = req.body.last_name;
     const email = req.body.email;
@@ -73,47 +75,46 @@ module.exports = (db) => {
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;
     `;
 
-    let queryStringInterests = 'INSERT INTO user_workout_types (user_id, workout_type_id) VALUES '
-    let queryStringGoals = 'INSERT INTO user_workout_goals (user_id, workout_goal_id) VALUES '
+    let queryStringWorkoutTypes = 'INSERT INTO user_workout_types (user_id, workout_type_id) VALUES '
+    let queryStringWorkoutGoals = 'INSERT INTO user_workout_goals (user_id, workout_goal_id) VALUES '
 
     let user_id;
 
     db.query(queryString, queryParams)
       .then((data) => {
         user_id = data.rows[0].id;
-        let interests_added = 0;
+        let workout_types_added = 0;
 
-        for (interest of req.body.interests) {
-          if (interest.value) {
-            queryStringInterests += `(${user_id}, ${interest.interest_id}), `;
-            interests_added += 1;
+        for (const workout_type of req.body.workout_types) {
+          if (workout_type.value) {
+            queryStringWorkoutTypes += `(${user_id}, ${workout_type.workout_type_id}), `;
+            workout_types_added += 1;
           }
         }
-        if (interests_added > 0) {
-          queryStringInterests = queryStringInterests.slice(0, -2) + ';';
+        if (workout_types_added > 0) {
+          queryStringWorkoutTypes = queryStringWorkoutTypes.slice(0, -2) + ';';
         } else {
-          queryStringInterests = '';
+          queryStringWorkoutTypes = '';
         }
-        console.log(queryStringInterests);
 
-        return db.query(queryStringInterests);
+        return db.query(queryStringWorkoutTypes);
       })
       .then((data) => {
-        let goals_added = 0;
+        let workout_goals_added = 0;
 
-        for (goal of req.body.goals) {
-          if (goal.value) {
-            queryStringGoals += `(${user_id}, ${goal.goal_id}), `;
-            goals_added += 1;
+        for (const workout_goal of req.body.workout_goals) {
+          if (workout_goal.value) {
+            queryStringWorkoutGoals += `(${user_id}, ${workout_goal.workout_goal_id}), `;
+            workout_goals_added += 1;
           }
         }
-        if (goals_added > 0) {
-          queryStringGoals = queryStringGoals.slice(0, -2) + ';';
+        if (workout_goals_added > 0) {
+          queryStringWorkoutGoals = queryStringWorkoutGoals.slice(0, -2) + ';';
         } else {
-          queryStringGoals = '';
+          queryStringWorkoutGoals = '';
         }
 
-        return db.query(queryStringGoals);
+        return db.query(queryStringWorkoutGoals);
       })
       .then((data) => {
         res
@@ -121,6 +122,7 @@ module.exports = (db) => {
           .status(200)
       })
       .catch(error => console.log(error));
+
   });
 
   router.put("/", (req, res) => {
