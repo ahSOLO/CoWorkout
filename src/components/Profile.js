@@ -190,6 +190,10 @@ export default function Profile(props) {
                 <Typography variant="subtitle1">
                   Avg Session Length: {Math.round(props.user.avg_session_length, 2)} minutes
                 </Typography>
+                <br/>
+                <Typography variant="subtitle1">
+                  Positive Rating: {Math.round(props.user.rating_percentage * 100)}%
+                </Typography>
               </Box>
             </Container>
           </Box>
