@@ -3,6 +3,7 @@ import { Grid, Box, Container, Typography, Paper, IconButton, Popover } from '@m
 import EditIcon from '@material-ui/icons/EditOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import EditProfileDialog from 'components/Dialogs/EditProfileDialog';
+import EditNotificationDialog from 'components/Dialogs/EditNotificationDialog';
 import "./Profile.scss";
 
 const useStyles = makeStyles((theme) => ({
@@ -21,6 +22,14 @@ export default function Profile(props) {
   }
   const handleProfileEditClose = () => {
     setProfileEditOpen(false);
+  }
+
+  const [notificationEditOpen, setNotificationEditOpen] = useState(false);
+  const handleNotificationEditClick = () => {
+    setNotificationEditOpen(true);
+  }
+  const handleNotificationEditClose = () => {
+    setNotificationEditOpen(false);
   }
 
   const [popoverState, setPopoverState] = useState({
@@ -112,6 +121,30 @@ export default function Profile(props) {
                 <br/>
                 <Typography variant="subtitle1">
                   Fitness Goals: {props.user.fitness_goals}
+                </Typography>
+                <br/>
+              </Box>
+              <br/><br/>
+              <Box className="profile__section">
+                <Typography variant="h6" className="profile__heading">
+                  <b>Notifications</b>
+                  <IconButton onClick={handleNotificationEditClick}>
+                    <EditIcon 
+                      style={{ fontSize: 18 }}
+                    />
+                  </IconButton>
+                  <EditNotificationDialog
+                    handleNotificationEditClose={handleNotificationEditClose}
+                    notificationEditOpen={notificationEditOpen}
+                  />
+                </Typography>
+                <br/>
+                <Typography variant="subtitle1">
+                  Email: when session booked, when matched
+                </Typography>
+                <br/>
+                <Typography variant="subtitle1">
+                  SMS: none
                 </Typography>
                 <br/>
               </Box>
