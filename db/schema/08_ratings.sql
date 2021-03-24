@@ -5,5 +5,5 @@ CREATE TABLE ratings (
   session_id INT REFERENCES sessions(id) ON DELETE CASCADE,
   rater_user_id INT REFERENCES users(id) ON DELETE CASCADE,
   rated_user_id INT REFERENCES users(id) ON DELETE CASCADE,
-  rating VARCHAR(8) NOT NULL
+  rating INT NOT NULL
 );

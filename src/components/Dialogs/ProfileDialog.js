@@ -6,6 +6,7 @@ import DialogTemplate from "./DialogTemplate";
 import Popover from '@material-ui/core/Popover';
 import "./ProfileDialog.scss";
 import axios from 'axios';
+import { achievement_badges } from "helpers/achievement_badges";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -42,21 +43,6 @@ export default function ProfileDialog(props) {
 
   const { anchorEl, openedPopoverId } = popoverState;
   
-  const achievement_badges = [
-    {
-      id: 0,
-      badge_name: 'one_completed_badge',
-      emoji: '127895',
-      hover_text: 'Completed first workout!'
-    },
-    {
-      id: 1,
-      badge_name: 'ten_completed_badge',
-      emoji: '127941',
-      hover_text: 'Completed 10 workouts!'
-    }
-  ]
-
   useEffect(() => {
     if (props.user) {
       axios.get(BASE_URL + '/api/users', {
@@ -114,7 +100,7 @@ export default function ProfileDialog(props) {
                       onMouseLeave={handlePopoverClose} 
                       className="popup__emoji"
                     >
-                      {String.fromCodePoint(parseInt (badge.emoji, 10))}
+                      <img src={badge.emoji} className="popup__emoji__image"/>
                     </Paper>
                     <Popover
                       className={classes.popover}
