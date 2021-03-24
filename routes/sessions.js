@@ -203,12 +203,29 @@ module.exports = (db) => {
     const feedbackString = req.body.params.feedback;
     const feedback = JSON.parse(feedbackString);
     console.log(feedback)
+    const query1 = `
+      UPDATE session_users
+      SET state = '${feedback.partnerCompletion && "complete" || "incomplete"}'
+      WHERE session_id = ${feedback.sessionID} AND user_id = ${feedback.ratedID};
+    `;  
+    const query2 = `
+      INSERT INTO ratings VALUES
+        (${feedback.sessionID}, ${feedback.raterID}, ${feedback.ratedID}, ${feedback.partnerRating});
+    `;
+
+    Promise.all([
+      db.query(query1),
+      db.query(query2)
+    ])
+      .then(() => {
+        res.status(200).json({status: 'success'});
+      })
+      .catch(err => {
+        console.log("Error adding records pertaining to feedback.");
+        res.status(500).send("Failure");
+      });
   });
 
-  const query1 = `
-    UPDATE 
-  `;
-  const query2 = ``;
 
   return router;
 };
