@@ -168,8 +168,34 @@ module.exports = (db) => {
   });
 
   router.get('/:sessionUUID', (req, res) => {
-    console.log('session UUID:', req.params.sessionUUID);
-    res.end('hello');
+    const sessionUUID = req.params.sessionUUID;
+
+    const query = `
+    SELECT
+      sessions.session_uuid,
+      sessions.scheduled_at,
+      workout_types.type,
+      ARRAY_AGG(users.id || ' ' || users.user_uuid || ' ' || users.first_name || ' ' || users.last_name || ' ' || users.profile_image_url ) as participants
+    FROM sessions
+    JOIN session_users
+      ON (sessions.id = session_users.session_id)
+    JOIN users
+      ON (users.id = session_users.user_id)
+    JOIN workout_types
+      ON (sessions.workout_type_id = workout_types.id)
+    WHERE sessions.session_UUID = '${sessionUUID}'
+    GROUP BY
+      sessions.id,
+      session_users.session_id,
+      sessions.session_uuid,
+      sessions.scheduled_at,
+      sessions.workout_type_id,
+      workout_types.type;`;
+
+    db.query(query)
+      .then((data) => {
+        res.status(200).json(data.rows);
+      })
   });
 
   return router;
