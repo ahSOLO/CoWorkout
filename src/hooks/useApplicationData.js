@@ -69,6 +69,7 @@ export default function useApplicationData() {
     constructSlots();
   }, []);
 
+  // Set user prop based on logged in user
   useEffect(() => {
     axios.get(BASE_URL + '/api/users', {
       params: {

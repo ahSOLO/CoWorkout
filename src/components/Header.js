@@ -22,8 +22,8 @@ export default function Header(props) {
           <Button className="header__button" color="primary" variant="outlined" onClick={handleLogOut}>
             <b>Log Out</b>
           </Button>
-          <Avatar className="header__avatar"/>
-          <Typography variant="subtitle1" className="header__name">{props.user.name}</Typography>
+          <Avatar src={props.user.user_profile_image_url} className="header__avatar" onClick={() => history.push("/profile")}/>
+          <Typography variant="subtitle1" className="header__name" onClick={() => history.push("/profile")}>{props.user.name}</Typography>
         </>
       )
     } else {
