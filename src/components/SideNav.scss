@@ -5,6 +5,7 @@
   justify-content: space-between;
   min-width: 15%;
   padding: 40px 20px;
+  z-index: 3;
 }
 
 #app-mininav {
@@ -17,11 +18,11 @@
 #menu-icon {
   position: relative;
   right: -65px;
-  z-index: 2;
+  z-index: 4;
 }
 
 #menu-icon-minimized {
   position: relative;
   right: -20px;
-  z-index: 2;
+  z-index: 4;
 }
