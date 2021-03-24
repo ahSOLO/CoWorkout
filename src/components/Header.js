@@ -1,24 +1,16 @@
 import { Typography, Avatar, Box, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import "./Header.scss";
+import ContextContainer from 'contexts/ContextContainer';
 
 const lightPaths = ["/", "/register", "/login"];
 
 export default function Header(props) {
   const [style, setStyle] = useState("");
   const history = useHistory();
-
-  const handleLogOut = event => {
-    event.preventDefault();
-
-    props.removeCookie("user_id", {
-        path: "/"
-    });
-
-    props.setUser({});
-    history.push("/");
-  }
+  // Handle logout moved to App.js so it can be called from the sidenav as well.
+  const { handleLogOut } = useContext(ContextContainer);
 
   const headerRight = function() {
     if (props.user.user_id) {

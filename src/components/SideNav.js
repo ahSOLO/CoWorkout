@@ -14,7 +14,7 @@ export default function SideNav(props) {
   const [hide, setHide] = useState(false);
   const [minimized, setMinimized] = useState(true);
 
-  const { appState, setAppState, renderUpcoming } = useContext(ContextContainer);
+  const { appState, setAppState, renderUpcoming, handleLogOut } = useContext(ContextContainer);
 
   useEffect(() => {
     // Hide the navbar if the current url matches one of the hide paths
@@ -77,7 +77,7 @@ export default function SideNav(props) {
         <br/>
         <Typography className="clickable" onClick={() => history.push('/dashboard')}><b>My Profile &amp; Preferences</b></Typography>
         <br/>
-        <Typography className="clickable" onClick={() => history.push('/logout')}><b>Sign Out</b></Typography>
+        <Typography className="clickable" onClick={handleLogOut}><b>Sign Out</b></Typography>
       </Box>
       <Box display="flex" flexDirection="column" width="100%">
         <Typography variant="body2">About</Typography>

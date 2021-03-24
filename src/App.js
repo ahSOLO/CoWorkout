@@ -84,9 +84,21 @@ function App() {
       })
   }
 
+  // Logs out the user
+  const handleLogOut = event => {
+    event.preventDefault();
+
+    removeCookie("user_id", {
+        path: "/"
+    });
+
+    setUser({});
+    history.push("/");
+  }
+
   return (
     <ThemeProvider theme={theme}>
-      <ContextContainer.Provider value={{appState, setAppState, renderUpcoming}}>
+      <ContextContainer.Provider value={{appState, setAppState, renderUpcoming, handleLogOut}}>
         <MainRouter 
           user={user} 
           setUser={setUser}
