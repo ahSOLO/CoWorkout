@@ -37,6 +37,7 @@ export default function Slot(props) {
     if (usersNum === 0) {
       setMode(EMPTY);
     } else if (usersNum === 1) {
+      console.log(props.data.session_users[0])
       const isMySession = props.user && Boolean(props.data.session_users[0].user_id === props.user.user_id);
       // MATCHING: you booked and you're able to match with others - i.e. you're the owner of a 'pending' session and the only person associated with it
       // BOOKED: somebody other than you has booked and you're able to match - i.e. there is at least 1 person (not you) associated with a 'pending' session

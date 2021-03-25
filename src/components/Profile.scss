@@ -18,7 +18,7 @@
   position: relative;
 }
 
-#profile__avatar {
+#profile-avatar-container {
   display: block;
   height: Min(200px, 15vw);
   width: Min(200px, 15vw);
@@ -31,6 +31,11 @@
   left: 50%;
   transform: translate(-50%, -50%);
   overflow: hidden;
+}
+
+#profile-avatar {
+  height: Min(200px, 15vw);
+  width: Min(200px, 15vw);
 }
 
 #profile__avatar img {
