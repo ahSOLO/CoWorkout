@@ -1,7 +1,7 @@
 #profile-main-container {
   background-color: #ededed;
-  // Kind of hacky but will work as long as the length of the container does not grow before the demo
-  height: 170vh;
+  // Slightly less hacky
+  height: calc(100vh + Max(45vw, 350px));
 }
 
 .profile-paper {
