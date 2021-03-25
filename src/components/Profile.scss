@@ -1,9 +1,12 @@
-#main-container {
+#profile-main-container {
   background-color: #ededed;
+  // Kind of hacky but will work as long as the length of the container does not grow before the demo
+  height: 170vh;
 }
 
 .profile-paper {
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
   width: 65vw;
   border: 1px solid #c7c7c7;
 }

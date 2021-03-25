@@ -56,7 +56,7 @@ export default function Profile(props) {
   const { anchorEl, openedPopoverId } = popoverState;
 
   return (
-    <Box display="flex" flexDirection="column" height="100%" width="100%" id="profile-main-container">
+    <Box display="flex" flexDirection="column" justifyContent="flex-start" height="100%" width="100%" id="profile-main-container">
         
       <br/><br/><br/>
 
