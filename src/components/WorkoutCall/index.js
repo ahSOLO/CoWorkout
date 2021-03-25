@@ -43,6 +43,12 @@ export default function WorkoutCall(props) {
         video: { }
       })
         .then((room) => {
+          room.on('disconnected', room => {
+            room.localParticipant.tracks.forEach(publication => {
+              const attachedElements = publication.track.detach();
+              attachedElements.forEach(element => element.remove());
+            });
+          });
           setConnecting(false);
           setRoom(room);
         })
@@ -184,41 +190,7 @@ export default function WorkoutCall(props) {
           <Typography variant="h4">Joining Session</Typography>
           <Typography variant="subtitle1">Getting ready to join a <b>{ currentSessionInfo.type }</b> session with <b>{ partnerInfo.firstName }</b></Typography>
         </Box>
-        <Preview participant={fakeLocalParticipant}/>
-
-        <Box display="flex" justifyContent="space-between" width="100%">
-          <div className="button-spacing">
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<SettingsIcon />}
-              size="large"
-            >
-              Settings
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<ExitToAppIcon />}
-              size="large"
-              onClick={(event) => {connectToRoom(event, username, roomName)}}
-            >
-              Ready
-            </Button>
-          </div>
-          <div className="button-spacing">
-            <Button
-              component={Link}
-              to="/dashboard"
-              variant="contained"
-              color="primary"
-              startIcon={<ExitToAppIcon />}
-              size="large"
-            >
-              Leave
-            </Button>
-          </div>
-        </Box>
+        <Preview participant={fakeLocalParticipant} connect={connectToRoom} username={username} roomName={roomName} />
       </Box>
     );
   }
