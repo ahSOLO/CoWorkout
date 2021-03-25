@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Grid, Box, Container, Typography, Paper, IconButton, Popover } from '@material-ui/core';
+import { Grid, Box, Container, Typography, Paper, IconButton, Popover, Avatar } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/EditOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import EditProfileDialog from 'components/Dialogs/EditProfileDialog';
@@ -62,8 +62,8 @@ export default function Profile(props) {
 
       <Paper className="profile-paper">
         <Box className="profile-header-background">
-          <div id="profile__avatar">
-            <img src={props.user.user_profile_image_url} />
+          <div id="profile-avatar-container">
+            <Avatar id="profile-avatar" src={props.user.user_profile_image_url} />
           </div>
         </Box>
         <Box className="profile-header-main">

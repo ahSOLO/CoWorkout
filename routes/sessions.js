@@ -7,7 +7,7 @@ module.exports = (db) => {
     const user_id = req.query.user_id;
     const filter = JSON.parse(req.query.filter);
 
-    console.log('Getting sessions data:', filter, user_id);
+    // console.log('Getting sessions data:', filter, user_id);
     
     let filterQueryAdditions = "";
     if (filter.activityId) {

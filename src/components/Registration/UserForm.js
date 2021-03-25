@@ -128,6 +128,7 @@ export class UserForm extends Component {
       })
     })
     .then((data) => {
+      // console.log(data.data.users[0]);
       this.props.setUser(data.data.users[0]);
     })
   }

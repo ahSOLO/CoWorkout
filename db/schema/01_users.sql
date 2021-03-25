@@ -14,5 +14,5 @@ CREATE TABLE users (
   country VARCHAR(255),
   region VARCHAR(255),
   timezone VARCHAR(255),
-  profile_image_url VARCHAR(255)
+  profile_image_url VARCHAR(255) DEFAULT 'default'
 );

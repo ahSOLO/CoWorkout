@@ -26,7 +26,7 @@ module.exports = (db) => {
          , COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end)::NUMERIC / NULLIF(COUNT(DISTINCT su.session_id), 0) as completion_rate
          , AVG(sessions.actual_duration) as avg_session_length
          , COUNT(DISTINCT ratings.session_id) as rating_count
-         , COUNT(DISTINCT CASE WHEN ratings.rating = 1 THEN ratings.session_id END)::NUMERIC / COUNT(DISTINCT ratings.session_id) as rating_percentage
+         , COUNT(DISTINCT CASE WHEN ratings.rating = 1 THEN ratings.session_id END)::NUMERIC / NULLIF(COUNT(DISTINCT ratings.session_id), 0) as rating_percentage
          , CASE WHEN COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end) >= 1 then TRUE else FALSE end as one_completed_badge
          , CASE WHEN COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end) >= 10 then TRUE else FALSE end as ten_completed_badge
       FROM users
@@ -54,6 +54,7 @@ module.exports = (db) => {
         res.json({ users });
       })
       .catch(err => {
+        console.log(err)
         res
           .status(500)
           .json({ error: err.message });
