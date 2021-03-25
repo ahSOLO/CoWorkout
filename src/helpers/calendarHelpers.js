@@ -229,7 +229,7 @@ const rebuildAppointmentObjs = function(emptyAppointments, persistentAppointment
 // replace with static var after finalizing formats
 const allSlots = autoGenerateEmptyAppointments();
 
-module.exports = {
+export {
   allSlots,
   formatTimeStamp,
   extractTimeString,
