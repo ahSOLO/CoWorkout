@@ -182,7 +182,7 @@ module.exports = (db) => {
       ON (sessions.id = session_users.session_id)
     JOIN users
       ON (users.id = session_users.user_id)
-    JOIN workout_types
+    LEFT OUTER JOIN workout_types
       ON (sessions.workout_type_id = workout_types.id)
     WHERE sessions.session_UUID = '${sessionUUID}'
     GROUP BY
