@@ -204,7 +204,7 @@ export default function Session(props) {
                     startIcon={<ExitToAppIcon />}
                     size="large"
                     onClick={() => {
-                      fastForwardCountDown()
+                      props.endSession(sessionFeedback);
                       history.push("/dashboard")
                     }}
                   >
