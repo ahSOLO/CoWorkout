@@ -1,21 +1,17 @@
-.profile__grid {
-  display: flex;
+#main-container {
+  background-color: #ededed;
 }
 
-.profile__margin {
-  background-color: #C4C4C4;
-  height: calc(100vh + 20vw);
+.profile-paper {
+  margin: auto;
+  width: 65vw;
+  border: 1px solid #c7c7c7;
 }
 
-.profile__center {
-  height: calc(100vh + 20vw);
-  display: flex;
-  flex-direction: column;
-}
-
-.profile__center__header {
+.profile-header-background {
   background-color: #FBB03B;
-  height: Min(200px, 25vw);
+  background-image: url("https://www.transparenttextures.com/patterns/binding-dark.png");
+  height: 15vw;
   position: relative;
 }
 
@@ -39,54 +35,46 @@
   width: Min(200px, 15vw);
 }
 
-#profile__avatar__edit {
-  position: absolute;
-  top: calc(Min(200px, 25vw) + Min(200px, 15vw) / 2);
-  left: calc(50% + Min(200px, 15vw) / 2);
-  transform: translate(-75%, -75%);
+.profile-header-main {
+  margin-bottom: 25px;
 }
 
-.profile__center__body {
-  background-color: white;
-  position: relative;
-}
-
-.profile__center_content {
-  position: absolute;
-  top: Min(100px, 8vw);
-}
-
-#profile__name {
+#profile-name {
   text-align: center;
+  margin-top: Min(125px, 9vw);
 }
 
-.profile__section {
-  margin-left: 2vw;
-  margin-right: 2vw;
-}
-
-.profile__heading {
+.profile-emojis {
   display: flex;
-  align-items: center;
-}
-
-.profile__emojis {
-  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .emoji {
-  width: 50px;
-  height: 50px;
-  padding: 10px;
-  margin-right: 2rem;
+  width: 35px;
+  height: 35px;
+  padding: 8px;
+  margin-right: 1rem;
 }
 
-.emoji__image {
-  width: 50px;
-  height: 50px;
+.emoji-image {
+  width: 35px;
+  height: 35px;
 }
 
-.acheivement_badge {
+.acheivement-badge {
   padding: 10px;
   background-color: #FBB03B;
+}
+
+.profile-section {
+  margin: 3vw;
+}
+
+.profile-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #FBB03B;
 }
