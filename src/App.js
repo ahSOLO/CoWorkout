@@ -74,7 +74,7 @@ function App() {
               <>
                 <Box display="flex" justifyContent="space-between">
                   <Typography variant="body1">{startTimeObj.format("dddd, MMM Do [at] h:mma")} {otherUser && "with " + otherUser.user_first_name}</Typography>
-                  {(msToStart < fifteenMinutesInMs) && <JoinButton size="small" onClick={() => history.push(`/workout-call/${session.session_uuid}`)}><b>JOIN</b></JoinButton>}
+                  {(msToStart < fifteenMinutesInMs && otherUser) && <JoinButton size="small" onClick={() => history.push(`/workout-call/${session.session_uuid}`)}><b>JOIN</b></JoinButton>}
                 </Box>
                 <br/>
               </>
