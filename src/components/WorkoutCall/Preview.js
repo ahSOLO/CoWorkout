@@ -47,11 +47,6 @@ export default function Preview(props) {
   }, [audioTracks]);
 
   const disengagePreview = function() {
-    console.log('\n\n\n\n\n');
-    console.log(videoTracks);
-    console.log(audioTracks);
-    console.log('\n\n\n\n\n');
-
     videoTracks.forEach((track) => {
       track.stop()
     });
@@ -92,6 +87,7 @@ export default function Preview(props) {
         </div>
         <div className="button-spacing">
           <Button
+            onClick={disengagePreview}
             component={Link}
             to="/dashboard"
             variant="contained"
