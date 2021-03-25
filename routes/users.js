@@ -25,6 +25,8 @@ module.exports = (db) => {
          , COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end) as completed_sessions
          , COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end)::NUMERIC / NULLIF(COUNT(DISTINCT su.session_id), 0) as completion_rate
          , AVG(sessions.actual_duration) as avg_session_length
+         , COUNT(DISTINCT ratings.session_id) as rating_count
+         , COUNT(DISTINCT CASE WHEN ratings.rating = 1 THEN ratings.session_id END)::NUMERIC / COUNT(DISTINCT ratings.session_id) as rating_percentage
          , CASE WHEN COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end) >= 1 then TRUE else FALSE end as one_completed_badge
          , CASE WHEN COUNT(DISTINCT CASE WHEN su.state = 'complete' then su.session_id end) >= 10 then TRUE else FALSE end as ten_completed_badge
       FROM users
@@ -40,6 +42,8 @@ module.exports = (db) => {
            ON users.id = su.user_id and su.state != 'pending'
       LEFT JOIN sessions
            ON su.session_id = sessions.id
+      LEFT JOIN ratings
+           ON users.id = ratings.rated_user_id
      WHERE users.id = ${user_id}
      GROUP BY 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
     `

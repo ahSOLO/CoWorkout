@@ -75,9 +75,15 @@
 }
 
 .emoji {
-  font-size: 50px;
+  width: 50px;
+  height: 50px;
   padding: 10px;
   margin-right: 2rem;
+}
+
+.emoji__image {
+  width: 50px;
+  height: 50px;
 }
 
 .acheivement_badge {
